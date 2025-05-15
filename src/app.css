@@ -63,6 +63,17 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+  
+  /* Added cursor styles globally */
+  body {
+    @apply cursor-none overflow-x-hidden;
+  }
+  
+  a, button, [role="button"], 
+  input[type="submit"], input[type="button"], 
+  .clickable {
+    @apply cursor-none !important;
+  }
 }
 
 @layer base {
@@ -71,5 +82,17 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utilities for cursor effects */
+@layer utilities {
+  .backdrop-distort {
+    backdrop-filter: hue-rotate(45deg) contrast(1.5) blur(8px) saturate(1.5);
+    -webkit-backdrop-filter: hue-rotate(45deg) contrast(1.5) blur(8px) saturate(1.5);
+  }
+  
+  .will-change-transform {
+    will-change: transform;
   }
 }

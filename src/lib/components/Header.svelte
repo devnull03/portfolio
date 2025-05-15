@@ -4,7 +4,6 @@
   import { Button, buttonVariants } from "$lib/components/ui/button";
   import { gsap } from "gsap";
   import { onMount } from "svelte";
-  import * as Dialog from "$lib/components/ui/dialog";
   import { Title } from "$lib/components/ui/card";
   import { Slider } from "$lib/components/ui/slider";
   import { Input } from "$lib/components/ui/input";

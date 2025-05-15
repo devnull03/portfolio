@@ -16,4 +16,13 @@
 
 <svelte:window bind:scrollY={initScroll} />
 
-<main class="flex w-screen flex-col items-center gap-16 lg:gap-8 pb-48"></main>
+<main class="relative min-h-screen w-full">
+
+  <div class="absolute inset-0 z-0 w-full h-full select-none">
+    <img src="/assets/Gradient.png" class="w-full h-full object-cover select-none" ondragstart={e => e.preventDefault()} alt="">
+  </div>
+
+
+
+
+</main>
