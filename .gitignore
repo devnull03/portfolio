@@ -1,0 +1,10 @@
+# SvelteKit
+node_modules
+build
+.svelte-kit
+*.env
+*.local
+
+# Optional hosting
+.netlify
+.vercel
