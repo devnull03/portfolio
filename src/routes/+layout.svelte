@@ -38,7 +38,7 @@
   onMount(() => {
     firstLoad = false;
   });
-  
+
   function handleLoadingComplete() {
     isLoading = false;
   }
@@ -46,8 +46,8 @@
 
 <svelte:head>
   <title>{PUBLIC_COMPANY_NAME}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" /> -->
   <!-- <link
 		href="https://fonts.googleapis.com/css2?family=Alatsi&family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap"
 		rel="stylesheet"
@@ -90,7 +90,10 @@
 {#if isLoading}
   <LoadingScreen onComplete={handleLoadingComplete} />
 {:else}
-  <div class="flex h-screen flex-col justify-between" in:fade={{ duration: 600, delay: 200 }}>
+  <div
+    class="flex h-screen flex-col justify-between"
+    in:fade={{ duration: 600, delay: 200 }}
+  >
     <!-- <Header /> -->
     <div class="">
       {@render children?.()}

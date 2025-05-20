@@ -36,9 +36,7 @@
   class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
   out:fade={{ duration: 800 }}
 >
-  <div class="mb-12 text-2xl font-light text-black">
-    {PUBLIC_COMPANY_NAME || "Loading"}
-  </div>
+  <div class="mb-12 text-2xl font-light text-black">Arnav / अरनव / アルナフ</div>
 
   <div
     class="relative h-0.5 overflow-hidden transition-all duration-500 ease-out"

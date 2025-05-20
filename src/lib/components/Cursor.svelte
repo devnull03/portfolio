@@ -3,7 +3,7 @@
   import { Spring } from "svelte/motion";
 
   let mounted = false;
-  let isPointer = false;
+  let isPointer: boolean | null = false;
   let isOverStatic = false;
 
   // Create new Spring stores for cursor positions
@@ -41,41 +41,49 @@
         width: distortionPosition.current.width,
         height: distortionPosition.current.height,
       },
-      { preserveMomentum: 10000 }
+      { preserveMomentum: 5000 }
     );
 
     // Check if we're hovering over interactive elements
     const element = document.elementFromPoint(event.clientX, event.clientY);
-    const newIsPointer = element
-      ? getComputedStyle(element).cursor === "pointer"
+
+    // Check for static effect first (higher priority)
+    const newIsOverStatic = element
+      ? element.classList.contains("effect-static") ||
+        element.closest(".effect-static") !== null
       : false;
     
-    // Check if we're hovering over an element with the effect-static class
-    const newIsOverStatic = element 
-      ? element.classList.contains('effect-static') || 
-        element.closest('.effect-static') !== null
-      : false;
-
-    // Handle pointer state change
-    if (newIsPointer !== isPointer) {
-      isPointer = newIsPointer;
-
-      if (isPointer && !isOverStatic) {
-        dotScale.set(3);
-        distortionPosition.set({
-          ...distortionPosition.current,
-          width: 100,
-          height: 100,
-        });
-      } else if (!isOverStatic) {
-        dotScale.set(1);
-        distortionPosition.set({
-          ...distortionPosition.current,
-          width: 80,
-          height: 80,
-        });
-      }
-    }
+    // Enhanced pointer detection
+    const isClickable = (el: Element | null): boolean => {
+      if (!el) return false;
+      
+      // Get computed styles
+      const style = getComputedStyle(el);
+      
+      // Check for pointer cursor style
+      if (style.cursor === "pointer") return true;
+      
+      // Check common clickable elements
+      const clickableTags = ["A", "BUTTON", "INPUT", "SELECT", "TEXTAREA", "LABEL", "SUMMARY"];
+      if (clickableTags.includes(el.tagName)) return true;
+      
+      // Check for role="button" and other interactive roles
+      const interactiveRoles = ["button", "link", "checkbox", "menuitem", "tab"];
+      if (el.getAttribute("role") && interactiveRoles.includes(el.getAttribute("role") || "")) return true;
+      
+      // Check for click event listeners (approximate method)
+      if (el.hasAttribute("onclick") || el.hasAttribute("on:click")) return true;
+      
+      // Check for clickable class indicators
+      const clickableClasses = ["clickable", "btn", "button"];
+      if (Array.from(el.classList).some(cls => clickableClasses.some(c => cls.includes(c)))) return true;
+      
+      return false;
+    };
+    
+    // Check element and its ancestors for clickability
+    const newIsPointer = newIsOverStatic || 
+      (element && (isClickable(element) || isClickable(element.closest("[role], a, button, input, .clickable"))));
     
     // Handle static effect hover state change
     if (newIsOverStatic !== isOverStatic) {
@@ -89,13 +97,43 @@
           width: 120,
           height: 120,
         });
+        // Static effect overrides pointer effect
+        isPointer = true;
       } else {
-        // Revert to normal or pointer state
+        // Check if we should fall back to regular pointer state
+        const element = document.elementFromPoint(event.clientX, event.clientY);
+        const stillPointer = element
+          ? isClickable(element) || isClickable(element.closest("[role], a, button, input, .clickable"))
+          : false;
+          
+        isPointer = stillPointer;
+        
+        // Reset to appropriate state
         dotScale.set(isPointer ? 3 : 1);
         distortionPosition.set({
           ...distortionPosition.current,
           width: isPointer ? 100 : 80,
           height: isPointer ? 100 : 80,
+        });
+      }
+    } 
+    // Only handle pointer changes if not over static element
+    else if (!isOverStatic && newIsPointer !== isPointer) {
+      isPointer = newIsPointer;
+      
+      if (isPointer) {
+        dotScale.set(3);
+        distortionPosition.set({
+          ...distortionPosition.current,
+          width: 100,
+          height: 100,
+        });
+      } else {
+        dotScale.set(1);
+        distortionPosition.set({
+          ...distortionPosition.current, 
+          width: 80,
+          height: 80,
         });
       }
     }
@@ -130,10 +168,10 @@
   ></div>
   <div
     class="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[10000] mix-blend-exclusion will-change-transform"
-    class:bg-white={!isOverStatic} 
-    class:border={isOverStatic}
-    class:border-white={isOverStatic}
-    class:bg-transparent={isOverStatic}
+    class:bg-white={!isPointer}
+    class:border={isPointer}
+    class:border-white={isPointer}
+    class:bg-transparent={isPointer}
     style="transform: translate3d(calc({dotPosition.current
       .x}px - 50%), calc({dotPosition.current
       .y}px - 50%), 0) scale({dotScale.current});"
