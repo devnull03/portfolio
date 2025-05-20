@@ -21,7 +21,7 @@
 		"bits-ui": "1.4.3",
 		"clsx": "^2.1.1",
 		"embla-carousel-svelte": "^8.5.1",
-		"mode-watcher": "^1.0.7",
+		"mode-watcher": "^0.5.1",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"prettier-plugin-tailwindcss": "^0.6.5",

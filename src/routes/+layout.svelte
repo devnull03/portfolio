@@ -4,12 +4,13 @@
   import { fade, fly } from "svelte/transition";
   import { navigating } from "$app/stores";
   import { PUBLIC_COMPANY_NAME, PUBLIC_DOMAIN } from "$env/static/public";
+  import { ModeWatcher } from "mode-watcher";
+  import { Toaster } from "$lib/components/ui/sonner";
   import { dev } from "$app/environment";
 
-  import { injectAnalytics } from "@vercel/analytics/sveltekit";
   import Footer from "$lib/components/Footer.svelte";
   import Header from "$lib/components/Header.svelte";
-  import { Toaster } from "$lib/components/ui/sonner";
+  import { injectAnalytics } from "@vercel/analytics/sveltekit";
   import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
   import Cursor from "$lib/components/Cursor.svelte";
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
@@ -82,6 +83,8 @@
 </svelte:head>
 
 <svelte:window bind:scrollY />
+
+<ModeWatcher />
 
 <Toaster />
 
