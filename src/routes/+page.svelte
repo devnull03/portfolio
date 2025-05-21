@@ -33,7 +33,7 @@
     onclick={clickIntro}
     role="button"
     tabindex="0"
-    class="relative h-screen w-full object-cover overflow-hidden"
+    class="relative h-screen w-full object-cover overflow-hidden blur-[1px]"
   >
     <div class="absolute inset-0 z-0 w-full h-full select-none">
       <img
@@ -48,7 +48,7 @@
       src="/assets/bg.png"
       alt=""
       ondragstart={(e) => e.preventDefault()}
-      class="absolute object-contain h-full w-full p-4 select-none"
+      class="absolute object-contain h-full w-full p-4 select-none rotate-90 md:rotate-0"
     />
 
     <div class="effect-static"></div>
