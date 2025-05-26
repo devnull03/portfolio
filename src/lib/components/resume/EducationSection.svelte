@@ -14,13 +14,13 @@
 				<div class="flex items-start justify-between">
 					<div class="space-y-2">
 						<CardTitle class="flex items-center gap-2">
-							<GraduationCap class="h-5 w-5 text-primary" />
+							<GraduationCap class="h-5 w-5 text-muted-foreground" />
 							{edu.degree}
 						</CardTitle>
 						{#if edu.field}
 							<p class="text-lg font-medium text-muted-foreground">{edu.field}</p>
 						{/if}
-						<p class="text-base font-semibold text-primary">{edu.institution}</p>
+						<p class="text-base font-semibold text-foreground">{edu.institution}</p>
 					</div>
 					<div class="text-right space-y-1">
 						<div class="flex items-center gap-1 text-sm text-muted-foreground">

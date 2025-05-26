@@ -1,156 +1,157 @@
 // Resume interfaces for TypeScript
 
 export interface ContactInfo {
-  name: string;
-  title?: string;
-  email: string;
-  phone?: string;
-  location: string;
-  website?: string;
-  linkedin?: string;
-  github?: string;
-  resume?: string;
-  resumePdf?: string; 
+	name: string;
+	title?: string;
+	email: string;
+	phone?: string;
+	location: string;
+	website?: string;
+	linkedin?: string;
+	github?: string;
+	resume?: string;
+	resumePdf?: string;
 }
 
 export interface Education {
-//   id: string;
-  institution: string;
-  degree: string;
-  field?: string;
-  startDate: string;
-  endDate: string;
-  gpa?: string;
-  location: string;
-  description?: string;
-  coursework?: string[];
-  achievements?: string[];
+	//   id: string;
+	institution: string;
+	degree: string;
+	field?: string;
+	startDate: string;
+	endDate: string;
+	gpa?: string;
+	location: string;
+	description?: string;
+	coursework?: string[];
+	achievements?: string[];
 }
 
 export interface Experience {
-//   id: string;
-  company: string;
-  position: string;
-  startDate: string;
-  endDate: string;
-  location: string;
-  description: string;
-  responsibilities: string[];
-  technologies?: string[];
-  achievements?: string[];
+	//   id: string;
+	company: string;
+	position: string;
+	startDate: string;
+	endDate: string;
+	location: string;
+	description: string;
+	responsibilities: string[];
+	technologies?: string[];
+	achievements?: string[];
 }
 
 export interface Project {
-//   id: string;
-  name: string;
-  description: string;
-  technologies: string[];
-  startDate?: string;
-  endDate?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-  features: string[];
-  role?: string;
+	//   id: string;
+	name: string;
+	description: string;
+	technologies: string[];
+	startDate?: string;
+	endDate?: string;
+	githubUrl?: string;
+	liveUrl?: string;
+	features: string[];
+	role?: string;
 }
 
 export interface Skill {
-  name: string;
-  level?: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-  category: string;
+	name: string;
+	level?: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
+	category: string;
 }
 
 export interface SkillCategory {
-  category: string;
-  skills: Skill[];
+	category: string;
+	skills: Skill[];
 }
 
 export interface Certification {
-//   id: string;
-  name: string;
-  issuer: string;
-  issueDate: string;
-  expiryDate?: string;
-  credentialId?: string;
-  url?: string;
+	//   id: string;
+	name: string;
+	issuer: string;
+	issueDate: string;
+	expiryDate?: string;
+	credentialId?: string;
+	url?: string;
 }
 
 export interface Award {
-//   id: string;
-  name: string;
-  issuer: string;
-  date: string;
-  description?: string;
+	//   id: string;
+	name: string;
+	issuer: string;
+	date: string;
+	description?: string;
 }
 
 export interface Language {
-  name: string;
-  proficiency: 'Native' | 'Fluent' | 'Conversational' | 'Basic';
+	name: string;
+	proficiency: 'Native' | 'Fluent' | 'Conversational' | 'Basic';
 }
 
 export interface Volunteer {
-//   id: string;
-  organization: string;
-  role: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-  location?: string;
-  responsibilities?: string[];
-  achievements?: string[];
+	//   id: string;
+	organization: string;
+	role: string;
+	startDate: string;
+	endDate: string;
+	description: string;
+	location?: string;
+	responsibilities?: string[];
+	achievements?: string[];
 }
 
 export interface Resume {
-  contact: ContactInfo;
-  summary?: string;
-  education: Education[];
-  experience: Experience[];
-  additionalExperience?: Experience[];
-  projects: Project[];
-  skills: SkillCategory[];
-  certifications?: Certification[];
-  awards?: Award[];
-  languages: Language[];
-  volunteer: Volunteer[];
-  interests?: string[];
+	contact: ContactInfo;
+	summary?: string;
+	education: Education[];
+	experience: Experience[];
+	additionalExperience?: Experience[];
+	projects: Project[];
+	skills: SkillCategory[];
+	certifications?: Certification[];
+	awards?: Award[];
+	languages: Language[];
+	volunteer: Volunteer[];
+	interests?: string[];
 }
 
 // Component prop interfaces for Svelte 5
 export interface ContactInfoProps {
-  contact: ContactInfo;
-  summary?: string;
+	contact: ContactInfo;
+	summary?: string;
 }
 
 export interface EducationSectionProps {
-  education: Education[];
+	education: Education[];
 }
 
 export interface ExperienceSectionProps {
-  experience: Experience[];
+	experience: Experience[];
 }
 
 export interface ProjectsSectionProps {
-  projects: Project[];
+	projects: Project[];
 }
 
 export interface SkillsSectionProps {
-  skills: SkillCategory[];
+	skills: SkillCategory[];
 }
 
 export interface LanguagesSectionProps {
-  languages: Language[];
+	languages: Language[];
 }
 
 export interface VolunteerSectionProps {
-  volunteer: Volunteer[];
+	volunteer: Volunteer[];
 }
 
 export interface ResumeNavigationProps {
-  sections: Array<{ id: string; title: string; }>;
-  activeSection?: string;
+	sections: Array<{ id: string; title: string; }>;
+	activeSection?: string;
 }
 
 export interface ResumeSectionProps {
-  id: string;
-  title: string;
-  className?: string;
+	id: string;
+	title: string;
+	className?: string;
+	children?: any;
 }

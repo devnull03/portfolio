@@ -21,7 +21,7 @@
 				<div class="flex flex-col md:flex-row md:justify-between md:items-start gap-3">
 					<div class="space-y-2">
 						<CardTitle class="flex items-center gap-2 text-lg">
-							<FolderIcon class="h-5 w-5 text-primary" />
+							<FolderIcon class="h-5 w-5 text-muted-foreground" />
 							{project.name}
 						</CardTitle>
 						{#if project.role}
@@ -63,12 +63,12 @@
 				{#if project.technologies && project.technologies.length > 0}
 					<div>
 						<h4 class="text-sm font-semibold mb-3 flex items-center gap-2">
-							<CodeIcon class="h-4 w-4 text-primary" />
+							<CodeIcon class="h-4 w-4 text-muted-foreground" />
 							Technologies
 						</h4>
 						<div class="flex flex-wrap gap-2">
 							{#each project.technologies as tech}
-								<Badge variant="outline" class="text-xs bg-green-50 text-green-700 border-green-200 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800">
+								<Badge variant="outline" class="text-xs">
 									{tech}
 								</Badge>
 							{/each}
@@ -82,7 +82,7 @@
 				{#if project.features && project.features.length > 0}
 					<div>
 						<div class="flex items-center gap-2 mb-3">
-							<StarIcon class="h-4 w-4 text-primary" />
+							<StarIcon class="h-4 w-4 text-muted-foreground" />
 							<h4 class="text-sm font-semibold">Key Features</h4>
 						</div>
 						<ul class="list-disc list-inside text-sm text-muted-foreground space-y-2 ml-6">

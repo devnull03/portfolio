@@ -7,21 +7,6 @@
 	
 	let { languages }: LanguagesSectionProps = $props();
 	
-	function getProficiencyColor(proficiency: string): { variant: any; color: string } {
-		switch (proficiency) {
-			case 'Native':
-				return { variant: 'default' as const, color: 'text-blue-600' };
-			case 'Fluent':
-				return { variant: 'secondary' as const, color: 'text-green-600' };
-			case 'Conversational':
-				return { variant: 'outline' as const, color: 'text-yellow-600' };
-			case 'Basic':
-				return { variant: 'outline' as const, color: 'text-orange-600' };
-			default:
-				return { variant: 'outline' as const, color: 'text-gray-600' };
-		}
-	}
-	
 	function getProficiencyProgress(proficiency: string): number {
 		switch (proficiency) {
 			case 'Native':
@@ -45,14 +30,12 @@
 				<div class="space-y-3">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
-							<GlobeIcon class="h-4 w-4 text-primary" />
+							<GlobeIcon class="h-4 w-4 text-muted-foreground" />
 							<h3 class="text-sm font-semibold">{language.name}</h3>
 						</div>
-						{#each [getProficiencyColor(language.proficiency)] as colorInfo}
-							<Badge variant={colorInfo.variant} class="text-xs {colorInfo.color}">
-								{language.proficiency}
-							</Badge>
-						{/each}
+						<Badge variant="outline" class="text-xs">
+							{language.proficiency}
+						</Badge>
 					</div>
 					<div class="space-y-1">
 						<div class="flex justify-between text-xs text-muted-foreground">

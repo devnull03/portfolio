@@ -8,21 +8,6 @@
 	
 	let { skills }: SkillsSectionProps = $props();
 	
-	function getSkillLevelColor(level: string | undefined): { variant: any; color: string } {
-		switch (level) {
-			case 'Expert':
-				return { variant: 'destructive' as const, color: 'text-red-600' };
-			case 'Advanced':
-				return { variant: 'default' as const, color: 'text-orange-600' };
-			case 'Intermediate':
-				return { variant: 'secondary' as const, color: 'text-yellow-600' };
-			case 'Beginner':
-				return { variant: 'outline' as const, color: 'text-green-600' };
-			default:
-				return { variant: 'outline' as const, color: 'text-gray-600' };
-		}
-	}
-	
 	function getSkillProgress(level: string | undefined): number {
 		switch (level) {
 			case 'Expert':
@@ -55,8 +40,7 @@
 							<div class="flex items-center justify-between">
 								<span class="font-medium text-sm">{skill.name}</span>
 								{#if skill.level}
-									{@const { variant, color } = getSkillLevelColor(skill.level)}
-									<Badge {variant} class="text-xs {color}">
+									<Badge class="text-xs">
 										{skill.level}
 									</Badge>
 								{/if}
@@ -77,3 +61,4 @@
 		</Card>
 	{/each}
 </div>
+

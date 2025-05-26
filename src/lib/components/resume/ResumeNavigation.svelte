@@ -56,7 +56,7 @@
 	<Card class="h-full rounded-none border-r shadow-lg">
 		<CardHeader class="pb-4">
 			<CardTitle class="flex items-center gap-2">
-				<FileTextIcon class="h-5 w-5 text-primary" />
+				<FileTextIcon class="h-5 w-5 text-muted-foreground" />
 				Resume
 			</CardTitle>
 			<div class="flex items-center gap-2 text-sm text-muted-foreground">
@@ -73,7 +73,7 @@
 							variant={activeSection === section.id ? 'default' : 'ghost'}
 							class="w-full justify-start text-left h-auto py-3 px-3 {
 								activeSection === section.id 
-									? 'bg-primary text-primary-foreground shadow-sm border-l-4 border-primary-foreground/20' 
+									? 'bg-accent text-accent-foreground shadow-sm border-l-4 border-accent-foreground/20' 
 									: 'hover:bg-accent hover:text-accent-foreground'
 							}"
 							onclick={() => scrollToSection(section.id)}

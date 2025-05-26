@@ -20,10 +20,10 @@
 				<div class="flex flex-col md:flex-row md:justify-between md:items-start gap-3">
 					<div class="space-y-2">
 						<CardTitle class="flex items-center gap-2 text-lg">
-							<BriefcaseIcon class="h-5 w-5 text-primary" />
+							<BriefcaseIcon class="h-5 w-5 text-muted-foreground" />
 							{exp.position}
 						</CardTitle>
-						<div class="flex items-center gap-2 text-base font-medium text-primary">
+						<div class="flex items-center gap-2 text-base font-medium text-foreground">
 							<BuildingIcon class="h-4 w-4" />
 							{exp.company}
 						</div>
@@ -47,7 +47,7 @@
 				{#if exp.responsibilities && exp.responsibilities.length > 0}
 					<div>
 						<div class="flex items-center gap-2 mb-3">
-							<CheckCircleIcon class="h-4 w-4 text-primary" />
+							<CheckCircleIcon class="h-4 w-4 text-muted-foreground" />
 							<h4 class="text-sm font-semibold">Key Responsibilities</h4>
 						</div>
 						<ul class="list-disc list-inside text-sm text-muted-foreground space-y-2 ml-6">
@@ -79,7 +79,7 @@
 				{#if exp.achievements && exp.achievements.length > 0}
 					<div>
 						<div class="flex items-center gap-2 mb-3">
-							<StarIcon class="h-4 w-4 text-primary" />
+							<StarIcon class="h-4 w-4 text-muted-foreground" />
 							<h4 class="text-sm font-semibold">Key Achievements</h4>
 						</div>
 						<ul class="list-disc list-inside text-sm text-muted-foreground space-y-2 ml-6">
