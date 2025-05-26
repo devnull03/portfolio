@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { gsap } from "gsap";
   import { isMobile, scrollThreshold } from "$lib/stores.svelte";
+  import { Button } from "$lib/components/ui/button";
 
   let initScroll = $state(0);
 
@@ -56,9 +57,11 @@
 
   <section
     id="main-info"
-    class="h-screen w-full flex items-center justify-center"
+    class="h-screen w-full flex items-center justify-center flex-col gap-4"
   >
-    hello
+    <p class="text-6xl">hello</p>
+
+    <Button href="/resume" size="sm">Resume</Button>
   </section>
 </main>
 
