@@ -2,18 +2,13 @@
   import "../app.css";
   import { onMount } from "svelte";
   import { fade, fly } from "svelte/transition";
-  import { navigating } from "$app/stores";
   import { PUBLIC_COMPANY_NAME, PUBLIC_DOMAIN } from "$env/static/public";
   import { ModeWatcher } from "mode-watcher";
   import { Toaster } from "$lib/components/ui/sonner";
-  import { dev } from "$app/environment";
 
-  import Footer from "$lib/components/Footer.svelte";
-  import Header from "$lib/components/Header.svelte";
-  import { injectAnalytics } from "@vercel/analytics/sveltekit";
-  import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
   import Cursor from "$lib/components/Cursor.svelte";
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
+  import { page } from "$app/stores";
 
   interface Props {
     children?: import("svelte").Snippet;
@@ -23,8 +18,7 @@
   let { children }: Props = $props();
 
   let firstLoad = $state(true);
-  let load = $derived(firstLoad || !$navigating);
-  let isLoading = $state(true); // New state to track initial loading
+  let isLoading = $state($page.url.pathname === "/");
 
   const siteData = {
     description: "",
