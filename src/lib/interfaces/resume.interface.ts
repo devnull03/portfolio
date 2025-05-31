@@ -41,19 +41,6 @@ export interface Experience {
 	relatedProjects?: string[];
 }
 
-export interface Project {
-	id: string;
-	name: string;
-	description: string;
-	technologies: string[];
-	category: "work-experience" | "personal" | "academic" | "freelance" | "hackathon";
-	startDate?: string;
-	endDate?: string;
-	githubUrl?: string;
-	liveUrl?: string;
-	features: string[];
-	role?: string;
-}
 
 export interface Skill {
 	name: string;
@@ -130,9 +117,6 @@ export interface ExperienceSectionProps {
 	experience: Experience[];
 }
 
-export interface ProjectsSectionProps {
-	projects: string[];
-}
 
 export interface SkillsSectionProps {
 	skills: SkillCategory[];

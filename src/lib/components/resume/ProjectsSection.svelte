@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ProjectsSectionProps } from "$lib/interfaces/resume.interface";
+  import type { ProjectsSectionProps } from "$lib/interfaces/project.interface";
   import {
     Card,
     CardContent,
@@ -15,7 +15,7 @@
   import GithubIcon from "@lucide/svelte/icons/github";
   import CodeIcon from "@lucide/svelte/icons/code";
   import StarIcon from "@lucide/svelte/icons/star";
-  import { getProjectsByIds } from "$lib/data/projects.data";
+  import { getProjectsByIds } from "$lib/data/project.data";
 
   let { projects: projectIds }: ProjectsSectionProps = $props();
   let projects = $derived(getProjectsByIds(projectIds));
