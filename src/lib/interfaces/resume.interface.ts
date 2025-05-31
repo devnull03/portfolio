@@ -28,7 +28,7 @@ export interface Education {
 }
 
 export interface Experience {
-	//   id: string;
+	id: string;
 	company: string;
 	position: string;
 	startDate: string;
@@ -38,13 +38,15 @@ export interface Experience {
 	responsibilities: string[];
 	technologies?: string[];
 	achievements?: string[];
+	relatedProjects?: string[];
 }
 
 export interface Project {
-	//   id: string;
+	id: string;
 	name: string;
 	description: string;
 	technologies: string[];
+	category: "work-experience" | "personal" | "academic" | "freelance" | "hackathon";
 	startDate?: string;
 	endDate?: string;
 	githubUrl?: string;
@@ -105,7 +107,7 @@ export interface Resume {
 	education: Education[];
 	experience: Experience[];
 	additionalExperience?: Experience[];
-	projects: Project[];
+	projects: string[];
 	skills: SkillCategory[];
 	certifications?: Certification[];
 	awards?: Award[];
@@ -129,7 +131,7 @@ export interface ExperienceSectionProps {
 }
 
 export interface ProjectsSectionProps {
-	projects: Project[];
+	projects: string[];
 }
 
 export interface SkillsSectionProps {

@@ -30,6 +30,7 @@ export const resumeData: Resume = {
 
 	experience: [
 		{
+			id: "south-asian-studies-institute-undergraduate-research-assistant-web-developer",
 			company: "South Asian Studies Institute, University of the Fraser Valley",
 			position: "Undergraduate Research Assistant / Web Developer",
 			startDate: "August 2022",
@@ -47,9 +48,42 @@ export const resumeData: Resume = {
 				"Increased user engagement by 200%",
 				"Improved loading speeds by 40%",
 				"Reduced task completion time by 80%"
-			]
+			],
+			relatedProjects: ["sacda-digital-archive", "union-zindabad-exhibit", "discriminatory-laws-timeline", "komagata-maru-lesson-plans"]
 		},
 		{
+			id: "university-of-the-fraser-valley-teaching-assistant",
+			company: "University of the Fraser Valley",
+			position: "Teaching Assistant",
+			startDate: "Sep 2024",
+			endDate: "Dec 2024",
+			location: "Abbotsford, BC",
+			description: "Providing feedback and learning support to students",
+			responsibilities: [
+				"Provided academic support and feedback to students",
+				"Assisted with course material and assignments",
+				"Facilitated learning through one-on-one and group sessions"
+			],
+			technologies: ["Teaching", "Academic Support"]
+		},
+		{
+			id: "it-service-desk-lab-monitor",
+			company: "IT Service Desk, University of the Fraser Valley",
+			position: "Lab Monitor",
+			startDate: "Oct 2022",
+			endDate: "Apr 2024",
+			location: "Abbotsford, BC",
+			description: "Tech/Product support for university IT services",
+			responsibilities: [
+				"Provided technical support to students and faculty",
+				"Monitored computer lab operations",
+				"Troubleshot hardware and software issues",
+				"Assisted with IT service desk operations"
+			],
+			technologies: ["IT Support", "Hardware Troubleshooting", "Customer Service"]
+		},
+		{
+			id: "ids-company-full-stack-engineer",
 			company: "IDS.company",
 			position: "Full-Stack Engineer",
 			startDate: "May 2022",
@@ -68,9 +102,11 @@ export const resumeData: Resume = {
 				"Improved content moderation workflows by 35%",
 				"Enhanced page load speeds by 40%",
 				"Increased team efficiency by 20%"
-			]
+			],
+			relatedProjects: ["the-garden-platform"]
 		},
 		{
+			id: "job-unicorn-software-engineering-intern",
 			company: "Job Unicorn",
 			position: "Software Engineering Intern",
 			startDate: "Feb 2022",
@@ -90,94 +126,16 @@ export const resumeData: Resume = {
 				"Increased data retrieval speed by 10x",
 				"Cut API request failures by 60%",
 				"Reduced data retrieval latency by 35%"
-			]
-		}
-	],
-
-	additionalExperience: [
-		{
-			company: "University of the Fraser Valley",
-			position: "Teaching Assistant",
-			startDate: "Sep 2024",
-			endDate: "Dec 2024",
-			location: "Abbotsford, BC",
-			description: "Providing feedback and learning support to students",
-			responsibilities: [
-				"Provided academic support and feedback to students",
-				"Assisted with course material and assignments",
-				"Facilitated learning through one-on-one and group sessions"
 			],
-			technologies: ["Teaching", "Academic Support"]
-		},
-		{
-			company: "IT Service Desk, University of the Fraser Valley",
-			position: "Lab Monitor",
-			startDate: "Oct 2022",
-			endDate: "Apr 2024",
-			location: "Abbotsford, BC",
-			description: "Tech/Product support for university IT services",
-			responsibilities: [
-				"Provided technical support to students and faculty",
-				"Monitored computer lab operations",
-				"Troubleshot hardware and software issues",
-				"Assisted with IT service desk operations"
-			],
-			technologies: ["IT Support", "Hardware Troubleshooting", "Customer Service"]
+			relatedProjects: ["job-unicorn-platform"]
 		}
 	],
 
 	projects: [
-		{
-			name: "Slap Game",
-			description: "Built an interactive multiplayer slap battle game for nwHacks 2025, integrating MediaPipe for real-time facial and hand tracking alongside WebRTC for low-latency peer-to-peer video streaming, reducing game lag by 50%.",
-			technologies: ["Next.js", "WebRTC", "Express.js", "Socket.IO", "MediaPipe", "Solidity", "Hardhat"],
-			startDate: "Jan 2025",
-			endDate: "Jan 2025",
-			githubUrl: "https://github.com/devnull03/slap-game",
-			features: [
-				"Real-time facial and hand tracking with MediaPipe",
-				"Low-latency peer-to-peer video streaming with WebRTC",
-				"Solidity-based smart contracts for secure in-game wagers",
-				"Deployed via Hardhat with 100+ decentralized transactions",
-				"Zero security breaches",
-				"50% reduction in game lag"
-			],
-			role: "Full Stack Developer"
-		},
-		{
-			name: "zKare",
-			description: "Developed a decentralized healthcare data platform that won the EAS Best Privacy-Preserving Project and The Graph Prize Pool at ETH Global Waterloo 2023, processing 10,000+ secure transactions.",
-			technologies: ["Python", "FastAPI", "Next.js", "Ethereum Attestation Service", "Solidity"],
-			startDate: "June 2023",
-			endDate: "June 2023",
-			liveUrl: "https://ethglobal.com/showcase/zkare-2xc7u",
-			features: [
-				"Zero-knowledge proofs for secure, anonymous patient-researcher data sharing",
-				"Reduced unauthorized access by 85%",
-				"Improved healthcare data interoperability",
-				"Won EAS Best Privacy-Preserving Project",
-				"Won The Graph Prize Pool at ETH Global Waterloo 2023",
-				"Processed 10,000+ secure transactions"
-			],
-			role: "Full Stack Developer"
-		},
-		{
-			name: "Portfolio Website",
-			description: "A modern, responsive portfolio website built with SvelteKit and TailwindCSS featuring dark mode, smooth animations, and optimized performance.",
-			technologies: ["SvelteKit", "TypeScript", "TailwindCSS", "Vite"],
-			startDate: "2024",
-			endDate: "2024",
-			githubUrl: "https://github.com/devnull03/portfolio",
-			liveUrl: "https://dvnl.work",
-			features: [
-				"Responsive design with mobile-first approach",
-				"Dark/light mode toggle",
-				"Smooth scroll animations",
-				"SEO optimized",
-				"Fast loading times"
-			],
-			role: "Full Stack Developer"
-		}
+		"slap-game",
+		"zkare",
+		"portfolio-website",
+		"sustainsnap"
 	],
 
 	skills: [
