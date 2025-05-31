@@ -64,7 +64,8 @@ export const resumeData: Resume = {
 				"Assisted with course material and assignments",
 				"Facilitated learning through one-on-one and group sessions"
 			],
-			technologies: ["Teaching", "Academic Support"]
+			technologies: ["Teaching", "Academic Support"],
+			relatedProjects: []
 		},
 		{
 			id: "it-service-desk-lab-monitor",
@@ -80,7 +81,8 @@ export const resumeData: Resume = {
 				"Troubleshot hardware and software issues",
 				"Assisted with IT service desk operations"
 			],
-			technologies: ["IT Support", "Hardware Troubleshooting", "Customer Service"]
+			technologies: ["IT Support", "Hardware Troubleshooting", "Customer Service"],
+			relatedProjects: []
 		},
 		{
 			id: "ids-company-full-stack-engineer",
@@ -133,7 +135,7 @@ export const resumeData: Resume = {
 
 	projects: [
 		"slap-game",
-		"zkare",
+		"zkare", 
 		"portfolio-website",
 		"sustainsnap"
 	],

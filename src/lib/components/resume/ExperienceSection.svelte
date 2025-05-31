@@ -3,14 +3,23 @@
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Separator } from '$lib/components/ui/separator';
+	import { getProjectById } from '$lib/data/project.data';
+	import { goto } from '$app/navigation';
 	import BriefcaseIcon from '@lucide/svelte/icons/briefcase';
 	import BuildingIcon from '@lucide/svelte/icons/building';
 	import MapPinIcon from '@lucide/svelte/icons/map-pin';
 	import CalendarIcon from '@lucide/svelte/icons/calendar';
 	import StarIcon from '@lucide/svelte/icons/star';
 	import CheckCircleIcon from '@lucide/svelte/icons/check-circle';
+	import FolderIcon from '@lucide/svelte/icons/folder';
+	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
 	
 	let { experience }: ExperienceSectionProps = $props();
+
+	// Function to navigate to project page
+	function navigateToProject(projectId: string) {
+		goto(`/projects/${projectId}`);
+	}
 </script>
 
 <div class="space-y-6">
@@ -87,6 +96,55 @@
 								<li class="font-medium leading-relaxed">{achievement}</li>
 							{/each}
 						</ul>
+					</div>
+				{/if}
+
+				{#if exp.relatedProjects && exp.relatedProjects.length > 0}
+					{#if (exp.achievements && exp.achievements.length > 0) || (exp.technologies && exp.technologies.length > 0)}
+						<Separator />
+					{/if}
+					<div>
+						<div class="flex items-center gap-2 mb-3">
+							<FolderIcon class="h-4 w-4 text-muted-foreground" />
+							<h4 class="text-sm font-semibold">Related Projects</h4>
+						</div>
+						<div class="space-y-2">
+							{#each exp.relatedProjects as projectId}
+								{@const project = getProjectById(projectId)}
+								{#if project}
+									<button
+										class="w-full p-3 rounded-lg border border-border hover:border-primary/50 hover:shadow-sm transition-all duration-200 text-left group"
+										onclick={() => navigateToProject(projectId)}
+									>
+										<div class="flex items-start justify-between gap-3">
+											<div class="space-y-1 flex-1">
+												<div class="flex items-center gap-2">
+													<h5 class="text-sm font-medium group-hover:text-primary transition-colors">
+														{project.name}
+													</h5>
+													<ExternalLinkIcon class="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+												</div>
+												<p class="text-xs text-muted-foreground overflow-hidden">
+													{project.description.length > 80 ? project.description.substring(0, 80) + '...' : project.description}
+												</p>
+												<div class="flex flex-wrap gap-1 mt-2">
+													{#each project.technologies.slice(0, 3) as tech}
+														<Badge variant="outline" class="text-xs px-1 py-0">
+															{tech}
+														</Badge>
+													{/each}
+													{#if project.technologies.length > 3}
+														<Badge variant="outline" class="text-xs px-1 py-0">
+															+{project.technologies.length - 3} more
+														</Badge>
+													{/if}
+												</div>
+											</div>
+										</div>
+									</button>
+								{/if}
+							{/each}
+						</div>
 					</div>
 				{/if}
 			</CardContent>
