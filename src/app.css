@@ -65,23 +65,28 @@
   }
   
   /* Added cursor styles globally */
-  body {
+  /* body {
     @apply cursor-none overflow-x-hidden;
-  }
+  } */
   
-  a, button, [role="button"], 
+  /* a, button, [role="button"], 
   input[type="submit"], input[type="button"], 
   .clickable {
     @apply cursor-none !important;
-  }
+  } */
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border leading-loose;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  #smooth-content {
+    overflow: visible;
+    width: 100%;
+    height: 100rem;
   }
 }
 

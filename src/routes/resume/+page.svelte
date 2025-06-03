@@ -71,7 +71,7 @@
 
 <!-- Floating Navigation -->
 {#if mounted}
-  <nav class="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block">
+  <nav class="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block  font-serif">
     <div class="relative">
       <!-- Navigation Line -->
       <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
@@ -107,7 +107,7 @@
 {/if}
 
 <!-- Mobile Navigation -->
-<nav class="lg:hidden fixed top-4 left-4 right-4 z-50">
+<nav class="lg:hidden fixed top-4 left-4 right-4 z-50  font-serif" id="smooth-content">
   <div class="bg-background/95 backdrop-blur-sm border rounded-full px-4 py-2 shadow-lg">
     <div class="flex items-center justify-between space-x-2 overflow-x-auto">
       {#each sections as section}
@@ -128,7 +128,7 @@
 </nav>
 
 <!-- Main Content -->
-<div class="min-h-screen bg-background">
+<div class="min-h-screen bg-background !font-sans">
   <div class="max-w-4xl mx-auto px-6 lg:px-12 py-8 lg:py-16">
     <!-- Contact Information Header -->
     <section id="contact" class="mb-16">

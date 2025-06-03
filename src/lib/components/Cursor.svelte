@@ -4,10 +4,11 @@
   import { gsap } from "gsap";
   import { MorphSVGPlugin } from "gsap/all";
   import { CursorState } from "$lib/interfaces/cursor.interface";
+  import { currentState } from "$lib/stores.svelte";
 
-  let mounted = false;
-  let currentState: CursorState = CursorState.Default;
-  let cursorSvg: SVGElement;
+  let mounted = $state(false);
+
+  let cursorSvg: SVGElement | undefined = $state();
   let currentPath: SVGPathElement;
 
   // Spring for dot scale animations
@@ -159,9 +160,9 @@
     }
 
     // Update state if changed
-    if (newState !== currentState) {
-      currentState = newState;
-      updateCursorAppearance(currentState);
+    if (newState !== $currentState) {
+      $currentState = newState;
+      // updateCursorAppearance($currentState);
     }
   }
 
@@ -241,6 +242,8 @@
     }
   }
 
+  $effect(() => updateCursorAppearance($currentState));
+
   onMount(() => {
     gsap.registerPlugin(MorphSVGPlugin);
 
@@ -280,8 +283,8 @@
     bind:this={cursorSvg}
     class="fixed top-0 left-0 pointer-events-none z-[10000] mix-blend-exclusion will-change-transform"
     style="transform: translate3d(calc({dotPosition.current
-      .x}px - 50%), calc({dotPosition.current
-      .y}px - 50%), 0) scale({dotScale.current});"
+      .x}px - 35%), calc({dotPosition.current
+      .y}px - 35%), 0) scale({dotScale.current});"
     width="48"
     height="48"
     viewBox="0 0 48 48"

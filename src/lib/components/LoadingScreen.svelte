@@ -33,7 +33,7 @@
 </script>
 
 <div
-  class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
+  class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white font-majorMono "
   out:fade={{ duration: 800 }}
 >
   <div class="mb-12 text-2xl font-light text-black">Arnav / अरनव / アルナフ</div>
