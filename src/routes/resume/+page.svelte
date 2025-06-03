@@ -27,16 +27,18 @@
   function scrollToSection(id: string) {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
   function updateActiveSection() {
     if (!mounted) return;
-    
-    const sectionElements = sections.map(section => document.getElementById(section.id)).filter(Boolean);
+
+    const sectionElements = sections
+      .map((section) => document.getElementById(section.id))
+      .filter(Boolean);
     const scrollPosition = window.scrollY + 200;
-    
+
     for (let i = sectionElements.length - 1; i >= 0; i--) {
       const element = sectionElements[i];
       if (element && element.offsetTop <= scrollPosition) {
@@ -48,11 +50,11 @@
 
   onMount(() => {
     mounted = true;
-    window.addEventListener('scroll', updateActiveSection);
+    window.addEventListener("scroll", updateActiveSection);
     updateActiveSection();
-    
+
     return () => {
-      window.removeEventListener('scroll', updateActiveSection);
+      window.removeEventListener("scroll", updateActiveSection);
     };
   });
 </script>
@@ -61,7 +63,8 @@
   <title>Resume - {resumeData.contact.name}</title>
   <meta
     name="description"
-    content="Professional resume of {resumeData.contact.name} - {resumeData.summary}"
+    content="Professional resume of {resumeData.contact
+      .name} - {resumeData.summary}"
   />
   <meta
     name="keywords"
@@ -71,11 +74,15 @@
 
 <!-- Floating Navigation -->
 {#if mounted}
-  <nav class="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block  font-serif">
+  <nav
+    class="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block font-serif"
+  >
     <div class="relative">
       <!-- Navigation Line -->
-      <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
-      
+      <div
+        class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2"
+      ></div>
+
       <!-- Navigation Points -->
       <div class="relative space-y-6">
         {#each sections as section, i}
@@ -84,17 +91,22 @@
             onclick={() => scrollToSection(section.id)}
           >
             <!-- Dot -->
-            <div class="w-3 h-3 rounded-full border-2 bg-background transition-all duration-200 {
-              activeSection === section.id 
-                ? 'border-foreground bg-foreground scale-125' 
-                : 'border-muted-foreground hover:border-foreground hover:scale-110'
-            }"></div>
-            
+            <div
+              class="w-3 h-3 rounded-full border-2 bg-background transition-all duration-200 {activeSection ===
+              section.id
+                ? 'border-foreground bg-foreground scale-125'
+                : 'border-muted-foreground hover:border-foreground hover:scale-110'}"
+            ></div>
+
             <!-- Tooltip -->
-            <div class="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 
-                        transition-opacity duration-200 pointer-events-none">
-              <div class="bg-popover text-popover-foreground px-3 py-2 rounded-md shadow-md 
-                          text-sm font-medium whitespace-nowrap border">
+            <div
+              class="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100
+                        transition-opacity duration-200 pointer-events-none"
+            >
+              <div
+                class="bg-popover text-popover-foreground px-3 py-2 rounded-md shadow-md
+                          text-sm font-medium whitespace-nowrap border"
+              >
                 <span class="mr-2">{section.icon}</span>
                 {section.title}
               </div>
@@ -107,16 +119,17 @@
 {/if}
 
 <!-- Mobile Navigation -->
-<nav class="lg:hidden fixed top-4 left-4 right-4 z-50  font-serif" id="smooth-content">
-  <div class="bg-background/95 backdrop-blur-sm border rounded-full px-4 py-2 shadow-lg">
+<nav class="lg:hidden fixed top-4 left-4 right-4 z-50 font-serif">
+  <div
+    class="bg-background/95 backdrop-blur-sm border rounded-full px-4 py-2 shadow-lg"
+  >
     <div class="flex items-center justify-between space-x-2 overflow-x-auto">
       {#each sections as section}
         <button
-          class="flex-shrink-0 p-2 rounded-full transition-colors duration-200 {
-            activeSection === section.id 
-              ? 'bg-accent text-accent-foreground' 
-              : 'hover:bg-accent/50'
-          }"
+          class="flex-shrink-0 p-2 rounded-full transition-colors duration-200 {activeSection ===
+          section.id
+            ? 'bg-accent text-accent-foreground'
+            : 'hover:bg-accent/50'}"
           onclick={() => scrollToSection(section.id)}
           title={section.title}
         >
@@ -128,12 +141,17 @@
 </nav>
 
 <!-- Main Content -->
-<div class="min-h-screen bg-background !font-sans">
+<div class="min-h-screen bg-background !font-sans" id="smooth-content">
   <div class="max-w-4xl mx-auto px-6 lg:px-12 py-8 lg:py-16">
     <!-- Contact Information Header -->
     <section id="contact" class="mb-16">
-      <div class="bg-gradient-to-r from-muted/50 to-background rounded-2xl p-8 border">
-        <ContactInfo contact={resumeData.contact} summary={resumeData.summary} />
+      <div
+        class="bg-gradient-to-r from-muted/50 to-background rounded-2xl p-8 border"
+      >
+        <ContactInfo
+          contact={resumeData.contact}
+          summary={resumeData.summary}
+        />
       </div>
     </section>
 
@@ -146,7 +164,9 @@
             <span class="text-2xl">🎓</span>
             <h2 class="text-3xl font-bold text-foreground">Education</h2>
           </div>
-          <div class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"></div>
+          <div
+            class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"
+          ></div>
         </div>
         <EducationSection education={resumeData.education} />
       </section>
@@ -158,7 +178,9 @@
             <span class="text-2xl">💼</span>
             <h2 class="text-3xl font-bold text-foreground">Experience</h2>
           </div>
-          <div class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"></div>
+          <div
+            class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"
+          ></div>
         </div>
         <ExperienceSection experience={resumeData.experience} />
       </section>
@@ -170,7 +192,9 @@
             <span class="text-2xl">🚀</span>
             <h2 class="text-3xl font-bold text-foreground">Projects</h2>
           </div>
-          <div class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"></div>
+          <div
+            class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"
+          ></div>
         </div>
         <ProjectsSection projects={resumeData.projects} />
       </section>
@@ -182,7 +206,9 @@
             <span class="text-2xl">⚡</span>
             <h2 class="text-3xl font-bold text-foreground">Skills</h2>
           </div>
-          <div class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"></div>
+          <div
+            class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"
+          ></div>
         </div>
         <SkillsSection skills={resumeData.skills} />
       </section>
@@ -194,7 +220,9 @@
             <span class="text-2xl">🌍</span>
             <h2 class="text-3xl font-bold text-foreground">Languages</h2>
           </div>
-          <div class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"></div>
+          <div
+            class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"
+          ></div>
         </div>
         <LanguagesSection languages={resumeData.languages} />
       </section>
@@ -204,9 +232,13 @@
         <div class="mb-8">
           <div class="flex items-center gap-3 mb-4">
             <span class="text-2xl">❤️</span>
-            <h2 class="text-3xl font-bold text-foreground">Volunteer Experience</h2>
+            <h2 class="text-3xl font-bold text-foreground">
+              Volunteer Experience
+            </h2>
           </div>
-          <div class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"></div>
+          <div
+            class="w-20 h-1 bg-gradient-to-r from-accent to-transparent rounded-full"
+          ></div>
         </div>
         <VolunteerSection volunteer={resumeData.volunteer} />
       </section>

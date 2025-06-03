@@ -20,7 +20,7 @@
 
 <svelte:window />
 
-<main id="smooth-content" class="font-majorMono ">
+<main id="smooth-content" class="font-majorMono">
   <HomeIntro bind:smoother />
 
   <section
@@ -33,5 +33,3 @@
   </section>
 </main>
 
-<style>
-</style>

@@ -45,15 +45,19 @@
     href="https://fonts.gstatic.com"
     crossorigin="anonymous"
   />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
 
   <script
     src="https://kit.fontawesome.com/30f055fc02.js"
     crossorigin="anonymous"
   ></script>
+
+  <!-- <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content={PUBLIC_COMPANY_NAME} />
+  <link rel="manifest" href="/site.webmanifest" /> -->
 
   <meta name="description" content={siteData.description} />
   <meta name="keywords" content={siteData.keywords.join(", ")} />

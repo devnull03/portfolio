@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { page } from "$app/stores";
-  import { isMobile, scrollThreshold } from "$lib/stores.svelte";
+  import { isMobile, scrollThreshold } from "$lib/stores";
 
   let initScroll = $state(0);
   let isLandingPage = $derived($page.route.id === "/");
@@ -20,7 +20,6 @@
 
 <nav class="realtive">
 
-
-
+  
 
 </nav>

@@ -4,7 +4,7 @@
   import { gsap } from "gsap";
   import { MorphSVGPlugin } from "gsap/all";
   import { CursorState } from "$lib/interfaces/cursor.interface";
-  import { currentState } from "$lib/stores.svelte";
+  import { currentCursorState } from "$lib/stores";
 
   let mounted = $state(false);
 
@@ -160,8 +160,8 @@
     }
 
     // Update state if changed
-    if (newState !== $currentState) {
-      $currentState = newState;
+    if (newState !== $currentCursorState) {
+      $currentCursorState = newState;
       // updateCursorAppearance($currentState);
     }
   }
@@ -242,7 +242,7 @@
     }
   }
 
-  $effect(() => updateCursorAppearance($currentState));
+  $effect(() => updateCursorAppearance($currentCursorState));
 
   onMount(() => {
     gsap.registerPlugin(MorphSVGPlugin);
@@ -283,8 +283,8 @@
     bind:this={cursorSvg}
     class="fixed top-0 left-0 pointer-events-none z-[10000] mix-blend-exclusion will-change-transform"
     style="transform: translate3d(calc({dotPosition.current
-      .x}px - 35%), calc({dotPosition.current
-      .y}px - 35%), 0) scale({dotScale.current});"
+      .x}px - 50%), calc({dotPosition.current
+      .y}px - 50%), 0) scale({dotScale.current});"
     width="48"
     height="48"
     viewBox="0 0 48 48"
@@ -292,17 +292,16 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
-      <path id="dot" d="M16 16m-6 0a6 6 0 1 1 12 0a6 6 0 1 1 -12 0" />
+      <path id="dot" d="M24 24m-6 0a6 6 0 1 1 12 0a6 6 0 1 1 -12 0" />
 
       <path
         id="ring"
-        d="M16 16m-9 0a9 9 0 1 1 18 0a9 9 0 1 1 -18 0 M16 16m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+        d="M24 24m-9 0a9 9 0 1 1 18 0a9 9 0 1 1 -18 0 M24 24m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
         fill-rule="evenodd"
       />
 
-      <path id="caret" d="M15 8h2v16h-2z" fill="white" />
+      <path id="caret" d="M23 16h2v16h-2z" fill="white" />
 
-      <!-- <path id="arrow-down" d="M15 8h2v12h4l-5 6-5-6h4V8z" /> -->
       <path
         id="arrow-down"
         d="M24 0C37.2548 0 48 10.7452 48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24C0 10.7452 10.7452 0 24 0ZM25.4297 27.5479L32.0889 20.8887C32.6473 20.3302 33.5529 20.3302 34.1113 20.8887C34.6698 21.4471 34.6698 22.3527 34.1113 22.9111L25.0107 32.0107C24.4523 32.5692 23.5477 32.5692 22.9893 32.0107L13.8887 22.9111C13.3302 22.3527 13.3302 21.4471 13.8887 20.8887C14.4471 20.3302 15.3527 20.3302 15.9111 20.8887L22.5703 27.5479V4.05078C12.1919 4.78383 4 13.435 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 13.435 35.8081 4.78383 25.4297 4.05078V27.5479Z"
@@ -312,7 +311,7 @@
 
     <path
       id="current-path"
-      d="M16 16m-6 0a6 6 0 1 1 12 0a6 6 0 1 1 -12 0"
+      d="M24 24m-6 0a6 6 0 1 1 12 0a6 6 0 1 1 -12 0"
       fill="white"
       stroke="none"
     />
