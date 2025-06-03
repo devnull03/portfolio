@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { gsap } from "gsap";
-  import { isMobile, scrollThreshold } from "$lib/stores.svelte";
   import { Button } from "$lib/components/ui/button";
+  import { gsap } from "gsap";
+  import { ScrollTrigger, ScrollSmoother } from "gsap/all";
 
   let initScroll = $state(0);
+  let smoother: globalThis.ScrollSmoother;
 
   const clickIntro = (e: MouseEvent | KeyboardEvent) => {
     if (
@@ -13,59 +14,75 @@
         e instanceof KeyboardEvent &&
         (e.key === "Enter" || e.key === "Space"))
     ) {
-      const mainInfo = document.getElementById("main-info");
-      if (mainInfo) {
-        mainInfo.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
+
+      smoother?.scrollTo("#main-info", true)
+      
     }
   };
 
-  onMount(() => {});
+  onMount(() => {
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    smoother = ScrollSmoother.create({
+      smooth: 2,
+      effects: true,
+      normalizeScroll: true,
+    });
+  });
 </script>
 
 <svelte:window bind:scrollY={initScroll} />
 
-<main class="min-h-screen w-full h-full overflow-y-auto">
-  <section
-    onkeydown={clickIntro}
-    onclick={clickIntro}
-    role="button"
-    tabindex="0"
-    class="relative h-screen w-full object-cover overflow-hidden blur-[1px]"
-  >
-    <div class="absolute inset-0 z-0 w-full h-full select-none">
+  <main id="smooth-content" class="">
+    <section
+      onkeydown={clickIntro}
+      onclick={clickIntro}
+      role="button"
+      tabindex="0"
+      class="relative h-screen w-full object-cover overflow-hidden blur-[1px] z-10"
+      id="intro-section"
+      data-speed="0.7"
+      data-cursor-state="indicate-scroll-down"
+    >
+      <div class="absolute inset-0 z-0 w-full h-full select-none">
+        <img
+          src="/assets/Gradient.png"
+          class="w-full h-full object-cover select-none"
+          ondragstart={(e) => e.preventDefault()}
+          alt=""
+        />
+      </div>
+
       <img
-        src="/assets/Gradient.png"
-        class="w-full h-full object-cover select-none"
-        ondragstart={(e) => e.preventDefault()}
+        src="/assets/bg.png"
         alt=""
+        ondragstart={(e) => e.preventDefault()}
+        class="absolute object-contain h-full w-full p-4 select-none rotate-90 md:rotate-0"
       />
-    </div>
 
-    <img
-      src="/assets/bg.png"
-      alt=""
-      ondragstart={(e) => e.preventDefault()}
-      class="absolute object-contain h-full w-full p-4 select-none rotate-90 md:rotate-0"
-    />
+      <div class="effect-static"></div>
 
-    <div class="effect-static"></div>
-  </section>
+      <!-- <div class="borderAnimation"></div>
+    <div class="borderAnimationBottom"></div> -->
+    </section>
 
-  <section
-    id="main-info"
-    class="h-screen w-full flex items-center justify-center flex-col gap-4"
-  >
-    <p class="text-6xl">hello</p>
+    <section
+      id="main-info"
+      class="h-screen w-full flex items-center justify-center flex-col gap-4 relative z-30 bg-background"
+    >
+      <p class="text-6xl">hello</p>
 
-    <Button href="/resume" size="sm">Resume</Button>
-  </section>
-</main>
+      <Button href="/resume" size="sm">Resume</Button>
+    </section>
+  </main>
 
 <style>
+  #smooth-content {
+    overflow: visible;
+    width: 100%;
+    height: 100rem;
+  }
+
   .effect-static {
     position: absolute;
     top: -50%;

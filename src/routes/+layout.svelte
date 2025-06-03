@@ -17,7 +17,6 @@
   let scrollY = $state(0);
   let { children }: Props = $props();
 
-  let firstLoad = $state(true);
   let isLoading = $state($page.url.pathname === "/");
 
   const siteData = {
@@ -30,9 +29,7 @@
   // injectAnalytics({ mode: dev ? "development" : "production" });
   // injectSpeedInsights();
 
-  onMount(() => {
-    firstLoad = false;
-  });
+  onMount(() => {});
 
   function handleLoadingComplete() {
     isLoading = false;
@@ -87,14 +84,9 @@
 {#if isLoading}
   <LoadingScreen onComplete={handleLoadingComplete} />
 {:else}
-  <div
-    class="flex h-screen flex-col justify-between"
-    in:fade={{ duration: 600, delay: 200 }}
-  >
+  <div id="smooth-wrapper">
     <!-- <Header /> -->
-    <div class="">
-      {@render children?.()}
-    </div>
+    {@render children?.()}
     <!-- <Footer /> -->
   </div>
 
