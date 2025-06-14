@@ -88,6 +88,10 @@
     width: 100%;
     height: 150rem;
   }
+  .aspect-crt {
+    @apply md:!max-w-[calc(100vh*(4/3))] md:mx-auto;
+  }
+
 }
 
 /* Custom utilities for cursor effects */

@@ -107,7 +107,7 @@
 {#if isLoading}
   <LoadingScreen onComplete={handleLoadingComplete} />
 {:else}
-  <div id="smooth-wrapper" class="md:!w-[calc(100vh*(4/3))] md:mx-auto h-full">
+  <div id="smooth-wrapper" class="aspect-crt h-full">
     <CrtOverlay bind:this={crtEffect} enabled={crtEnabled} />
     <!-- <Header /> -->
     {@render children?.()}

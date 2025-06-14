@@ -126,7 +126,7 @@
 
 <canvas
   bind:this={canvas}
-  class="fixed inset-0 pointer-events-none z-[999] transition-opacity duration-300 mix-blend-overlay md:!w-[calc(100vh*(4/3))] md:mx-auto w-full h-full"
+  class="fixed inset-0 pointer-events-none z-[999] transition-opacity duration-300 mix-blend-overlay aspect-crt w-full h-full"
   class:opacity-0={!enabled}
   class:opacity-100={enabled}
 ></canvas>
