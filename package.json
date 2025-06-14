@@ -44,6 +44,7 @@
 		"wrangler": "^4.20.0"
 	},
 	"dependencies": {
+		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
