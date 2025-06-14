@@ -8,3 +8,4 @@ build
 # Optional hosting
 .netlify
 .vercel
+.wrangler

@@ -13,7 +13,13 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	  "routes": [
+  	  {
+  	    "pattern": "dvnl.work/*",
+	    "zone_name": "dvnl.work"
+  	  }
+  	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
