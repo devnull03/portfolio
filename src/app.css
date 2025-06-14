@@ -89,7 +89,7 @@
     height: 150rem;
   }
   .aspect-crt {
-    @apply md:!max-w-[calc(100vh*(4/3))] md:mx-auto;
+    @apply md:!max-w-[calc(100vh*(4/3))] md:mx-auto md:rounded-lg md:shadow-lg;
   }
 
 }
