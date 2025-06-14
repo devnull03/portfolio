@@ -27,7 +27,7 @@
   <div class="absolute inset-0 z-0 w-full h-full select-none">
     <img
       src="/assets/Gradient.png"
-      class="w-full h-full object-cover select-none"
+      class="w-full h-full md:object-cover select-none"
       ondragstart={(e) => e.preventDefault()}
       alt=""
     />
@@ -37,7 +37,7 @@
     src="/assets/bg.png"
     alt=""
     ondragstart={(e) => e.preventDefault()}
-    class="absolute object-contain h-full w-full p-4 select-none rotate-90 md:rotate-0"
+    class="absolute object-cover object-center md:object-contain h-full w-[100vh] md:w-full md:h-full p-4 select-none"
   />
 
   <div class="effect-static"></div>

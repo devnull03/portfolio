@@ -8,6 +8,7 @@
 
   import Cursor from "$lib/components/Cursor.svelte";
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
+  import CrtOverlay from "$lib/components/CrtOverlay.svelte";
   import { page } from "$app/stores";
 
   interface Props {
@@ -18,6 +19,8 @@
   let { children }: Props = $props();
 
   let isLoading = $state($page.url.pathname === "/");
+  let crtEffect: CrtOverlay | undefined = $state(undefined);
+  let crtEnabled = $state(true);
 
   const siteData = {
     description: "",
@@ -34,6 +37,12 @@
   function handleLoadingComplete() {
     isLoading = false;
   }
+
+  function toggleCRT() {
+    crtEnabled = !crtEnabled;
+    crtEffect?.toggle();
+    localStorage.setItem("crt-effect", crtEnabled.toString());
+  }
 </script>
 
 <svelte:head>
@@ -45,7 +54,10 @@
     href="https://fonts.gstatic.com"
     crossorigin="anonymous"
   />
-  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap"
+    rel="stylesheet"
+  />
 
   <script
     src="https://kit.fontawesome.com/30f055fc02.js"
@@ -83,10 +95,20 @@
 
 <Cursor />
 
+<!-- CRT Toggle Button -->
+<!-- <button
+  class="fixed top-6 right-6 z-[999] rounded-full bg-primary/80 backdrop-blur-sm p-3 shadow-lg transition-all duration-300 hover:bg-primary"
+  aria-label="Toggle CRT Effect (Ctrl+R)"
+  onclick={toggleCRT}
+>
+  <span class="fa fa-tv text-primary-foreground"></span>
+</button> -->
+
 {#if isLoading}
   <LoadingScreen onComplete={handleLoadingComplete} />
 {:else}
-  <div id="smooth-wrapper">
+  <div id="smooth-wrapper" class="md:!w-[calc(100vh*(4/3))] md:mx-auto h-full">
+    <CrtOverlay bind:this={crtEffect} enabled={crtEnabled} />
     <!-- <Header /> -->
     {@render children?.()}
     <!-- <Footer /> -->

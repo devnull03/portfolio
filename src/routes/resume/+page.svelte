@@ -10,6 +10,8 @@
   import VolunteerSection from "$lib/components/resume/VolunteerSection.svelte";
   import { Button } from "$lib/components/ui/button";
   import { Download } from "@lucide/svelte";
+  import { gsap } from "gsap";
+  import { ScrollTrigger, ScrollSmoother } from "gsap/all";
 
   let mounted = $state(false);
   let activeSection = $state("contact");
@@ -52,6 +54,14 @@
     mounted = true;
     window.addEventListener("scroll", updateActiveSection);
     updateActiveSection();
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    // ScrollSmoother.create({
+    //   smooth: 2,
+    //   effects: true,
+    //   // normalizeScroll: true,
+    // });
 
     return () => {
       window.removeEventListener("scroll", updateActiveSection);
@@ -142,7 +152,7 @@
 
 <!-- Main Content -->
 <div class="min-h-screen bg-background !font-sans" id="smooth-content">
-  <div class="max-w-4xl mx-auto px-6 lg:px-12 py-8 lg:py-16">
+  <div class="max-w-4xl mx-auto px-6 lg:px-12 py-8 lg:py-16 overflow-y-scroll">
     <!-- Contact Information Header -->
     <section id="contact" class="mb-16">
       <div

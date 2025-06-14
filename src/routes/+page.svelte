@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { Button } from "$lib/components/ui/button";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
@@ -12,15 +12,20 @@
 
     smoother = ScrollSmoother.create({
       smooth: 2,
+      smoothTouch: 1,
       effects: true,
       normalizeScroll: true,
     });
   });
+
+  onDestroy(() => {
+    smoother.kill()
+  })
 </script>
 
 <svelte:window />
 
-<main id="smooth-content" class="font-majorMono">
+<main id="smooth-content" class="font-majorMono h-full">
   <HomeIntro bind:smoother />
 
   <section
@@ -31,5 +36,8 @@
 
     <Button href="/resume" size="sm">Resume</Button>
   </section>
-</main>
 
+  <footer data-speed="0.5" class="realtive z-10 h-screen bg-orange-400">
+    alkfd
+  </footer>
+</main>
