@@ -20,7 +20,6 @@
 
   let isLoading = $state($page.url.pathname === "/");
   let crtEffect: CrtOverlay | undefined = $state(undefined);
-  let crtEnabled = $state(true);
 
   const siteData = {
     description: "",
@@ -39,9 +38,7 @@
   }
 
   function toggleCRT() {
-    crtEnabled = !crtEnabled;
     crtEffect?.toggle();
-    localStorage.setItem("crt-effect", crtEnabled.toString());
   }
 </script>
 
@@ -83,7 +80,7 @@
 
 <svelte:window bind:scrollY />
 
-<CrtOverlay bind:this={crtEffect} enabled={crtEnabled} />
+<CrtOverlay bind:this={crtEffect} />
 <Cursor />
 <ModeWatcher />
 <Toaster />

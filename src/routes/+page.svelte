@@ -25,7 +25,7 @@
 
 <svelte:window />
 
-<main id="smooth-content" class="font-majorMono h-full">
+<main id="smooth-content" class="font-majorMono">
   <HomeIntro bind:smoother />
 
   <section

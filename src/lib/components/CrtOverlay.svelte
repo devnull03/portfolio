@@ -8,6 +8,7 @@
     Vector3,
   } from "@babylonjs/core";
   import { PostProcess } from "@babylonjs/core/PostProcesses";
+  import { crtEffectEnabled } from "$lib/stores";
 
   let canvas: HTMLCanvasElement;
   let engine: Engine;
@@ -15,7 +16,7 @@
   let camera: TargetCamera;
   let postProcess: PostProcess;
 
-  export let enabled = false;
+  // export let $crtEffectEnabled = false;
 
   // CRT shader parameters
   let screenCurvatureOn = new Vector2(4.0, 4.0);
@@ -97,7 +98,7 @@
   }
 
   function updateShaderValues() {
-    if (enabled) {
+    if ($crtEffectEnabled) {
       screenCurvature.copyFrom(screenCurvatureOn);
       scanLineOpacity.copyFrom(scanLineOpacityOn);
       vignetteOpacity = vignetteOpacityOn;
@@ -112,12 +113,12 @@
     }
   }
 
-  $: if (typeof window !== "undefined") {
-    updateShaderValues();
-  }
+  $effect(() => {
+    typeof window !== "undefined" && updateShaderValues();
+  });
 
   export function toggle() {
-    enabled = !enabled;
+    $crtEffectEnabled = !$crtEffectEnabled;
     updateShaderValues();
   }
 </script>
@@ -127,6 +128,6 @@
 <canvas
   bind:this={canvas}
   class="fixed inset-0 pointer-events-none z-[999] transition-opacity duration-300 mix-blend-overlay aspect-crt w-full h-full"
-  class:opacity-0={!enabled}
-  class:opacity-100={enabled}
+  class:opacity-0={!$crtEffectEnabled}
+  class:opacity-100={$crtEffectEnabled}
 ></canvas>
