@@ -75,3 +75,12 @@
   />
 </svelte:head>
 
+
+
+<main id="smooth-content">
+
+  
+
+</main>
+
+

@@ -10,6 +10,7 @@
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
   import CrtOverlay from "$lib/components/CrtOverlay.svelte";
   import { page } from "$app/stores";
+  import { ChevronUp } from "@lucide/svelte";
 
   interface Props {
     children?: import("svelte").Snippet;
@@ -52,15 +53,14 @@
     crossorigin="anonymous"
   />
   <link
-    href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Major+Mono+Display&display=swap"
     rel="stylesheet"
   />
 
-  <script
+  <!-- <script
     src="https://kit.fontawesome.com/30f055fc02.js"
     crossorigin="anonymous"
-  ></script>
-
+  ></script> -->
 
   <meta name="description" content={siteData.description} />
   <meta name="keywords" content={siteData.keywords.join(", ")} />
@@ -96,15 +96,13 @@
     {#if scrollY !== 0}
       <button
         transition:fade
-        class="group absolute bottom-6 right-6 z-[999] rounded-full bg-primary object-cover py-0.5 shadow-lg transition-all duration-500 hover:-translate-y-1"
+        class="group absolute bottom-6 right-6 z-[999] rounded-full bg-primary object-cover p-3 shadow-lg transition-all duration-500 hover:-translate-y-1"
         aria-label="yuh"
         onclick={() => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
-        <span
-          class="fa fa-angle-left rotate-90 px-5 py-4 text-primary-foreground transition-all duration-500 group-hover:scale-110"
-        ></span>
+        <ChevronUp color="black" class="transition-all duration-500 group-hover:scale-110"></ChevronUp>
       </button>
     {/if}
   </div>

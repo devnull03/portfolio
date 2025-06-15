@@ -35,7 +35,7 @@
   >
     <p class="text-6xl">hello</p>
 
-    <Button href="{base}/data/Resume.pdf" target="_blank" size="sm">Resume</Button>
+    <Button href="{base}/resume.pdf" target="_blank" size="sm">Resume</Button>
   </section>
 
   <footer data-speed="0.5" class="realtive z-10 h-screen bg-orange-400">
