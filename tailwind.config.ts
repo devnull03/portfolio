@@ -69,6 +69,7 @@ const config: Config = {
 			fontFamily: {
 				sans: [...fontFamily.sans],
 				majorMono: ["Major Mono Display", "monospace"],
+				courierPrime: ["Courier Prime", "monospace"],
 			},
 			keyframes: {
 				"accordion-down": {

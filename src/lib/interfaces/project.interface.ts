@@ -13,7 +13,3 @@ export interface Project {
 	role?: string;
 }
 
-
-export interface ProjectsSectionProps {
-	projects: string[];
-}

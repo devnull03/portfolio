@@ -13,131 +13,42 @@ export interface ContactInfo {
 	resumePdf?: string;
 }
 
-export interface Education {
-	//   id: string;
-	institution: string;
-	degree: string;
-	field?: string;
-	startDate: string;
-	endDate: string;
-	gpa?: string;
-	location: string;
-	description?: string;
-	coursework?: string[];
-	achievements?: string[];
-}
-
-export interface Experience {
+// Unified Resume Entry for Experience, Education, Volunteer, Projects
+export interface ResumeEntry {
 	id: string;
-	company: string;
-	position: string;
+	title: string; // Position/Degree/Role/Project Name
+	organization: string; // Company/Institution/Organization
+	location: string;
 	startDate: string;
 	endDate: string;
-	location: string;
 	description: string;
-	responsibilities: string[];
+	details: string[]; // Responsibilities/Coursework/Features/Achievements
 	technologies?: string[];
 	achievements?: string[];
-	relatedProjects?: string[];
+	relatedProjects?: string[]; // References to project IDs
+	category?: string; // For projects: "work-experience" | "personal" | "academic" | "freelance" | "hackathon"
+	githubUrl?: string; // For projects
+	liveUrl?: string; // For projects
+	gpa?: string; // For education
+	field?: string; // For education
+	degree?: string; // For education
 }
 
-
-export interface Skill {
+// Skills/Languages Entry Structure
+export interface SkillEntry {
+	id: string;
 	name: string;
-	level?: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-	category: string;
+	proficiency?: string; // For languages: 'Native' | 'Fluent' | 'Conversational' | 'Basic'
 }
 
-export interface SkillCategory {
-	category: string;
-	skills: Skill[];
-}
-
-export interface Certification {
-	//   id: string;
-	name: string;
-	issuer: string;
-	issueDate: string;
-	expiryDate?: string;
-	credentialId?: string;
-	url?: string;
-}
-
-export interface Award {
-	//   id: string;
-	name: string;
-	issuer: string;
-	date: string;
-	description?: string;
-}
-
-export interface Language {
-	name: string;
-	proficiency: 'Native' | 'Fluent' | 'Conversational' | 'Basic';
-}
-
-export interface Volunteer {
-	//   id: string;
-	organization: string;
-	role: string;
-	startDate: string;
-	endDate: string;
-	description: string;
-	location?: string;
-	responsibilities?: string[];
-	achievements?: string[];
-}
-
+// Main Resume Structure
 export interface Resume {
 	contact: ContactInfo;
 	summary?: string;
-	education: Education[];
-	experience: Experience[];
-	additionalExperience?: Experience[];
-	projects: string[];
-	skills: SkillCategory[];
-	certifications?: Certification[];
-	awards?: Award[];
-	languages: Language[];
-	volunteer: Volunteer[];
-	interests?: string[];
-}
-
-// Component prop interfaces for Svelte 5
-export interface ContactInfoProps {
-	contact: ContactInfo;
-	summary?: string;
-}
-
-export interface EducationSectionProps {
-	education: Education[];
-}
-
-export interface ExperienceSectionProps {
-	experience: Experience[];
-}
-
-
-export interface SkillsSectionProps {
-	skills: SkillCategory[];
-}
-
-export interface LanguagesSectionProps {
-	languages: Language[];
-}
-
-export interface VolunteerSectionProps {
-	volunteer: Volunteer[];
-}
-
-export interface ResumeNavigationProps {
-	sections: Array<{ id: string; title: string; }>;
-	activeSection?: string;
-}
-
-export interface ResumeSectionProps {
-	id: string;
-	title: string;
-	className?: string;
-	children?: any;
+	resumeSections: {
+		[sectionKey: string]: ResumeEntry[];
+	};
+	skillSections: {
+		[sectionKey: string]: SkillEntry[];
+	};
 }

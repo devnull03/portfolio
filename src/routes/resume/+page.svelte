@@ -1,64 +1,38 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { resumeData } from "$lib/data/resume.data";
+  import { onDestroy, onMount } from "svelte";
+  import { getSectionKeys, resumeData } from "$lib/data/resume.data";
   import { Button } from "$lib/components/ui/button";
   import { Download } from "@lucide/svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+  import { base } from "$app/paths";
+  import { crtEffectBlendMode, crtEffectEnabled } from "$lib/stores";
+  import { CrtEffectBlendMode } from "$lib/interfaces/sys.interface";
 
   let mounted = $state(false);
-  let activeSection = $state("contact");
+  let smoother: globalThis.ScrollSmoother;
 
-  const sections = [
-    { id: "contact", title: "Contact", icon: "👤" },
-    { id: "education", title: "Education", icon: "🎓" },
-    { id: "experience", title: "Experience", icon: "💼" },
-    { id: "projects", title: "Projects", icon: "🚀" },
-    { id: "skills", title: "Skills", icon: "⚡" },
-    { id: "languages", title: "Languages", icon: "🌍" },
-    { id: "volunteer", title: "Volunteer", icon: "❤️" },
-  ];
+  let sections = $derived([...getSectionKeys(), "Skills"]);
 
-  function scrollToSection(id: string) {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-
-  function updateActiveSection() {
-    if (!mounted) return;
-
-    const sectionElements = sections
-      .map((section) => document.getElementById(section.id))
-      .filter(Boolean);
-    const scrollPosition = window.scrollY + 200;
-
-    for (let i = sectionElements.length - 1; i >= 0; i--) {
-      const element = sectionElements[i];
-      if (element && element.offsetTop <= scrollPosition) {
-        activeSection = sections[i].id;
-        break;
-      }
-    }
-  }
+  const scrollToSection = (idxs: number) => {};
 
   onMount(() => {
-    mounted = true;
-    window.addEventListener("scroll", updateActiveSection);
-    updateActiveSection();
+    $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-    // ScrollSmoother.create({
-    //   smooth: 2,
-    //   effects: true,
-    //   // normalizeScroll: true,
-    // });
+    smoother = ScrollSmoother.create({
+      smooth: 2,
+      effects: true,
+      normalizeScroll: true,
+    });
 
-    return () => {
-      window.removeEventListener("scroll", updateActiveSection);
-    };
+    mounted = true;
+  });
+
+  onDestroy(() => {
+    $crtEffectBlendMode = CrtEffectBlendMode.Overlay;
+    smoother.kill();
   });
 </script>
 
@@ -75,12 +49,75 @@
   />
 </svelte:head>
 
+<div
+  class="bg-[url('/assets/resume-bg.png')] bg-black/20 bg-blend-overlay bg-cover h-screen rounded-lg px-16 py-4 flex gap-6 font-courierPrime text-black"
+>
+  <div id="smooth-wrapper" class="w-3/4 h-full relative">
+    <div class="main-borders left-0">&nbsp;</div>
+    <main id="smooth-content">
+      <section
+        data-speed="clamp(0.09)"
+        class="w-full flex flex-col items-center mt-4"
+      >
+        <h1 class="text-5xl w-1/2 border-b-2 border-b-black text-center">
+          Resume
+        </h1>
 
+        <p class="text-sm font-courierPrime text-black">
+          <span
+            >{resumeData.contact.name} | {resumeData.contact.location} |
+          </span>
+          <button
+            class="underline hover:no-underline transition-all duration-200"
+            onclick={() =>
+              window.open(`mailto:${resumeData.contact.email}`, "_blank")}
+          >
+            Contact
+          </button>
+          <span> | </span>
+          <button
+            class="underline hover:no-underline transition-all duration-200"
+            onclick={() => window.open("/resume.pdf", "_blank")}
+          >
+            Download PDF Version
+          </button>
+        </p>
+      </section>
 
-<main id="smooth-content">
+      <section></section>
+    </main>
+    <div class="main-borders right-0">&nbsp;</div>
+  </div>
 
-  
+  <!-- Right Nav -->
+  <div class="w-1/4 relative">
+    <nav class="*:px-4 text-left w-full mt-4 nav-position">
+      <h2 class="border-b-2 border-b-black mb-4 text-lg font-courierPrime">
+        Resume
+      </h2>
+      <div class="flex flex-col items-start gap-2">
+        {#each sections as sec, idxs}
+          <button
+            class="group font-courierPrime text-sm text-left"
+            onclick={() => scrollToSection(idxs)}
+          >
+            {sec}
+            <hr
+              class="w-0 group-hover:w-1/2 -mt-1 transition-all duration-200 border-black"
+            />
+          </button>
+        {/each}
+      </div>
+    </nav>
+  </div>
+</div>
 
-</main>
+<style type="postcss">
+  .main-borders {
+    @apply border-l-2 border-l-black w-0.5 h-[41vh] nav-position;
+  }
 
-
+  .nav-position {
+    @apply absolute top-[21vh];
+  }
+</style>
