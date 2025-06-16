@@ -14,7 +14,11 @@
 
   let sections = $derived([...getSectionKeys(), "Skills"]);
 
-  const scrollToSection = (idxs: number) => {};
+  const scrollToSection = (id: string) => {
+    if (!mounted) return;
+
+    smoother.scrollTo(`#${id}`, true, "top 200rem");
+  };
 
   onMount(() => {
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
@@ -133,25 +137,24 @@
         </p>
 
         <p class="text-sm">
-          <a 
-            href={resumeData.contact.github || "#"} 
+          <a
+            href={resumeData.contact.github || "#"}
             class="underline hover:no-underline transition-all duration-200"
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
           >
             Github
           </a>
           <span> | </span>
-          <a 
-            href={resumeData.contact.linkedin || "#"} 
+          <a
+            href={resumeData.contact.linkedin || "#"}
             class="underline hover:no-underline transition-all duration-200"
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
           >
             LinkedIn
           </a>
         </p>
-
       </section>
 
       {#each getSectionKeys() as secId, idxsi}
@@ -308,7 +311,7 @@
         {#each sections as sec, idxs}
           <button
             class="group font-courierPrime text-sm text-left"
-            onclick={() => scrollToSection(idxs)}
+            onclick={() => scrollToSection(sec)}
           >
             {sec}
             <hr
