@@ -8,7 +8,7 @@
     Vector3,
   } from "@babylonjs/core";
   import { PostProcess } from "@babylonjs/core/PostProcesses";
-  import { crtEffectEnabled } from "$lib/stores";
+  import { crtEffectBlendMode, crtEffectEnabled } from "$lib/stores";
 
   let canvas: HTMLCanvasElement;
   let engine: Engine;
@@ -127,7 +127,7 @@
 
 <canvas
   bind:this={canvas}
-  class="fixed inset-0 pointer-events-none z-[999] transition-opacity duration-300 mix-blend-overlay aspect-crt w-full h-full"
+  class="fixed inset-0 pointer-events-none z-[99999] transition-opacity duration-300 {$crtEffectBlendMode} aspect-crt w-full h-full"
   class:opacity-0={!$crtEffectEnabled}
   class:opacity-100={$crtEffectEnabled}
 ></canvas>

@@ -3,7 +3,7 @@
   import { Spring } from "svelte/motion";
   import { gsap } from "gsap";
   import { MorphSVGPlugin } from "gsap/all";
-  import { CursorState } from "$lib/interfaces/cursor.interface";
+  import { CursorState } from "$lib/interfaces/sys.interface";
   import { currentCursorState } from "$lib/stores";
 
   let mounted = $state(false);

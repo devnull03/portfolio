@@ -11,6 +11,7 @@
   import CrtOverlay from "$lib/components/CrtOverlay.svelte";
   import { page } from "$app/stores";
   import { ChevronUp } from "@lucide/svelte";
+  import { crtEffectEnabled } from "$lib/stores";
 
   interface Props {
     children?: import("svelte").Snippet;
@@ -19,7 +20,7 @@
   let scrollY = $state(0);
   let { children }: Props = $props();
 
-  let isLoading = $state($page.url.pathname === "/");
+  let isLoading = $state($crtEffectEnabled);
   let crtEffect: CrtOverlay | undefined = $state(undefined);
 
   const siteData = {
@@ -62,7 +63,7 @@
     crossorigin="anonymous"
   ></script> -->
 
-  <meta name="description" content={siteData.description} />
+  <!-- <meta name="description" content={siteData.description} />
   <meta name="keywords" content={siteData.keywords.join(", ")} />
   <meta property="og:title" content={PUBLIC_COMPANY_NAME} />
   <meta property="og:description" content={siteData.description} />
@@ -75,7 +76,8 @@
 
   <meta name="author" content={PUBLIC_COMPANY_NAME} />
   <meta name="geo.placename" content={siteData.placename} />
-  <meta name="geo.region" content={siteData.region} />
+  <meta name="geo.region" content={siteData.region} /> -->
+
 </svelte:head>
 
 <svelte:window bind:scrollY />
