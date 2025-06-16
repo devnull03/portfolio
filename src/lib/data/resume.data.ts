@@ -121,26 +121,6 @@ export const resumeData: Resume = {
 			}
 		],
 
-		"Education": [
-			{
-				id: "university-of-the-fraser-valley-computer-science",
-				title: "Bachelor of Science",
-				organization: "University of the Fraser Valley",
-				location: "Abbotsford, BC",
-				startDate: "May 2022",
-				endDate: "Apr 2026 (Expected Graduation)",
-				description: "Focused on software engineering, data structures, and algorithms",
-				details: [
-					"Computer Science, with Co-operative education",
-					"Focused on software engineering, data structures, and algorithms",
-					"Relevant coursework in full-stack development and system design"
-				],
-				field: "Computer Science, with Co-operative education",
-				degree: "Bachelor of Science",
-				relatedProjects: []
-			}
-		],
-
 		"Projects": [
 			{
 				id: "slap-game",
@@ -253,7 +233,29 @@ export const resumeData: Resume = {
 				],
 				relatedProjects: []
 			}
-		]
+		],
+
+		"Education": [
+			{
+				id: "university-of-the-fraser-valley-computer-science",
+				title: "Bachelor of Science",
+				organization: "University of the Fraser Valley",
+				location: "Abbotsford, BC",
+				startDate: "May 2022",
+				endDate: "Apr 2026 (Expected Graduation)",
+				description: "Focused on software engineering, data structures, and algorithms",
+				details: [
+					"Computer Science, with Co-operative education",
+					"Focused on software engineering, data structures, and algorithms",
+					"Relevant coursework in full-stack development and system design"
+				],
+				field: "Computer Science, with Co-operative education",
+				degree: "Bachelor of Science",
+				relatedProjects: []
+			}
+		],
+
+
 	},
 
 	skillSections: {
