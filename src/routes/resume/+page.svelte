@@ -89,8 +89,10 @@
           {/if}
         </div>
       </div>
-      <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-courierPrime whitespace-nowrap">
-        CRT: {$crtEffectEnabled ? 'ON' : 'OFF'}
+      <span
+        class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-courierPrime whitespace-nowrap"
+      >
+        CRT: {$crtEffectEnabled ? "ON" : "OFF"}
       </span>
     </Button>
   </div>
@@ -107,25 +109,49 @@
       >
         <h1 class="text-5xl w-1/2 border-b-2 border-b-black">Resume</h1>
 
-        <p class="text-sm font-courierPrime text-black">
+        <p class="text-sm">
           <span
             >{resumeData.contact.name} | {resumeData.contact.location} |
           </span>
-          <button
+          <a
+            href={`mailto:${resumeData.contact.email}`}
             class="underline hover:no-underline transition-all duration-200"
-            onclick={() =>
-              window.open(`mailto:${resumeData.contact.email}`, "_blank")}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Contact
-          </button>
+          </a>
           <span> | </span>
-          <button
+          <a
+            href="/resume.pdf"
             class="underline hover:no-underline transition-all duration-200"
-            onclick={() => window.open("/resume.pdf", "_blank")}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Download PDF Version
-          </button>
+          </a>
         </p>
+
+        <p class="text-sm">
+          <a 
+            href={resumeData.contact.github || "#"} 
+            class="underline hover:no-underline transition-all duration-200"
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            Github
+          </a>
+          <span> | </span>
+          <a 
+            href={resumeData.contact.linkedin || "#"} 
+            class="underline hover:no-underline transition-all duration-200"
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+        </p>
+
       </section>
 
       {#each getSectionKeys() as secId, idxsi}
