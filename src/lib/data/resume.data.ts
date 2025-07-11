@@ -1,4 +1,5 @@
 import type { Resume } from '../interfaces/resume.interface';
+import { getProjectsByIds } from './project.data';
 
 export const resumeData: Resume = {
 	contact: {
@@ -122,75 +123,10 @@ export const resumeData: Resume = {
 		],
 
 		"Projects": [
-			{
-				id: "slap-game",
-				title: "Slap Game",
-				organization: "Personal Project",
-				location: "Remote",
-				startDate: "2024",
-				endDate: "2024",
-				description: "Interactive web-based game with real-time multiplayer functionality",
-				details: [
-					"Built with modern web technologies",
-					"Real-time multiplayer capabilities",
-					"Responsive design for mobile and desktop"
-				],
-				category: "personal",
-				technologies: ["JavaScript", "WebRTC", "Socket.io"],
-				relatedProjects: []
-			},
-			{
-				id: "zkare",
-				title: "ZKare",
-				organization: "Hackathon Project",
-				location: "Remote",
-				startDate: "2024",
-				endDate: "2024",
-				description: "Healthcare management system with privacy-focused features",
-				details: [
-					"Privacy-focused healthcare data management",
-					"Zero-knowledge proof implementation",
-					"Secure patient data handling"
-				],
-				category: "hackathon",
-				technologies: ["React", "Node.js", "Cryptography"],
-				relatedProjects: []
-			},
-			{
-				id: "portfolio-website",
-				title: "Portfolio Website",
-				organization: "Personal Project",
-				location: "Remote",
-				startDate: "2024",
-				endDate: "Present",
-				description: "Modern portfolio website showcasing projects and skills",
-				details: [
-					"Built with SvelteKit and modern web technologies",
-					"Responsive design with interactive animations",
-					"Optimized for performance and accessibility"
-				],
-				category: "personal",
-				technologies: ["SvelteKit", "TypeScript", "Tailwind CSS"],
-				githubUrl: "https://github.com/devnull03/portfolio",
-				relatedProjects: []
-			},
-			{
-				id: "sustainsnap",
-				title: "SustainSnap",
-				organization: "Academic Project",
-				location: "Abbotsford, BC",
-				startDate: "2023",
-				endDate: "2024",
-				description: "Sustainability tracking application for environmental impact monitoring",
-				details: [
-					"Environmental impact tracking and visualization",
-					"Data analytics for sustainability metrics",
-					"User-friendly interface for habit tracking"
-				],
-				category: "academic",
-				technologies: ["React Native", "Firebase", "Data Visualization"],
-				relatedProjects: []
-			}
+			"portfolio-website",
+			"slap-game",
+			"zkare", 
+			"sustainsnap"
 		],
 
 		"Volunteer": [
@@ -313,4 +249,9 @@ export const getSectionKeys = (): string[] => {
 
 export const getSkillSectionKeys = (): string[] => {
 	return Object.keys(resumeData.skillSections);
+}
+
+export const getSelectedProjects = () => {
+	const projectIds = resumeData.resumeSections["Projects"] as string[];
+	return getProjectsByIds(projectIds);
 }

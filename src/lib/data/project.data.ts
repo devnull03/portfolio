@@ -1,14 +1,14 @@
-export const projects = [
+import type { Project } from '../interfaces/project.interface';
+
+export const projects: Project[] = [
 	{
 		id: "slap-game",
-		name: "Slap Game",
+		title: "Slap Game",
+		organization: "nwHacks 2025",
+		location: "Vancouver, BC",
 		category: "hackathon",
 		description: "Built an interactive multiplayer slap battle game for nwHacks 2025, integrating MediaPipe for real-time facial and hand tracking alongside WebRTC for low-latency peer-to-peer video streaming, reducing game lag by 50%.",
-		technologies: ["Next.js", "WebRTC", "Express.js", "Socket.IO", "MediaPipe", "Solidity", "Hardhat"],
-		startDate: "Jan 2025",
-		endDate: "Jan 2025",
-		githubUrl: "https://github.com/devnull03/slap-game",
-		features: [
+		details: [
 			"Real-time facial and hand tracking with MediaPipe",
 			"Low-latency peer-to-peer video streaming with WebRTC",
 			"Solidity-based smart contracts for secure in-game wagers",
@@ -16,18 +16,19 @@ export const projects = [
 			"Zero security breaches",
 			"50% reduction in game lag"
 		],
-		role: "Full Stack Developer"
+		technologies: ["Next.js", "WebRTC", "Express.js", "Socket.IO", "MediaPipe", "Solidity", "Hardhat"],
+		startDate: "Jan 2025",
+		endDate: "Jan 2025",
+		githubUrl: "https://github.com/devnull03/nwhacks25-nameTBA"
 	},
 	{
 		id: "zkare",
-		name: "zKare",
+		title: "zKare",
+		organization: "ETH Global Waterloo 2023",
+		location: "Waterloo, ON",
 		category: "hackathon",
 		description: "Developed a decentralized healthcare data platform that won the EAS Best Privacy-Preserving Project and The Graph Prize Pool at ETH Global Waterloo 2023, processing 10,000+ secure transactions.",
-		technologies: ["Python", "FastAPI", "Next.js", "Ethereum Attestation Service", "Solidity"],
-		startDate: "June 2023",
-		endDate: "June 2023",
-		liveUrl: "https://ethglobal.com/showcase/zkare-2xc7u",
-		features: [
+		details: [
 			"Zero-knowledge proofs for secure, anonymous patient-researcher data sharing",
 			"Reduced unauthorized access by 85%",
 			"Improved healthcare data interoperability",
@@ -35,37 +36,49 @@ export const projects = [
 			"Won The Graph Prize Pool at ETH Global Waterloo 2023",
 			"Processed 10,000+ secure transactions"
 		],
-		role: "Full Stack Developer"
+		technologies: ["Python", "FastAPI", "Next.js", "Ethereum Attestation Service", "Solidity"],
+		startDate: "June 2023",
+		endDate: "June 2023",
+		previewItems: [
+			{
+				link: "https://ethglobal.com/showcase/zkare-nxt7h",
+				title: "ETH Global Showcase"
+			}
+		]
 	},
 	{
 		id: "portfolio-website",
-		name: "Portfolio Website",
+		title: "Portfolio Website",
+		organization: "Personal Project",
+		location: "Remote",
 		category: "personal",
 		description: "A modern, responsive portfolio website built with SvelteKit and TailwindCSS featuring dark mode, smooth animations, and optimized performance.",
-		technologies: ["SvelteKit", "TypeScript", "TailwindCSS", "Vite"],
-		startDate: "2024",
-		endDate: "2024",
-		githubUrl: "https://github.com/devnull03/portfolio",
-		liveUrl: "https://dvnl.work",
-		features: [
+		details: [
 			"Responsive design with mobile-first approach",
 			"Dark/light mode toggle",
 			"Smooth scroll animations",
 			"SEO optimized",
 			"Fast loading times"
 		],
-		role: "Full Stack Developer"
+		technologies: ["SvelteKit", "TypeScript", "TailwindCSS", "Vite"],
+		startDate: "June 2025",
+		endDate: "Present",
+		githubUrl: "https://github.com/devnull03/portfolio",
+		previewItems: [
+			{
+				link: "https://dvnl.work",
+				title: "Live Site"
+			}
+		]
 	},
 	{
 		id: "sustainsnap",
-		name: "SustainSnap",
+		title: "SustainSnap",
+		organization: "NWhacks UBC",
+		location: "Vancouver, BC",
 		category: "hackathon",
-		description: "Spearheaded the development of SustainSnap, a mobile web application at the NWhacks UBC hackathon, designed to tackle environmental challenges through waste management. Integrated OpenAI’s GPT-4 for image recognition, enabling users to accurately identify different types of garbage and receive guidance on correct disposal methods, promoting recycling and sustainability.",
-		technologies: ["SvelteKit", "Tailwind CSS", "Express.js", "OpenAI GPT-4", "MongoDB"],
-		startDate: "Jan 2024",
-		endDate: "Jan 2024",
-		githubUrl: "https://github.com/RichardOhata/SustainSnap",
-		features: [
+		description: "Spearheaded the development of SustainSnap, a mobile web application at the NWhacks UBC hackathon, designed to tackle environmental challenges through waste management. Integrated OpenAI's GPT-4 for image recognition, enabling users to accurately identify different types of garbage and receive guidance on correct disposal methods, promoting recycling and sustainability.",
+		details: [
 			"Mobile web application for waste management",
 			"Intuitive and responsive UI with SvelteKit and Tailwind CSS",
 			"Express.js backend integration",
@@ -73,37 +86,38 @@ export const projects = [
 			"Guidance for correct disposal methods",
 			"Promotes recycling and sustainability efforts"
 		],
-		role: "Full Stack Developer"
+		technologies: ["SvelteKit", "Tailwind CSS", "Express.js", "OpenAI GPT-4", "MongoDB"],
+		startDate: "Jan 2024",
+		endDate: "Jan 2024",
+		githubUrl: "https://github.com/RichardOhata/SustainSnap"
 	},
 	{
 		id: "booksplore",
-		name: "Booksplore",
+		title: "Booksplore",
+		organization: "Programming Addicts Codejam",
+		location: "Remote",
 		category: "hackathon",
 		description: "Developed a winning website called Booksplore as part of a codejam, using Vue.js, TypeScript, Tailwind CSS, FastAPI, and Python. Implemented responsive web design and RESTful APIs for data retrieval.",
-		technologies: ["Vue.js", "TypeScript", "Tailwind CSS", "FastAPI", "Python", "REST APIs", "Node.js", "React.js", "Git"],
-		startDate: "Jun 2021",
-		endDate: "Jul 2021",
-		githubUrl: "https://github.com/Programming-Addicts/BookSplore",
-		features: [
+		details: [
 			"Responsive web design",
 			"RESTful API for data retrieval",
 			"Full-stack development with Vue.js and FastAPI",
 			"Collaborative codejam project",
 			"Award-winning implementation"
 		],
-		role: "Full Stack Developer"
+		technologies: ["Vue.js", "TypeScript", "Tailwind CSS", "FastAPI", "Python", "REST APIs", "Node.js", "React.js", "Git"],
+		startDate: "Jun 2021",
+		endDate: "Jul 2021",
+		githubUrl: "https://github.com/Programming-Addicts/BookSplore"
 	},
 	{
 		id: "job-unicorn-platform",
-		name: "Job Unicorn Platform",
+		title: "Job Unicorn Platform",
+		organization: "Job Unicorn",
+		location: "Mumbai, India",
 		category: "work-experience",
 		description: "A decentralized platform for finding and hiring the best talent, connecting employers with skilled professionals through innovative blockchain-based solutions.",
-		technologies: ["TypeScript", "Golang", "Express.js", "Puppeteer", "RESTful APIs", "Blockchain", "Decentralized Systems"],
-		startDate: "Feb 2022",
-		endDate: "Apr 2022",
-		githubUrl: "https://github.com/Job-Unicorn",
-		liveUrl: "https://github.com/Job-Unicorn",
-		features: [
+		details: [
 			"Decentralized talent marketplace",
 			"Advanced web scraping system for job data aggregation",
 			"RESTful APIs for enhanced analytics integration",
@@ -111,18 +125,25 @@ export const projects = [
 			"Improved server response times by 40%",
 			"Reduced data retrieval latency by 35%"
 		],
-		role: "Software Engineering Intern"
+		technologies: ["TypeScript", "Golang", "Express.js", "Puppeteer", "RESTful APIs", "Blockchain", "Decentralized Systems"],
+		startDate: "Feb 2022",
+		endDate: "Apr 2022",
+		githubUrl: "https://github.com/Job-Unicorn",
+		previewItems: [
+			{
+				link: "https://github.com/Job-Unicorn",
+				title: "GitHub Repository"
+			}
+		]
 	},
 	{
 		id: "the-garden-platform",
-		name: "The Garden Platform",
+		title: "The Garden Platform",
+		organization: "IDS.company",
+		location: "Remote",
 		category: "work-experience",
 		description: "The Garden is a creative platform where talents showcase their creativity and connect with fellow creatives. Developed interactive content and streamlined website management with automated solutions, increasing user engagement significantly.",
-		technologies: ["PHP", "Python", "Web Development", "Content Management", "Full-Stack Development"],
-		startDate: "May 2022",
-		endDate: "July 2024",
-		liveUrl: "https://thegarden.gg/explore",
-		features: [
+		details: [
 			"Creative talent showcase platform",
 			"Interactive content creation tools",
 			"Community connection features",
@@ -130,18 +151,24 @@ export const projects = [
 			"Enhanced page load speeds by 40%",
 			"Improved content moderation workflows by 35%"
 		],
-		role: "Full-Stack Engineer"
+		technologies: ["PHP", "Python", "Web Development", "Content Management", "Full-Stack Development"],
+		startDate: "May 2022",
+		endDate: "July 2024",
+		previewItems: [
+			{
+				link: "https://thegarden.gg/explore",
+				title: "Live Platform"
+			}
+		]
 	},
 	{
 		id: "sacda-digital-archive",
-		name: "South Asian Canadian Digital Archive (SACDA)",
+		title: "South Asian Canadian Digital Archive (SACDA)",
+		organization: "South Asian Studies Institute, University of the Fraser Valley",
+		location: "Abbotsford, BC",
 		category: "work-experience",
 		description: "A pan-Canadian digital archive documenting the history and heritage of the South Asian diaspora in Canada. Developed interactive exhibits and automated metadata management systems to preserve and share cultural heritage materials.",
-		technologies: ["PHP", "Python", "Collective Access", "Web Development", "Digital Archive Systems"],
-		startDate: "August 2022",
-		endDate: "Present",
-		liveUrl: "https://sacda.ca/",
-		features: [
+		details: [
 			"Digital heritage preservation platform",
 			"Interactive historical exhibits",
 			"Automated metadata management with Python",
@@ -149,68 +176,96 @@ export const projects = [
 			"Increased user engagement by 200%",
 			"Reduced task completion time by 80%"
 		],
-		role: "Undergraduate Research Assistant / Web Developer"
+		technologies: ["PHP", "Python", "Collective Access", "Web Development", "Digital Archive Systems"],
+		startDate: "August 2022",
+		endDate: "Present",
+		previewItems: [
+			{
+				link: "https://sacda.ca/",
+				title: "SACDA Website"
+			}
+		]
 	},
 	{
 		id: "union-zindabad-exhibit",
-		name: "Union Zindabad! Digital Exhibit",
+		title: "Union Zindabad! Digital Exhibit",
+		organization: "South Asian Studies Institute, University of the Fraser Valley",
+		location: "Abbotsford, BC",
 		category: "work-experience",
 		description: "An interactive digital exhibit exploring South Asian labor history in Canada, featuring immersive storytelling and historical documentation through modern web technologies.",
-		technologies: ["PHP", "Web Development", "Digital Exhibits", "Historical Documentation"],
-		startDate: "August 2022",
-		endDate: "Present",
-		liveUrl: "https://sacda.ca/exhibits/union-zindabad/",
-		features: [
+		details: [
 			"Interactive historical storytelling",
 			"Digital exhibit platform",
 			"Cultural heritage documentation",
 			"Enhanced user engagement through interactive content",
 			"Preservation of South Asian labor history"
 		],
-		role: "Web Developer"
+		technologies: ["PHP", "Web Development", "Digital Exhibits", "Historical Documentation"],
+		startDate: "March 2024",
+		endDate: "October 2024",
+		previewItems: [
+			{
+				link: "https://sacda.ca/exhibits/union-zindabad/",
+				title: "Union Zindabad Exhibit"
+			}
+		]
 	},
 	{
 		id: "discriminatory-laws-timeline",
-		name: "Timeline of Discriminatory Laws: A South Asian History",
+		title: "Timeline of Discriminatory Laws: A South Asian History",
+		organization: "South Asian Studies Institute, University of the Fraser Valley",
+		location: "Abbotsford, BC",
 		category: "work-experience",
 		description: "An interactive timeline exploring the historical records of adversities, obstacles, and victories of the South Asian community in dealing with systemic prejudice in Canada.",
-		technologies: ["PHP", "Web Development", "Interactive Timelines", "Historical Data Visualization"],
-		startDate: "August 2022",
-		endDate: "Present",
-		liveUrl: "https://sacda.ca/exhibits/legal-history/",
-		features: [
+		details: [
 			"Interactive historical timeline",
 			"Data visualization of discriminatory laws",
 			"Educational content platform",
 			"Historical research documentation",
 			"Community heritage preservation"
 		],
-		role: "Web Developer"
+		technologies: ["PHP", "Web Development", "Interactive Timelines", "Historical Data Visualization"],
+		startDate: "January 2024",
+		endDate: "March 2024",
+		previewItems: [
+			{
+				link: "https://sacda.ca/exhibits/legal-history/",
+				title: "Legal History Timeline"
+			}
+		]
 	},
 	{
 		id: "komagata-maru-lesson-plans",
-		name: "Komagata Maru Educational Resources",
+		title: "Komagata Maru Educational Resources",
+		organization: "South Asian Studies Institute, University of the Fraser Valley",
+		location: "Abbotsford, BC",
 		category: "work-experience",
 		description: "Educational web platform telling the story of Abbotsford citizens who supported the 346 Komagata Maru passengers' bid to legally reside in Canada, featuring lesson plans and historical documentation.",
-		technologies: ["Web Development", "Educational Content", "Historical Documentation"],
-		startDate: "August 2022",
-		endDate: "Present",
-		liveUrl: "https://www.southasiancanadianheritage.ca/kgm-lesson-plans/",
-		features: [
+		details: [
 			"Educational lesson plan platform",
 			"Historical storytelling",
 			"Community heritage documentation",
 			"Interactive learning resources",
 			"Cultural education materials"
 		],
-		role: "Web Developer"
+		technologies: ["Web Development", "Educational Content", "Historical Documentation"],
+		startDate: "August 2023",
+		endDate: "November 2023",
+		previewItems: [
+			{
+				link: "https://www.southasiancanadianheritage.ca/kgm-lesson-plans/",
+				title: "Komagata Maru Resources"
+			}
+		]
 	}
-]
+];
 
-export const getProjectById = (id: string) => {
+export const getProjectById = (id: string): Project | undefined => {
 	return projects.find(project => project.id === id);
 }
 
-export const getProjectsByIds = (ids: string[]) => {
-	return projects.filter(project => ids.includes(project.id));
+export const getProjectsByIds = (ids: string[]): Project[] => {
+	return projects.filter(project => ids.includes(project.id)).toSorted((a, b) => {
+		return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+	});
 }

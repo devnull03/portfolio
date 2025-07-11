@@ -1,5 +1,7 @@
 // Resume interfaces for TypeScript
 
+import type { ProjectID } from "./project.interface";
+
 export interface ContactInfo {
 	name: string;
 	title?: string;
@@ -51,7 +53,7 @@ export interface Resume {
 	contact: ContactInfo;
 	summary?: string;
 	resumeSections: {
-		[sectionKey: string]: ResumeEntry[];
+		[sectionKey: string]: ResumeEntry[] | ProjectID[]; // string[] for project IDs
 	};
 	skillSections: {
 		[sectionKey: string]: SkillEntry[];
