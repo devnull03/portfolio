@@ -27,7 +27,7 @@
   };
 </script>
 
-<div class="w-[75vw] left-4 fixed bottom-4 {className}">
+<div class="w-[75vw] left-4 fixed bottom-4 md:hidden {className}">
   <div class="bg-white border-t border-black rounded-none flex flex-col-reverse">
     <!-- Trigger Button -->
     <button
