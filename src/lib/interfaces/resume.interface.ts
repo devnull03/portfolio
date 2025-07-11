@@ -13,7 +13,6 @@ export interface ContactInfo {
 	resumePdf?: string;
 }
 
-// Unified Resume Entry for Experience, Education, Volunteer, Projects
 export interface ResumeEntry {
 	id: string;
 	title: string; // Position/Degree/Role/Project Name
@@ -28,10 +27,16 @@ export interface ResumeEntry {
 	relatedProjects?: string[]; // References to project IDs
 	category?: string; // For projects: "work-experience" | "personal" | "academic" | "freelance" | "hackathon"
 	githubUrl?: string; // For projects
-	liveUrl?: string; // For projects
+	previewItems?: PreviewItem[];
 	gpa?: string; // For education
 	field?: string; // For education
 	degree?: string; // For education
+}
+
+export interface PreviewItem {
+	link: string;
+	title: string;
+	image?: string;
 }
 
 // Skills/Languages Entry Structure

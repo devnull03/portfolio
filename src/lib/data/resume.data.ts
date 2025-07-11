@@ -172,7 +172,6 @@ export const resumeData: Resume = {
 				category: "personal",
 				technologies: ["SvelteKit", "TypeScript", "Tailwind CSS"],
 				githubUrl: "https://github.com/devnull03/portfolio",
-				liveUrl: "https://dvnl.work",
 				relatedProjects: []
 			},
 			{

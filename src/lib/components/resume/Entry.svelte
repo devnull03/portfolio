@@ -1,11 +1,64 @@
 <script lang="ts">
   import type { ResumeEntry } from "$lib/interfaces/resume.interface";
+  import { getProjectById } from "$lib/data/project.data";
+  import PreviewPlaceholder from "./PreviewPlaceholder.svelte";
 
   interface Props {
     entry: ResumeEntry;
   }
 
   let { entry }: Props = $props();
+
+  // Compute related project data if available
+  const relatedProjectsData = $derived(
+    entry.relatedProjects && entry.relatedProjects.length > 0
+      ? entry.relatedProjects.map((projectId) => {
+          const project = getProjectById(projectId);
+          return {
+            id: projectId,
+            name:
+              project?.name ||
+              projectId
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, (l) => l.toUpperCase()),
+            url:
+              project?.liveUrl || project?.githubUrl || `#project-${projectId}`,
+          };
+        })
+      : []
+  );
+
+  // Get all URLs to preview from previewItems or related projects
+  const getAllUrls = () => {
+    // If entry has previewItems, use those
+    if (entry.previewItems && entry.previewItems.length > 0) {
+      return entry.previewItems.map((item) => ({
+        title: item.title,
+        url: item.link,
+        image: item.image,
+        isPrimary: false,
+        isRelatedProject: false,
+      }));
+    }
+
+    // For experience entries with related projects, create preview items from project IDs
+    if (entry.relatedProjects && entry.relatedProjects.length > 0) {
+      return relatedProjectsData.map((projectData) => ({
+        title: projectData.name,
+        url: projectData.url,
+        image: undefined,
+        isPrimary: false,
+        isRelatedProject: true,
+      }));
+    }
+
+    return [];
+  };
+
+  const allUrls = getAllUrls();
+  const maxPreviewsToShow = 2;
+  const urlsToPreview = allUrls.slice(0, maxPreviewsToShow);
+  const remainingUrlsCount = Math.max(0, allUrls.length - maxPreviewsToShow);
 </script>
 
 <div class="entry-item">
@@ -27,16 +80,9 @@
     </p>
   </div>
 
-  <!-- Description -->
-  {#if entry.description}
-    <p class="text font-courierPrime text-black/80 mb-3 italic">
-      {entry.description}
-    </p>
-  {/if}
-
   <!-- Details/Responsibilities -->
   {#if entry.details && entry.details.length > 0}
-    <ul class="space-y-2 mb-4">
+    <ul class="mb-4">
       {#each entry.details as detail}
         <li class="flex items-center">
           <span class="text-black mr-2 mt-1">•</span>
@@ -65,24 +111,80 @@
   {/if}
 
   <!-- Project Links for Projects section -->
-  {#if entry.githubUrl || entry.liveUrl}
-    <div class="flex gap-3 mt-3">
-      {#if entry.githubUrl}
-        <button
-          class="text-sm font-courierPrime text-black underline hover:no-underline transition-all duration-200"
-          onclick={() => window.open(entry.githubUrl, "_blank")}
-        >
-          GitHub
-        </button>
+  {#if entry.githubUrl || (entry.previewItems && entry.previewItems.length > 0) || (entry.relatedProjects && entry.relatedProjects.length > 0)}
+    <div class="mt-4">
+      <!-- Preview thumbnails -->
+      {#if urlsToPreview.length > 0}
+        <div class="mb-3">
+          <div class="grid grid-cols-7 gap-3">
+            {#each urlsToPreview as urlItem, index}
+              {@const previewItem = entry.previewItems?.[index]}
+
+              <button
+                class="relative group cursor-pointer w-full text-left col-span-3"
+                onclick={() => window.open(urlItem.url, "_blank")}
+                type="button"
+                aria-label={`Open ${urlItem.title}`}
+              >
+                <div
+                  class="w-full h-28 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                >
+                  {#if previewItem?.image}
+                    <!-- Use provided image -->
+                    <div class="w-full h-full relative">
+                      <img
+                        src={previewItem.image}
+                        alt={urlItem.title}
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  {:else}
+                    <PreviewPlaceholder title={urlItem.title} />
+                  {/if}
+
+                  <!-- Overlay with title -->
+                  <div
+                    class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-200 flex items-end"
+                  >
+                    <div
+                      class="w-full p-2 bg-gradient-to-t from-black/60 to-transparent"
+                    >
+                      <p class="text-white text-xs font-courierPrime truncate">
+                        {urlItem.title}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            {/each}
+
+            <!-- "+more" indicator if there are additional URLs -->
+            {#if remainingUrlsCount > 0}
+              <div class="h-28 rounded-lg border border-gray-200 flex items-center justify-center col-span-1">
+                <div class="text-center">
+                  <div class="text-xl text-gray-400 mb-1">+</div>
+                  <p class="text-xs font-courierPrime text-gray-600">
+                    {remainingUrlsCount} more
+                  </p>
+                </div>
+              </div>
+            {/if}
+          </div>
+        </div>
       {/if}
-      {#if entry.liveUrl}
-        <button
-          class="text-sm font-courierPrime text-black underline hover:no-underline transition-all duration-200"
-          onclick={() => window.open(entry.liveUrl, "_blank")}
-        >
-          Live Demo
-        </button>
-      {/if}
+
+      <!-- Action buttons -->
+      <div class="flex flex-wrap gap-2">
+        {#if entry.githubUrl}
+          <button
+            class="text-sm font-courierPrime text-black underline hover:no-underline transition-all duration-200"
+            onclick={() => window.open(entry.githubUrl, "_blank")}
+          >
+            GitHub
+          </button>
+        {/if}
+
+      </div>
     </div>
   {/if}
 </div>
