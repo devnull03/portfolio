@@ -17,12 +17,12 @@
           return {
             id: projectId,
             name:
-              project?.name ||
+              project?.title ||
               projectId
                 .replace(/-/g, " ")
                 .replace(/\b\w/g, (l) => l.toUpperCase()),
             url:
-              project?.liveUrl || project?.githubUrl || `#project-${projectId}`,
+              project?.previewItems?.[0]?.link || project?.githubUrl || `#project-${projectId}`,
           };
         })
       : []

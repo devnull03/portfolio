@@ -192,12 +192,12 @@
 
   function morphToShape(shapeName: string) {
     if (!mounted || !currentPath) {
-      console.log(
-        "Morph failed: mounted=",
-        mounted,
-        "currentPath=",
-        currentPath
-      );
+      // console.log(
+      //   "Morph failed: mounted=",
+      //   mounted,
+      //   "currentPath=",
+      //   currentPath
+      // );
       return;
     }
 
@@ -205,7 +205,7 @@
       `#${shapeName}`
     ) as SVGPathElement;
     if (!targetPath) {
-      console.log("Target path not found:", shapeName);
+      // console.log("Target path not found:", shapeName);
       return;
     }
 
@@ -214,11 +214,11 @@
         morphSVG: `#${shapeName}`,
         duration: 0.3,
         ease: "power2.out",
-        onComplete: () => {
-          console.log("Morph completed to:", shapeName);
-        },
+        // onComplete: () => {
+        //   console.log("Morph completed to:", shapeName);
+        // },
         onError: (error: any) => {
-          console.log("Morph error:", error);
+          // console.log("Morph error:", error);
           // Fallback: directly set the path data
           const targetPathData = targetPath.getAttribute("d");
           if (targetPathData) {
@@ -227,7 +227,7 @@
         },
       });
     } catch (error) {
-      console.log("MorphSVG plugin error:", error);
+      // console.log("MorphSVG plugin error:", error);
       // Fallback: directly set the path data
       const targetPathData = targetPath.getAttribute("d");
       if (targetPathData) {
@@ -261,8 +261,8 @@
         currentPath = cursorSvg.querySelector(
           "#current-path"
         ) as SVGPathElement;
-        console.log("Current path set:", currentPath);
-        console.log("Cursor SVG:", cursorSvg);
+        // console.log("Current path set:", currentPath);
+        // console.log("Cursor SVG:", cursorSvg);
       }
     }, 100);
   });

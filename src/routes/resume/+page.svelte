@@ -1,25 +1,23 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import { getSectionKeys, resumeData } from "$lib/data/resume.data";
+  import {
+    getSectionKeys,
+    resumeData,
+    getSelectedProjects,
+  } from "$lib/data/resume.data";
   import { Button } from "$lib/components/ui/button";
-  import { Download } from "@lucide/svelte";
+  import { ArrowLeft, Download } from "@lucide/svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
   import { base } from "$app/paths";
   import { crtEffectBlendMode, crtEffectEnabled } from "$lib/stores";
   import { CrtEffectBlendMode } from "$lib/interfaces/sys.interface";
   import Entry from "$lib/components/resume/Entry.svelte";
+  import ResumeNav from "$lib/components/resume/ResumeNav.svelte";
+  import ResumeMobileNav from "$lib/components/resume/ResumeMobileNav.svelte";
 
   let mounted = $state(false);
-  let smoother: globalThis.ScrollSmoother;
-
-  let sections = $derived([...getSectionKeys(), "Skills"]);
-
-  const scrollToSection = (id: string) => {
-    if (!mounted) return;
-
-    smoother.scrollTo(`#${id}`, true, "top 200rem");
-  };
+  let smoother: globalThis.ScrollSmoother | null = $state(null);
 
   onMount(() => {
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
@@ -29,7 +27,6 @@
     smoother = ScrollSmoother.create({
       smooth: 2,
       effects: true,
-      normalizeScroll: true,
     });
 
     mounted = true;
@@ -37,7 +34,7 @@
 
   onDestroy(() => {
     $crtEffectBlendMode = CrtEffectBlendMode.Overlay;
-    smoother.kill();
+    smoother?.kill();
   });
 </script>
 
@@ -57,9 +54,9 @@
 <div
   class="bg-[url('/assets/resume-bg.png')] {$crtEffectEnabled
     ? 'bg-black/20'
-    : 'bg-white/70'} h-full bg-blend-overlay bg-cover rounded-lg px-16 py-4 flex gap-6 font-courierPrime text-black"
+    : 'bg-white/70'} h-full bg-blend-overlay bg-cover rounded-lg md:px-16 py-4 flex gap-6 font-courierPrime text-black"
 >
-  <div class="absolute top-4 right-4 z-50 flex flex-col gap-2">
+  <div class="fixed md:absolute top-4 right-4 z-50 flex md:flex-col gap-2">
     <Button
       class=""
       variant="outline"
@@ -102,15 +99,22 @@
     </Button>
   </div>
 
-  <div class="!w-3/4 relative">
-    <div class="main-borders left-0">&nbsp;</div>
+  <div class="fixed md:absolute top-4 left-4 z-50 flex flex-col gap-2">
+    <Button class="" variant="outline" size="icon" href="{base}/">
+      <!-- <Download class="w-6 h-6 text-white" /> -->
+      <ArrowLeft class="w-6 h-6 text-white" />
+    </Button>
+  </div>
+
+  <div class="md:!w-3/4 !w-full relative">
+    <div class="main-borders left-0 ml-4">&nbsp;</div>
     <main
       id="smooth-content"
-      class="px-6 *:px-4 flex flex-col gap-8 !h-[400rem]"
+      class="px-6 *:px-4 flex flex-col gap-8 !h-[650rem] md:!h-[450rem]"
     >
       <section
         data-speed="clamp(0.09)"
-        class="w-full flex flex-col items-center mt-4 mb-8 backdrop-blur-lg z-20 text-center"
+        class="flex w-full flex-col items-center mt-4 mb-8 backdrop-blur-lg z-20 text-center"
       >
         <h1 class="text-5xl w-1/2 border-b-2 border-b-black">Resume</h1>
 
@@ -168,9 +172,17 @@
 
           <!-- Section Entries -->
           <div class="space-y-8">
-            {#each resumeData.resumeSections[secId] as entry, idxe}
-              <Entry {entry} />
-            {/each}
+            {#if secId === "Projects"}
+              {#each getSelectedProjects() as entry, idxe}
+                <Entry {entry} />
+              {/each}
+            {:else}
+              {#each resumeData.resumeSections[secId] as entry, idxe}
+                {#if typeof entry === "object"}
+                  <Entry {entry} />
+                {/if}
+              {/each}
+            {/if}
           </div>
         </section>
       {/each}
@@ -212,30 +224,12 @@
         </div>
       </section>
     </main>
-    <div class="main-borders right-0">&nbsp;</div>
+    <div class="main-borders right-0 mr-4">&nbsp;</div>
   </div>
 
-  <!-- Right Nav -->
-  <div class="w-1/4 relative">
-    <nav class="*:px-4 text-left w-full mt-4 nav-position">
-      <h2 class="border-b-2 border-b-black mb-4 font-courierPrime text-2xl">
-        Sections
-      </h2>
-      <div class="flex flex-col items-start gap-2 *:text-lg">
-        {#each sections as sec, idxs}
-          <button
-            class="group font-courierPrime text-sm text-left"
-            onclick={() => scrollToSection(sec)}
-          >
-            {sec}
-            <hr
-              class="w-0 group-hover:w-1/2 -mt-1 transition-all duration-200 border-black"
-            />
-          </button>
-        {/each}
-      </div>
-    </nav>
-  </div>
+  <ResumeNav bind:mounted bind:smoother class="nav-position" />
+
+  <ResumeMobileNav bind:mounted bind:smoother />
 </div>
 
 <style type="postcss">
@@ -244,7 +238,6 @@
   }
 
   .nav-position {
-    @apply absolute top-[21vh];
+    @apply fixed md:absolute top-[21vh];
   }
-
 </style>
