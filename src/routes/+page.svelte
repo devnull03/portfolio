@@ -7,6 +7,7 @@
   import { base } from "$app/paths";
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
+  import { resumeData } from "$lib/data/resume.data";
 
   let smoother: globalThis.ScrollSmoother;
 
@@ -38,10 +39,16 @@
     class="h-screen realtive w-full flex items-center justify-center flex-col gap-4 relative z-30 bg-background"
   >
     <p class="text-6xl">hello</p>
+    <p class="">i make stuff</p>
 
-    <Button onclick={() => goto("/resume")} target="_blank" size="sm"
-      >Resume</Button
-    >
+    <div class="flex items-center gap-4">
+      <Button href={resumeData.contact.github} target="_blank" size="sm"
+        >Github</Button
+      >
+      <Button onclick={() => goto("/resume")} target="_blank" size="sm"
+        >Resume</Button
+      >
+    </div>
   </section>
 
   <footer data-speed="0.5" class="realtive z-10 h-screen bg-orange-400">
