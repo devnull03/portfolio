@@ -15,12 +15,22 @@
   import Entry from "$lib/components/resume/Entry.svelte";
   import ResumeNav from "$lib/components/resume/ResumeNav.svelte";
   import ResumeMobileNav from "$lib/components/resume/ResumeMobileNav.svelte";
+  import type { PageProps } from "./$types";
 
+  let { data }: PageProps = $props();
 
   let mounted = $state(false);
   let smoother: globalThis.ScrollSmoother | null = $state(null);
 
   onMount(() => {
+    Promise.all(Object.values(data))
+      .then((v) => {
+        console.log(v);
+      })
+      .catch((err) => {
+        console.error("Error loading resume data:", err);
+      });
+
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
