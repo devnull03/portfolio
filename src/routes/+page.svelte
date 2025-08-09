@@ -4,11 +4,13 @@
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
   import HomeIntro from "$lib/components/HomeIntro.svelte";
+  import FunnyHaha from "$lib/components/FunnyHaha.svelte";
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
   import { resumeData } from "$lib/data/resume.data";
 
   let smoother: globalThis.ScrollSmoother | undefined = $state();
+  let showFloatingWindow = $state(false);
 
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -50,6 +52,14 @@
       <Button onclick={() => goto("/projects")} target="_blank" size="sm"
         >Projects</Button
       >
+      <Button
+        onclick={() => (showFloatingWindow = true)}
+        variant="outline"
+        size="sm"
+        class="bg-blue-500 hover:bg-blue-600 text-white border-blue-500 hover:border-blue-600"
+      >
+        Surprize
+      </Button>
     </div>
   </section>
 
@@ -57,3 +67,7 @@
     alkfd
   </footer>
 </main>
+
+{#if showFloatingWindow}
+  <FunnyHaha onClose={() => (showFloatingWindow = false)} />
+{/if}
