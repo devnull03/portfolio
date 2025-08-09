@@ -13,6 +13,33 @@
  */
 
 // Source: schema.json
+export type Contact = {
+  _id: string
+  _type: 'contact'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  title?: string
+  email: string
+  phone?: string
+  location: string
+  website?: string
+  linkedin?: string
+  github?: string
+  resume?: string
+  resumePdf?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    media?: unknown
+    _type: 'file'
+  }
+}
+
 export type Project = {
   _id: string
   _type: 'project'
@@ -66,7 +93,6 @@ export type ResumeEntry = {
   description?: string
   details: Array<string>
   technologies?: Array<string>
-  achievements?: Array<string>
   relatedProjects?: Array<{
     _ref: string
     _type: 'reference'
@@ -74,8 +100,7 @@ export type ResumeEntry = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'project'
   }>
-  category?: 'work-experience' | 'education' | 'academic' | 'freelance' | 'hackathon' | 'personal'
-  githubUrl?: string
+  category?: 'work-experience' | 'education' | 'volunteering'
   previewItems?: Array<{
     link: string
     title: string
@@ -113,29 +138,6 @@ export type SkillSection = {
     _type: 'skill'
     _key: string
   }>
-}
-
-export type ContactInfo = {
-  _type: 'contactInfo'
-  name: string
-  title?: string
-  email: string
-  phone?: string
-  location: string
-  website?: string
-  linkedin?: string
-  github?: string
-  resume?: string
-  resumePdf?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-    }
-    media?: unknown
-    _type: 'file'
-  }
 }
 
 export type SanityImagePaletteSwatch = {
@@ -257,10 +259,10 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
+  | Contact
   | Project
   | ResumeEntry
   | SkillSection
-  | ContactInfo
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions

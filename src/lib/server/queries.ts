@@ -1,10 +1,10 @@
-import type { ContactInfo, Project, ResumeEntry, SkillSection } from '$lib/interfaces/sanity.types'
+import type { Contact, Project, ResumeEntry, SkillSection } from '$lib/interfaces/sanity.types'
 import sanity from './sanity'
 
 const PROJECTS_QUERY = `*[_type == "project"]`
 const RESUME_ENTRIES_QUERY = `*[_type == "resumeEntry"]`
 const SKILL_SECTIONS_QUERY = `*[_type == "skillSection"]`
-const CONTACT_QUERY = `*[_type == "contactInfo"][0]`
+const CONTACT_QUERY = `*[_type == "contact"][0]`
 
 function parseDate(d?: string): number | null {
   if (!d) return null
@@ -58,11 +58,7 @@ export async function getResumeEntriesByCategory(): Promise<Record<string, Resum
   const ORDER: string[] = [
     'work-experience',
     'education',
-    'academic',
-    'freelance',
-    'hackathon',
-    'personal',
-    'uncategorized',
+    'volunteering',
   ]
   const ordered: Record<string, ResumeEntry[]> = {}
   for (const k of ORDER) {
@@ -79,7 +75,7 @@ export async function getSkillSections(): Promise<SkillSection[]> {
   return sanity.fetch<SkillSection[]>(SKILL_SECTIONS_QUERY)
 }
 
-export async function getContactInfo(): Promise<ContactInfo | null> {
-  const doc = await sanity.fetch<ContactInfo | null>(CONTACT_QUERY)
+export async function getContactInfo(): Promise<Contact | null> {
+  const doc = await sanity.fetch<Contact | null>(CONTACT_QUERY)
   return doc ?? null
 }

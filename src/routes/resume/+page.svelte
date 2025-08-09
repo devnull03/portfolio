@@ -16,6 +16,7 @@
   import ResumeNav from "$lib/components/resume/ResumeNav.svelte";
   import ResumeMobileNav from "$lib/components/resume/ResumeMobileNav.svelte";
 
+
   let mounted = $state(false);
   let smoother: globalThis.ScrollSmoother | null = $state(null);
 
