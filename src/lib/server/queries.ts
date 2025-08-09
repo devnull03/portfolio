@@ -5,7 +5,7 @@ const experienceSort = `order(coalesce(select(endDate == 9999-12-31 => null, end
 
 const PROJECTS_QUERY = `*[_type == "project"]{
   ...,
-  preview[]{
+  previewItems[]{
     ...,
     image{
       ...,
@@ -13,6 +13,18 @@ const PROJECTS_QUERY = `*[_type == "project"]{
     }
   }
 } | ${experienceSort}`
+
+const RESUME_PROJECTS_QUERY = `*[_type == "project" && showInResume == true]{
+  ...,
+  previewItems[]{
+    ...,
+    image{
+      ...,
+      "url": asset->url
+    }
+  }[0]
+} | ${experienceSort}`
+
 const RESUME_ENTRIES_QUERY = `*[_type == "resumeEntry"]{
   ...,
   relatedProjects[]->{
@@ -20,7 +32,7 @@ const RESUME_ENTRIES_QUERY = `*[_type == "resumeEntry"]{
     url,
     githubUrl,
     identifier,
-    preview[]{
+    previewItems[]{
       ...,
       image{
         ...,
@@ -38,14 +50,19 @@ const CONTACT_QUERY = `*[_type == "contact"][0]{
 }`
 
 export async function getProjects(): Promise<Project[]> {
-  const data = sanity.fetch<Project[]>(PROJECTS_QUERY)
-  return data
+	const data = sanity.fetch<Project[]>(PROJECTS_QUERY)
+	return data
+}
+
+export async function getResumePageProjects(): Promise<Project[]> {
+	const data = sanity.fetch<Project[]>(RESUME_PROJECTS_QUERY)
+	return data
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  const query = `*[_type == "project" && identifier.current == $slug][0]{
+	const query = `*[_type == "project" && identifier.current == $slug][0]{
     ...,
-    preview[]{
+    previewItems[]{
       ...,
       image{
         ...,
@@ -53,45 +70,45 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       }
     }
   }`
-  const doc = sanity.fetch<Project | null>(query, { slug })
-  return doc
+	const doc = sanity.fetch<Project | null>(query, { slug })
+	return doc
 }
 
 export async function getResumeEntries(): Promise<ResumeEntry[]> {
-  const data = sanity.fetch<ResumeEntry[]>(RESUME_ENTRIES_QUERY)
-  return data
+	const data = sanity.fetch<ResumeEntry[]>(RESUME_ENTRIES_QUERY)
+	return data
 }
 
 export async function getResumeEntriesByCategory(): Promise<Record<string, ResumeEntry[]>> {
-  const entries = await getResumeEntries()
-  const grouped: Record<string, ResumeEntry[]> = {}
-  for (const entry of entries) {
-    const key = entry.category ?? 'uncategorized'
-    if (!grouped[key]) grouped[key] = []
-    grouped[key].push(entry)
-  }
- 
-  const ORDER: string[] = [
-    'work-experience',
-    'education',
-    'volunteering',
-  ]
-  const ordered: Record<string, ResumeEntry[]> = {}
-  for (const k of ORDER) {
-    if (grouped[k]?.length) ordered[k] = grouped[k]
-  }
-  const remaining = Object.keys(grouped)
-    .filter((k) => !ORDER.includes(k))
-    .sort((a, b) => a.localeCompare(b))
-  for (const k of remaining) ordered[k] = grouped[k]
-  return ordered
+	const entries = await getResumeEntries()
+	const grouped: Record<string, ResumeEntry[]> = {}
+	for (const entry of entries) {
+		const key = entry.category ?? 'uncategorized'
+		if (!grouped[key]) grouped[key] = []
+		grouped[key].push(entry)
+	}
+
+	const ORDER: string[] = [
+		'work-experience',
+		'education',
+		'volunteering',
+	]
+	const ordered: Record<string, ResumeEntry[]> = {}
+	for (const k of ORDER) {
+		if (grouped[k]?.length) ordered[k] = grouped[k]
+	}
+	const remaining = Object.keys(grouped)
+		.filter((k) => !ORDER.includes(k))
+		.sort((a, b) => a.localeCompare(b))
+	for (const k of remaining) ordered[k] = grouped[k]
+	return ordered
 }
 
 export async function getSkillSections(): Promise<SkillSection[]> {
-  return sanity.fetch<SkillSection[]>(SKILL_SECTIONS_QUERY)
+	return sanity.fetch<SkillSection[]>(SKILL_SECTIONS_QUERY)
 }
 
 export async function getContactInfo(): Promise<Contact | null> {
-  const doc = sanity.fetch<Contact | null>(CONTACT_QUERY)
-  return doc
+	const doc = sanity.fetch<Contact | null>(CONTACT_QUERY)
+	return doc
 }

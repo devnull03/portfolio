@@ -35,6 +35,7 @@ export type Contact = {
       _weak?: boolean
       [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
     }
+    url?: string // generated during groq query 
     media?: unknown
     _type: 'file'
   }
@@ -52,10 +53,10 @@ export type Project = {
   location?: string
   startDate?: string
   endDate?: string
+  showInResume?: boolean
   description?: string
   details?: Array<string>
   technologies?: Array<string>
-  achievements?: Array<string>
   category: 'work-experience' | 'personal' | 'academic' | 'freelance' | 'hackathon'
   githubUrl?: string
   previewItems?: Array<{
@@ -68,6 +69,7 @@ export type Project = {
         _weak?: boolean
         [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
       }
+      url?: string // generated during groq query 
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
@@ -115,6 +117,7 @@ export type ResumeEntry = {
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
       _type: 'image'
+      url?: string // generated during groq query 
     }
     _type: 'previewItem'
     _key: string
@@ -122,6 +125,7 @@ export type ResumeEntry = {
   gpa?: string
   field?: string
   degree?: string
+  githubUrl?: string // for compatibility
 }
 
 export type SkillSection = {

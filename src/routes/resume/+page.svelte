@@ -1,11 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import {
-    getSectionKeys,
-    resumeData,
-    getSelectedProjects,
-  } from "$lib/data/resume.data";
   import { Button } from "$lib/components/ui/button";
+  import { Skeleton } from "$lib/components/ui/skeleton";
   import { ArrowLeft, Download } from "@lucide/svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
@@ -19,17 +15,17 @@
 
   let { data }: PageProps = $props();
 
+  let resumeEntryScrollerHeight = $state(0);
+  let scrollerSectionHeightMultiplier = 62;
+
   let mounted = $state(false);
   let smoother: globalThis.ScrollSmoother | null = $state(null);
 
   onMount(() => {
-    Promise.all(Object.values(data))
-      .then((v) => {
-        console.log(v);
-      })
-      .catch((err) => {
-        console.error("Error loading resume data:", err);
-      });
+
+    data.resumeSections.then((s) => {
+      resumeEntryScrollerHeight = Object.values(s).flat().length * scrollerSectionHeightMultiplier;
+    })
 
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
 
@@ -50,12 +46,13 @@
 </script>
 
 <svelte:head>
-  <title>Resume - {resumeData.contact.name}</title>
-  <meta
-    name="description"
-    content="Professional resume of {resumeData.contact
-      .name} - {resumeData.summary}"
-  />
+  {#await data.contact then contact}
+    <title>Resume - {contact?.name || 'Loading...'}</title>
+    <meta
+      name="description"
+      content="Professional resume of {contact?.name || 'Loading...'}"
+    />
+  {/await}
   <meta
     name="keywords"
     content="resume, software developer, computer science, full-stack, web development"
@@ -121,7 +118,8 @@
     <div class="main-borders left-0 ml-4">&nbsp;</div>
     <main
       id="smooth-content"
-      class="px-6 *:px-4 flex flex-col gap-8 !h-[650rem] md:!h-[450rem]"
+      class="px-6 *:px-4 flex flex-col gap-8"
+      style:height="{200 + resumeEntryScrollerHeight}rem"
     >
       <section
         data-speed="clamp(0.09)"
@@ -129,74 +127,138 @@
       >
         <h1 class="text-5xl w-1/2 border-b-2 border-b-black">Resume</h1>
 
-        <p class="text-sm">
-          <span
-            >{resumeData.contact.name} | {resumeData.contact.location} |
-          </span>
-          <a
-            href={`mailto:${resumeData.contact.email}`}
-            class="underline hover:no-underline transition-all duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Contact
-          </a>
-          <span> | </span>
-          <a
-            href="/resume.pdf"
-            class="underline hover:no-underline transition-all duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Download PDF Version
-          </a>
-        </p>
+        {#await data.contact}
+          <div class="w-full flex flex-col items-center gap-2 mt-4">
+            <Skeleton class="h-5 w-[40%]" />
+            <Skeleton class="h-5 w-[30%]" />
+          </div>
+        {:then contact}
+          {#if contact}
+            <p class="text-sm">
+              <span>{contact.name} | {contact.location} | </span>
+              <a
+                href="mailto:{contact.email}"
+                class="underline hover:no-underline transition-all duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Contact
+              </a>
+              <span> | </span>
+              <a
+                href="/resume.pdf"
+                class="underline hover:no-underline transition-all duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download PDF Version
+              </a>
+            </p>
 
-        <p class="text-sm">
-          <a
-            href={resumeData.contact.github || "#"}
-            class="underline hover:no-underline transition-all duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Github
-          </a>
-          <span> | </span>
-          <a
-            href={resumeData.contact.linkedin || "#"}
-            class="underline hover:no-underline transition-all duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-        </p>
+            <p class="text-sm">
+              <a
+                href="{contact.github || '#'}"
+                class="underline hover:no-underline transition-all duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github
+              </a>
+              <span> | </span>
+              <a
+                href="{contact.linkedin || '#'}"
+                class="underline hover:no-underline transition-all duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </p>
+          {/if}
+        {/await}
       </section>
 
-      {#each getSectionKeys() as secId, idxsi}
-        <section id={secId} class="mb-12 rounded-lg p-6 shadow-sm">
-          <!-- Section Title with Underline -->
-          <div class="mb-6">
-            <h2 class="text-2xl font-courierPrime text-black mb-2">{secId}</h2>
-            <div class="w-full max-w-md h-0.5 bg-black"></div>
-          </div>
+      {#await data.resumeSections}
+        <!-- Resume sections skeleton -->
+        <div class="flex flex-col gap-8">
+          {#each Array(3) as _}
+            <section class="mb-12 rounded-lg p-6 shadow-sm">
+              <div class="mb-6">
+                <Skeleton class="h-6 w-40 mb-2" />
+                <Skeleton class="h-0.5 w-full max-w-md" />
+              </div>
+              <div class="space-y-6">
+                {#each Array(2) as __}
+                  <Skeleton class="h-24 w-full" />
+                {/each}
+              </div>
+            </section>
+          {/each}
+        </div>
+      {:then sections}
+        {#each Object.entries(sections) as [categoryKey, entries]}
+          <section id={categoryKey} class="mb-12 rounded-lg p-6 shadow-sm">
+            <!-- Section Title with Underline -->
+            <div class="mb-6">
+              <h2 class="text-2xl font-courierPrime text-black mb-2">
+                {(() => {
+                  const categoryNames: Record<string, string> = {
+                    'work-experience': 'Experience',
+                    'education': 'Education',
+                    'volunteering': 'Volunteering',
+                    'academic': 'Academic',
+                    'freelance': 'Freelance',
+                    'hackathon': 'Hackathons',
+                    'personal': 'Projects'
+                  };
+                  return categoryNames[categoryKey] || categoryKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                })()}
+              </h2>
+              <div class="w-full max-w-md h-0.5 bg-black"></div>
+            </div>
 
-          <!-- Section Entries -->
-          <div class="space-y-8">
-            {#if secId === "Projects"}
-              {#each getSelectedProjects() as entry, idxe}
+            <!-- Section Entries -->
+            <div class="space-y-8">
+              {#each entries as entry}
                 <Entry {entry} />
               {/each}
-            {:else}
-              {#each resumeData.resumeSections[secId] as entry, idxe}
-                {#if typeof entry === "object"}
-                  <Entry {entry} />
-                {/if}
-              {/each}
-            {/if}
+            </div>
+          </section>
+        {/each}
+      {/await}
+
+      <!-- Projects Section -->
+      {#await data.projects}
+        <!-- Projects skeleton -->
+        <section class="mb-12 rounded-lg p-6 shadow-sm">
+          <div class="mb-6">
+            <Skeleton class="h-6 w-32 mb-2" />
+            <Skeleton class="h-0.5 w-full max-w-md" />
+          </div>
+          <div class="space-y-6">
+            {#each Array(3) as _}
+              <Skeleton class="h-32 w-full" />
+            {/each}
           </div>
         </section>
-      {/each}
+      {:then projects}
+        {#if projects && projects.length > 0}
+          <section id="projects" class="mb-12 rounded-lg p-6 shadow-sm">
+            <!-- Section Title with Underline -->
+            <div class="mb-6">
+              <h2 class="text-2xl font-courierPrime text-black mb-2">Projects</h2>
+              <div class="w-full max-w-md h-0.5 bg-black"></div>
+            </div>
+
+            <!-- Project Entries -->
+            <div class="space-y-8">
+              {#each projects as project}
+                <Entry entry={project} />
+              {/each}
+            </div>
+          </section>
+        {/if}
+      {/await}
 
       <section id="Skills" class="mb-12 rounded-lg p-6 shadow-sm">
         <!-- Section Title with Underline -->
@@ -206,33 +268,46 @@
         </div>
 
         <!-- Skills Grid -->
-        <div class="space-y-6">
-          {#each Object.entries(resumeData.skillSections) as [categoryName, skills]}
-            <div class="skill-category">
-              <h3
-                class="text-lg font-courierPrime font-semibold text-black mb-3"
-              >
-                {categoryName}
-              </h3>
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {#each skills as skill}
-                  <div class="skill-item">
-                    <span
-                      class="bg-black/10 hover:bg-black/20 transition-colors duration-200 px-3 py-2 rounded-lg text-sm font-courierPrime text-black block text-center"
-                    >
-                      {skill.name}
-                      {#if skill.proficiency}
-                        <span class="block text-xs text-black/60 mt-1">
-                          {skill.proficiency}
-                        </span>
-                      {/if}
-                    </span>
-                  </div>
-                {/each}
+        {#await data.skills}
+          <div class="space-y-6">
+            {#each Array(3) as _}
+              <div>
+                <Skeleton class="h-5 w-64 mb-3" />
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                  {#each Array(6) as __}
+                    <Skeleton class="h-8" />
+                  {/each}
+                </div>
               </div>
-            </div>
-          {/each}
-        </div>
+            {/each}
+          </div>
+        {:then skillSections}
+          <div class="space-y-6">
+            {#each skillSections as section}
+              <div class="skill-category">
+                <h3 class="text-lg font-courierPrime font-semibold text-black mb-3">
+                  {section.title}
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                  {#each section.skills || [] as skill}
+                    <div class="skill-item">
+                      <span
+                        class="bg-black/10 hover:bg-black/20 transition-colors duration-200 px-3 py-2 rounded-lg text-sm font-courierPrime text-black block text-center"
+                      >
+                        {skill.name}
+                        {#if skill.proficiency}
+                          <span class="block text-xs text-black/60 mt-1">
+                            {skill.proficiency}
+                          </span>
+                        {/if}
+                      </span>
+                    </div>
+                  {/each}
+                </div>
+              </div>
+            {/each}
+          </div>
+        {/await}
       </section>
     </main>
     <div class="main-borders right-0 mr-4">&nbsp;</div>

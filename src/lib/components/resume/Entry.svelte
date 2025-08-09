@@ -1,64 +1,57 @@
 <script lang="ts">
-  import type { ResumeEntry } from "$lib/interfaces/resume.interface";
-  import { getProjectById } from "$lib/data/project.data";
+  import type { ResumeEntry, Project } from "$lib/interfaces/sanity.types";
   import PreviewPlaceholder from "./PreviewPlaceholder.svelte";
 
   interface Props {
-    entry: ResumeEntry;
+    entry: ResumeEntry | Project;
   }
 
   let { entry }: Props = $props();
 
-  // Compute related project data if available
-  const relatedProjectsData = $derived(
-    entry.relatedProjects && entry.relatedProjects.length > 0
-      ? entry.relatedProjects.map((projectId) => {
-          const project = getProjectById(projectId);
-          return {
-            id: projectId,
-            name:
-              project?.title ||
-              projectId
-                .replace(/-/g, " ")
-                .replace(/\b\w/g, (l) => l.toUpperCase()),
-            url:
-              project?.previewItems?.[0]?.link || project?.githubUrl || `#project-${projectId}`,
-          };
-        })
-      : []
-  );
+  console.log(entry.title)
 
-  // Get all URLs to preview from previewItems or related projects
+  const isProject = (entry: any): boolean => entry._type === 'project';
+
   const getAllUrls = () => {
-    // If entry has previewItems, use those
-    if (entry.previewItems && entry.previewItems.length > 0) {
-      return entry.previewItems.map((item) => ({
-        title: item.title,
-        url: item.link,
-        image: item.image,
-        isPrimary: false,
-        isRelatedProject: false,
-      }));
+    console.log(Object.hasOwn(entry, 'relatedProjects'))
+    if (Object.hasOwn(entry, 'relatedProjects')) {
+      // @ts-ignore
+      return entry.previewItems?.concat(entry.relatedProjects.previewItems ?? entry.relatedProjects.map(p => {
+        return {
+          title: p.title,
+          link: p.githubUrl, //TODO: replace with project link in website
+          image: null
+        };
+      })) || [];
     }
-
-    // For experience entries with related projects, create preview items from project IDs
-    if (entry.relatedProjects && entry.relatedProjects.length > 0) {
-      return relatedProjectsData.map((projectData) => ({
-        title: projectData.name,
-        url: projectData.url,
-        image: undefined,
-        isPrimary: false,
-        isRelatedProject: true,
-      }));
-    }
-
-    return [];
+    return entry.previewItems || [];
   };
 
   const allUrls = getAllUrls();
   const maxPreviewsToShow = 2;
-  const urlsToPreview = allUrls.slice(0, maxPreviewsToShow);
+  const urlsToPreview = allUrls?.slice(0, maxPreviewsToShow);
   const remainingUrlsCount = Math.max(0, allUrls.length - maxPreviewsToShow);
+
+  $inspect({
+    allUrls,
+    urlsToPreview,
+    remainingUrlsCount,
+  });
+
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return '';
+    if (dateString === '9999-12-31') return 'Present';
+    
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short' 
+      });
+    } catch {
+      return dateString;
+    }
+  };
 </script>
 
 <div class="entry-item">
@@ -68,7 +61,7 @@
       {entry.title}
     </h3>
     <span class="text-sm font-courierPrime text-black/70 mt-1 sm:mt-0">
-      {entry.startDate} – {entry.endDate}
+      {formatDate(entry.startDate)} – {formatDate(entry.endDate)}
     </span>
   </div>
 
@@ -111,7 +104,7 @@
   {/if}
 
   <!-- Project Links for Projects section -->
-  {#if entry.githubUrl || (entry.previewItems && entry.previewItems.length > 0) || (entry.relatedProjects && entry.relatedProjects.length > 0)}
+  {#if (isProject(entry) && entry.githubUrl) || (entry.previewItems && entry.previewItems.length > 0) || (!isProject(entry) && (entry as any).relatedProjects && (entry as any).relatedProjects.length > 0)}
     <div class="mt-4">
       <!-- Preview thumbnails -->
       {#if urlsToPreview.length > 0}
@@ -122,18 +115,27 @@
 
               <button
                 class="relative group cursor-pointer w-full text-left col-span-3"
-                onclick={() => window.open(urlItem.url, "_blank")}
+                onclick={() => window.open(urlItem.link, "_blank")}
                 type="button"
                 aria-label={`Open ${urlItem.title}`}
               >
                 <div
                   class="w-full h-28 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-200"
                 >
-                  {#if previewItem?.image}
+                  {#if previewItem && (previewItem.image as any)?.asset?.url}
                     <!-- Use provided image -->
                     <div class="w-full h-full relative">
                       <img
-                        src={previewItem.image}
+                        src={(previewItem.image as any).asset.url}
+                        alt={urlItem.title}
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  {:else if urlItem.image?.url}
+                    <!-- Use image from related project -->
+                    <div class="w-full h-full relative">
+                      <img
+                        src={urlItem.image.url}
                         alt={urlItem.title}
                         class="w-full h-full object-cover"
                       />
@@ -175,7 +177,7 @@
 
       <!-- Action buttons -->
       <div class="flex flex-wrap gap-2">
-        {#if entry.githubUrl}
+        {#if isProject(entry) && entry.githubUrl}
           <button
             class="text-sm font-courierPrime text-black underline hover:no-underline transition-all duration-200"
             onclick={() => window.open(entry.githubUrl, "_blank")}
