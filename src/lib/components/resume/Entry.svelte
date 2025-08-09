@@ -13,24 +13,38 @@
   const isProject = (entry: any): boolean => entry._type === 'project';
 
   const getAllUrls = () => {
-    console.log(Object.hasOwn(entry, 'relatedProjects'))
-    if (Object.hasOwn(entry, 'relatedProjects')) {
-      // @ts-ignore
-      return entry.previewItems?.concat(entry.relatedProjects.previewItems ?? entry.relatedProjects.map(p => {
-        return {
-          title: p.title,
-          link: p.githubUrl, //TODO: replace with project link in website
-          image: null
-        };
-      })) || [];
+    console.log('Entry:', entry);
+    console.log('Has relatedProjects:', Object.hasOwn(entry, 'relatedProjects'));
+    
+    let urls: any[] = [];
+    
+    // Add preview items if they exist
+    if (entry.previewItems && Array.isArray(entry.previewItems)) {
+      urls = [...entry.previewItems];
     }
-    return entry.previewItems || [];
+    
+    if (Object.hasOwn(entry, 'relatedProjects') && (entry as any).relatedProjects) {
+      const relatedProjects = (entry as any).relatedProjects;
+      if (Array.isArray(relatedProjects)) {
+        const projectItems = relatedProjects.map((p: any) => ({
+          title: p.title || 'Untitled Project',
+          link: p.githubUrl || p.url || '#',
+          image: p.previewItems?.[0]?.image || null,
+          _type: 'previewItem',
+          _key: p._id || Math.random().toString()
+        }));
+        urls = [...urls, ...projectItems];
+      }
+    }
+    
+    console.log('Generated URLs:', urls);
+    return urls;
   };
 
   const allUrls = getAllUrls();
   const maxPreviewsToShow = 2;
-  const urlsToPreview = allUrls?.slice(0, maxPreviewsToShow);
-  const remainingUrlsCount = Math.max(0, allUrls.length - maxPreviewsToShow);
+  const urlsToPreview = Array.isArray(allUrls) ? allUrls.slice(0, maxPreviewsToShow) : [];
+  const remainingUrlsCount = Math.max(0, (Array.isArray(allUrls) ? allUrls.length : 0) - maxPreviewsToShow);
 
   $inspect({
     allUrls,

@@ -27,6 +27,21 @@
       resumeEntryScrollerHeight = Object.values(s).flat().length * scrollerSectionHeightMultiplier;
     })
 
+    // Debug data loading
+    Promise.all([
+      data.contact,
+      data.resumeSections, 
+      data.projects,
+      data.skills
+    ]).then(([contact, sections, projects, skills]) => {
+      console.log('Loaded data:', {
+        contact,
+        sections,
+        projects: projects?.length || 0,
+        skills: skills?.length || 0
+      });
+    }).catch(console.error);
+
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -257,7 +272,15 @@
               {/each}
             </div>
           </section>
+        {:else}
+          <section class="mb-12 rounded-lg p-6 shadow-sm">
+            <p class="text-black/60">No projects to display</p>
+          </section>
         {/if}
+      {:catch error}
+        <section class="mb-12 rounded-lg p-6 shadow-sm">
+          <p class="text-red-600">Error loading projects: {error.message}</p>
+        </section>
       {/await}
 
       <section id="Skills" class="mb-12 rounded-lg p-6 shadow-sm">

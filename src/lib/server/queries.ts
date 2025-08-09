@@ -22,7 +22,7 @@ const RESUME_PROJECTS_QUERY = `*[_type == "project" && showInResume == true]{
       ...,
       "url": asset->url
     }
-  }[0]
+  }
 } | ${experienceSort}`
 
 const RESUME_ENTRIES_QUERY = `*[_type == "resumeEntry"]{
