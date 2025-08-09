@@ -1,47 +1,65 @@
 import type { Contact, Project, ResumeEntry, SkillSection } from '$lib/interfaces/sanity.types'
 import sanity from './sanity'
 
-const PROJECTS_QUERY = `*[_type == "project"]`
-const RESUME_ENTRIES_QUERY = `*[_type == "resumeEntry"]`
+const experienceSort = `order(coalesce(select(endDate == 9999-12-31 => null, endDate), startDate) desc)`;
+
+const PROJECTS_QUERY = `*[_type == "project"]{
+  ...,
+  preview[]{
+    ...,
+    image{
+      ...,
+      "url": asset->url
+    }
+  }
+} | ${experienceSort}`
+const RESUME_ENTRIES_QUERY = `*[_type == "resumeEntry"]{
+  ...,
+  relatedProjects[]->{
+    title,
+    url,
+    githubUrl,
+    identifier,
+    preview[]{
+      ...,
+      image{
+        ...,
+        "url": asset->url
+      }
+    }
+  }
+} | ${experienceSort}`
 const SKILL_SECTIONS_QUERY = `*[_type == "skillSection"]`
-const CONTACT_QUERY = `*[_type == "contact"][0]`
-
-function parseDate(d?: string): number | null {
-  if (!d) return null
-  const ts = Date.parse(d)
-  return Number.isNaN(ts) ? null : ts
-}
-
-function sortByExperience<T extends { startDate?: string; endDate?: string }>(arr: T[]): T[] {
-  return [...arr].sort((a, b) => {
-    const aEnd = parseDate(a.endDate)
-    const bEnd = parseDate(b.endDate)
-    const aStart = parseDate(a.startDate)
-    const bStart = parseDate(b.startDate)
-    const aOngoing = aEnd === null
-    const bOngoing = bEnd === null
-    if (aOngoing && !bOngoing) return -1
-    if (!aOngoing && bOngoing) return 1
-    if (aOngoing && bOngoing) return (bStart ?? 0) - (aStart ?? 0)
-    if (bEnd !== aEnd) return (bEnd ?? 0) - (aEnd ?? 0)
-    return (bStart ?? 0) - (aStart ?? 0)
-  })
-}
+const CONTACT_QUERY = `*[_type == "contact"][0]{
+  ...,
+  resumePdf{
+    "url": asset->url
+  }
+}`
 
 export async function getProjects(): Promise<Project[]> {
-  const data = await sanity.fetch<Project[]>(PROJECTS_QUERY)
-  return sortByExperience(data)
+  const data = sanity.fetch<Project[]>(PROJECTS_QUERY)
+  return data
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  const query = `*[_type == "project" && identifier.current == $slug][0]`
-  const doc = await sanity.fetch<Project | null>(query, { slug })
-  return doc ?? null
+  const query = `*[_type == "project" && identifier.current == $slug][0]{
+    ...,
+    preview[]{
+      ...,
+      image{
+        ...,
+        "url": asset->url
+      }
+    }
+  }`
+  const doc = sanity.fetch<Project | null>(query, { slug })
+  return doc
 }
 
 export async function getResumeEntries(): Promise<ResumeEntry[]> {
-  const data = await sanity.fetch<ResumeEntry[]>(RESUME_ENTRIES_QUERY)
-  return sortByExperience(data)
+  const data = sanity.fetch<ResumeEntry[]>(RESUME_ENTRIES_QUERY)
+  return data
 }
 
 export async function getResumeEntriesByCategory(): Promise<Record<string, ResumeEntry[]>> {
@@ -52,9 +70,7 @@ export async function getResumeEntriesByCategory(): Promise<Record<string, Resum
     if (!grouped[key]) grouped[key] = []
     grouped[key].push(entry)
   }
-  for (const k of Object.keys(grouped)) {
-    grouped[k] = sortByExperience(grouped[k])
-  }
+ 
   const ORDER: string[] = [
     'work-experience',
     'education',
@@ -76,6 +92,6 @@ export async function getSkillSections(): Promise<SkillSection[]> {
 }
 
 export async function getContactInfo(): Promise<Contact | null> {
-  const doc = await sanity.fetch<Contact | null>(CONTACT_QUERY)
-  return doc ?? null
+  const doc = sanity.fetch<Contact | null>(CONTACT_QUERY)
+  return doc
 }
