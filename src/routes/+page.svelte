@@ -4,12 +4,11 @@
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
   import HomeIntro from "$lib/components/HomeIntro.svelte";
-  import { base } from "$app/paths";
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
   import { resumeData } from "$lib/data/resume.data";
 
-  let smoother: globalThis.ScrollSmoother;
+  let smoother: globalThis.ScrollSmoother | undefined = $state();
 
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -25,14 +24,14 @@
   $crtEffectEnabled = true;
 
   onDestroy(() => {
-    smoother.kill();
+    smoother?.kill();
   });
 </script>
 
 <svelte:window />
 
 <main id="smooth-content" class="font-majorMono">
-  <HomeIntro bind:smoother />
+  <HomeIntro bind:smoother={smoother as globalThis.ScrollSmoother} />
 
   <section
     id="main-info"

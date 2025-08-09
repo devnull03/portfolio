@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { isMobile, scrollThreshold } from "$lib/stores";
 
   let initScroll = $state(0);
-  let isLandingPage = $derived($page.route.id === "/");
+  let isLandingPage = $derived(page.route.id === "/");
 
   let mobileNavButtonWidth: number = $state(0);
   let mobileNavOpen = $state(false);
