@@ -1,19 +1,40 @@
 <script lang="ts">
-  import { getSectionKeys, resumeData } from "$lib/data/resume.data";
   import { slide } from "svelte/transition";
 
   let {
     mounted = $bindable(),
     smoother = $bindable(),
+    resumeSections,
     class: className,
   }: {
     mounted: boolean;
     smoother: globalThis.ScrollSmoother | null;
+    resumeSections: Promise<Record<string, any[]>>;
     class?: string;
   } = $props();
 
-  let sections = $derived([...getSectionKeys(), "Skills"]);
+  let sections = $state<{display: string, id: string}[]>([]);
   let isOpen = $state(false);
+
+  resumeSections.then((data) => {
+    const categoryNames: Record<string, string> = {
+      'experience': 'Experience',
+      'education': 'Education',
+      'volunteering': 'Volunteering',
+      'projects': 'Projects'
+    };
+    
+    const resumeSectionItems = Object.keys(data).map(key => ({
+      display: categoryNames[key] || key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      id: key
+    }));
+    
+    sections = [
+      ...resumeSectionItems,
+      { display: "Projects", id: "projects" },
+      { display: "Skills", id: "Skills" }
+    ];
+  }).catch(console.error);
 
   const scrollToSection = (id: string) => {
     if (!mounted) return;
@@ -51,9 +72,9 @@
         transition:slide={{ duration: 250 }}
       >
         <div class="flex flex-col py-2.5 px-4 gap-3 font-courierPrime *:text-left *:text-sm">
-          {#each sections as sec, idxs}
-            <button onclick={() => scrollToSection(sec)}>
-              {sec}
+          {#each sections as section, idx}
+            <button onclick={() => scrollToSection(section.id)}>
+              {section.display}
             </button>
           {/each}
         </div>
@@ -63,12 +84,10 @@
 </div>
 
 <style type="postcss">
-  /* Custom styles for the mobile navigation */
   button {
     font-family: "Courier Prime", monospace;
   }
 
-  /* Add visual feedback for the collapsible state */
   button[aria-expanded="true"] {
     background-color: #f9f9f9;
   }

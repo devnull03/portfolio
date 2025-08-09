@@ -218,13 +218,10 @@
               <h2 class="text-2xl font-courierPrime text-black mb-2">
                 {(() => {
                   const categoryNames: Record<string, string> = {
-                    'work-experience': 'Experience',
+                    'experience': 'Experience',
                     'education': 'Education',
                     'volunteering': 'Volunteering',
-                    'academic': 'Academic',
-                    'freelance': 'Freelance',
-                    'hackathon': 'Hackathons',
-                    'personal': 'Projects'
+                    'projects': 'Projects'
                   };
                   return categoryNames[categoryKey] || categoryKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 })()}
@@ -336,9 +333,9 @@
     <div class="main-borders right-0 mr-4">&nbsp;</div>
   </div>
 
-  <ResumeNav bind:mounted bind:smoother class="nav-position" />
+  <ResumeNav bind:mounted bind:smoother resumeSections={data.resumeSections} class="nav-position" />
 
-  <ResumeMobileNav bind:mounted bind:smoother />
+  <ResumeMobileNav bind:mounted bind:smoother resumeSections={data.resumeSections} />
 </div>
 
 <style type="postcss">

@@ -1,17 +1,37 @@
 <script lang="ts">
-  import { getSectionKeys } from "$lib/data/resume.data";
-
   let {
     mounted = $bindable(),
     smoother = $bindable(),
+    resumeSections,
     class: className,
   }: {
     mounted: boolean;
     smoother: globalThis.ScrollSmoother | null;
+    resumeSections: Promise<Record<string, any[]>>;
     class?: string;
   } = $props();
 
-  let sections = $derived([...getSectionKeys(), "Skills"]);
+  let sections = $state<{display: string, id: string}[]>([]);
+
+  resumeSections.then((data) => {
+    const categoryNames: Record<string, string> = {
+      'experience': 'Experience',
+      'education': 'Education',
+      'volunteering': 'Volunteering',
+      'projects': 'Projects'
+    };
+    
+    const resumeSectionItems = Object.keys(data).map(key => ({
+      display: categoryNames[key] || key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      id: key
+    }));
+    
+    sections = [
+      ...resumeSectionItems,
+      { display: "Projects", id: "projects" },
+      { display: "Skills", id: "Skills" }
+    ];
+  }).catch(console.error);
 
   const scrollToSection = (id: string) => {
     if (!mounted) return;
@@ -26,12 +46,12 @@
       Sections
     </h2>
     <div class="flex flex-col items-start gap-2 *:text-lg">
-      {#each sections as sec, idxs}
+      {#each sections as section, idx}
         <button
           class="group font-courierPrime text-sm text-left"
-          onclick={() => scrollToSection(sec)}
+          onclick={() => scrollToSection(section.id)}
         >
-          {sec}
+          {section.display}
           <hr
             class="w-0 group-hover:w-1/2 -mt-1 transition-all duration-200 border-black"
           />
