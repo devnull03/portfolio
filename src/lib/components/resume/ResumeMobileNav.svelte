@@ -17,23 +17,46 @@
   let isOpen = $state(false);
 
   resumeSections.then((data) => {
-    const categoryNames: Record<string, string> = {
-      'experience': 'Experience',
-      'education': 'Education',
-      'volunteering': 'Volunteering',
-      'projects': 'Projects'
-    };
+    // Check if this is projects data by looking for resume-specific categories first
+    const isResumePage = Object.keys(data).some(key => 
+      ['experience', 'education', 'volunteering'].includes(key)
+    );
     
-    const resumeSectionItems = Object.keys(data).map(key => ({
-      display: categoryNames[key] || key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      id: key
-    }));
+    let categoryNames: Record<string, string>;
     
-    sections = [
-      ...resumeSectionItems,
-      { display: "Projects", id: "projects" },
-      { display: "Skills", id: "Skills" }
-    ];
+    if (isResumePage) {
+      categoryNames = {
+        'experience': 'Experience',
+        'education': 'Education',
+        'volunteering': 'Volunteering',
+        'projects': 'Projects'
+      };
+      
+      const sectionItems = Object.keys(data).map(key => ({
+        display: categoryNames[key] || key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        id: key
+      }));
+      
+      sections = [
+        ...sectionItems,
+        { display: "Projects", id: "projects" },
+        { display: "Skills", id: "Skills" }
+      ];
+    } else {
+      // This is projects page
+      categoryNames = {
+        'work-experience': 'Work Experience',
+        'personal': 'Personal Projects',
+        'academic': 'Academic Projects',
+        'freelance': 'Freelance Work',
+        'hackathon': 'Hackathons'
+      };
+      
+      sections = Object.keys(data).map(key => ({
+        display: categoryNames[key] || key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        id: key
+      }));
+    }
   }).catch(console.error);
 
   const scrollToSection = (id: string) => {
@@ -60,7 +83,7 @@
       <div
         class="font-courierPrime leading-[normal] not-italic text-sm text-left text-nowrap"
       >
-        Resume sections
+        Page sections
       </div>
     </button>
 

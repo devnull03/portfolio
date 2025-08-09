@@ -108,6 +108,33 @@ export async function getSkillSections(): Promise<SkillSection[]> {
 	return sanity.fetch<SkillSection[]>(SKILL_SECTIONS_QUERY)
 }
 
+export async function getProjectsByCategory(): Promise<Record<string, Project[]>> {
+	const projects = await getProjects()
+	const grouped: Record<string, Project[]> = {}
+	for (const project of projects) {
+		const key = project.category ?? 'uncategorized'
+		if (!grouped[key]) grouped[key] = []
+		grouped[key].push(project)
+	}
+
+	const ORDER: string[] = [
+		'work-experience',
+		'personal', 
+		'academic',
+		'freelance',
+		'hackathon'
+	]
+	const ordered: Record<string, Project[]> = {}
+	for (const k of ORDER) {
+		if (grouped[k]?.length) ordered[k] = grouped[k]
+	}
+	const remaining = Object.keys(grouped)
+		.filter((k) => !ORDER.includes(k))
+		.sort((a, b) => a.localeCompare(b))
+	for (const k of remaining) ordered[k] = grouped[k]
+	return ordered
+}
+
 export async function getContactInfo(): Promise<Contact | null> {
 	const doc = sanity.fetch<Contact | null>(CONTACT_QUERY)
 	return doc

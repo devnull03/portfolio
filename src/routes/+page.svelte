@@ -47,6 +47,9 @@
       <Button onclick={() => goto("/resume")} target="_blank" size="sm"
         >Resume</Button
       >
+      <Button onclick={() => goto("/projects")} target="_blank" size="sm"
+        >Projects</Button
+      >
     </div>
   </section>
 
