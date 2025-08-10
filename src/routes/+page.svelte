@@ -62,6 +62,9 @@
       >
         Surprize
       </Button>
+      <Button href="https://devnull03.notion.site/thingys" target="_blank" size="sm"
+        >Blog</Button
+      >
     </div>
   </section>
 
