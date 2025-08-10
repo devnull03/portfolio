@@ -11,6 +11,7 @@
 
   let smoother: globalThis.ScrollSmoother | undefined = $state();
   let showFloatingWindow = $state(false);
+  let loadFloatingWindow = $state(false);
 
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -54,6 +55,7 @@
       >
       <Button
         onclick={() => (showFloatingWindow = true)}
+        onmouseover={() => (loadFloatingWindow = true)}
         variant="outline"
         size="sm"
         class="bg-blue-500 hover:bg-blue-600 text-white border-blue-500 hover:border-blue-600"
@@ -68,6 +70,6 @@
   </footer>
 </main>
 
-{#if showFloatingWindow}
-  <FunnyHaha onClose={() => (showFloatingWindow = false)} />
+{#if loadFloatingWindow}
+  <FunnyHaha show={showFloatingWindow} onClose={() => (showFloatingWindow = false)} />
 {/if}
