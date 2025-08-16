@@ -33,7 +33,7 @@
 
 <svelte:window />
 
-<main id="smooth-content" class="font-majorMono">
+<main id="smooth-content" class="font-majorMono h-[250vh]">
   <HomeIntro bind:smoother={smoother as globalThis.ScrollSmoother} />
 
   <section
@@ -43,7 +43,7 @@
     <p class="text-6xl">hello</p>
     <p class="">i make stuff</p>
 
-    <div class="flex items-center gap-4">
+    <div class="flex flex-wrap justify-center items-center gap-4 px-4">
       <Button href={resumeData.contact.github} target="_blank" size="sm"
         >Github</Button
       >
@@ -68,8 +68,8 @@
     </div>
   </section>
 
-  <footer data-speed="0.5" class="realtive z-10 h-screen bg-orange-400">
-    alkfd
+  <footer data-speed="1" class="realtive z-10 h-[40vh] bg-orange-400 text-black font-black flex items-center justify-center p-2 text-center">
+    how i built this: <a href="https://devnull03.notion.site/thingys" target="_blank">blog post thingy</a>
   </footer>
 </main>
 
