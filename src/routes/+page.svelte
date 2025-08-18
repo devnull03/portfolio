@@ -47,12 +47,13 @@
       <Button href={resumeData.contact.github} target="_blank" size="sm"
         >Github</Button
       >
-      <Button onclick={() => goto("/resume")} target="_blank" size="sm"
-        >Resume</Button
-      >
       <Button onclick={() => goto("/projects")} target="_blank" size="sm"
         >Projects</Button
       >
+      <Button onclick={() => goto("/resume")} target="_blank" size="sm"
+        >Resume</Button
+      >
+
       <Button
         onclick={() => (showFloatingWindow = true)}
         onmouseover={() => (loadFloatingWindow = true)}
@@ -62,17 +63,31 @@
       >
         Surprize
       </Button>
-      <Button href="https://devnull03.notion.site/thingys" target="_blank" size="sm"
-        >Blog</Button
+      <Button
+        href="https://devnull03.notion.site/thingys"
+        target="_blank"
+        size="sm">Blog</Button
       >
     </div>
+
+    <a href="mailto:arnav@dvnl.work">email me</a>
+
   </section>
 
-  <footer data-speed="1" class="realtive z-10 h-[40vh] bg-orange-400 text-black font-black flex items-center justify-center p-2 text-center">
-    how i built this: <a href="https://devnull03.notion.site/thingys" target="_blank">blog post thingy</a>
+  <footer
+    data-speed="1"
+    class="realtive z-10 h-[40vh] bg-orange-400 text-black font-black flex items-center justify-center p-2 text-center"
+  >
+    how i built this: <a
+      href="https://devnull03.notion.site/thingys"
+      target="_blank">blog post thingy</a
+    >
   </footer>
 </main>
 
 {#if loadFloatingWindow}
-  <FunnyHaha show={showFloatingWindow} onClose={() => (showFloatingWindow = false)} />
+  <FunnyHaha
+    show={showFloatingWindow}
+    onClose={() => (showFloatingWindow = false)}
+  />
 {/if}

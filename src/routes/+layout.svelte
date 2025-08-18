@@ -65,6 +65,10 @@
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
   <meta name="theme-color" content="#ffffff" />
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={'{"token": "55338564772b42c391fb241b614c6cc9"}'}></script>
+  <!-- End Cloudflare Web Analytics -->
 </svelte:head>
 
 <svelte:window bind:scrollY />

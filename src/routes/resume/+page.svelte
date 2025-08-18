@@ -92,7 +92,7 @@
     </Button>
 
     <Button
-      class="relative hover:text-black"
+      class="relative hover:text-black {$isRecruiter && 'hidden'}"
       variant="outline"
       size="icon"
       onclick={() => ($crtEffectEnabled = !$crtEffectEnabled)}

@@ -6,7 +6,7 @@
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
   import { base } from "$app/paths";
-  import { crtEffectBlendMode, crtEffectEnabled } from "$lib/stores";
+  import { crtEffectBlendMode, crtEffectEnabled, isRecruiter } from "$lib/stores";
   import { CrtEffectBlendMode } from "$lib/interfaces/sys.interface";
   import Entry from "$lib/components/resume/Entry.svelte";
   import ResumeNav from "$lib/components/resume/ResumeNav.svelte";
@@ -65,13 +65,13 @@
 </svelte:head>
 
 <div
-  class="bg-[url('/assets/resume-bg.png')] {$crtEffectEnabled
+  class="bg-[url('/assets/resume-bg.png')] {!$isRecruiter && $crtEffectEnabled
     ? 'bg-black/20'
     : 'bg-white/70'} h-full bg-blend-overlay bg-cover rounded-lg md:px-16 py-4 flex gap-6 font-courierPrime text-black"
 >
   <div class="fixed md:absolute top-4 right-4 z-50 flex md:flex-col gap-2">
     <Button
-      class="relative hover:text-black"
+      class="relative hover:text-black {$isRecruiter && 'hidden'}"
       variant="outline"
       size="icon"
       onclick={() => ($crtEffectEnabled = !$crtEffectEnabled)}
