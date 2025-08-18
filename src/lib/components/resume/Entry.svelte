@@ -89,13 +89,10 @@
 
   <!-- Details/Responsibilities -->
   {#if entry.details && entry.details.length > 0}
-    <ul class="mb-4">
+    <ul class="mb-4 list-disc">
       {#each entry.details as detail}
-        <li class="flex items-center">
-          <span class="text-black mr-2 mt-1">•</span>
-          <span class="font-courierPrime text-black leading-relaxed">
+        <li class="font-courierPrime text-black leading-relaxed">
             {detail}
-          </span>
         </li>
       {/each}
     </ul>
