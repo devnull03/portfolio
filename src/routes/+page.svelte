@@ -70,8 +70,26 @@
       >
     </div>
 
-    <a href="mailto:arnav@dvnl.work">email me</a>
+    <p
+      aria-label="summary"
+      class="max-w-3xl text-justify text-sm font-courierPrime"
+    >
+      summary: <br />
+      I've been creating projects since I was in 9th grade. I've worked with
+      <b>automation</b> (<i>puppet browsers, discord bots, web scraping</i>),
+      <b>web dev</b> (<i
+        >fine tuning llms to use templates and create SEO optimised sites</i
+      >), <b>optimisation</b> (<i
+        >making the most efficient - websites, code, mass data processing
+        scripts</i
+      >). Also i've been making little cool tools with <b>notion integrations</b>
+      recently. Contact me if you have something cool you to work on.
+    </p>
 
+    <a
+      href="mailto:arnav@dvnl.work"
+      class="text-xs font-bold border-b border-b-white">email me here</a
+    >
   </section>
 
   <footer

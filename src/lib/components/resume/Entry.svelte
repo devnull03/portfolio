@@ -53,8 +53,10 @@
   });
 
   const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
-    if (dateString === '9999-12-31') return 'Present';
+    console.log(dateString);
+    
+    if (!dateString) return 'Present';
+    if (dateString === '9999-12-31' || dateString === undefined) return 'Present';
     
     try {
       const date = new Date(dateString);
