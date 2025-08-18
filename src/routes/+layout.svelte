@@ -1,28 +1,24 @@
 <script lang="ts">
   import "../app.css";
-  import { onMount } from "svelte";
-  import { fade, fly } from "svelte/transition";
-  import { PUBLIC_COMPANY_NAME, PUBLIC_DOMAIN } from "$env/static/public";
+  import type { LayoutProps } from "./$types";
+  import { fade } from "svelte/transition";
+  import { PUBLIC_COMPANY_NAME } from "$env/static/public";
   import { ModeWatcher } from "mode-watcher";
-  import { Toaster } from "$lib/components/ui/sonner";
-
   import Cursor from "$lib/components/Cursor.svelte";
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
   import CrtOverlay from "$lib/components/CrtOverlay.svelte";
   import { ChevronUp } from "@lucide/svelte";
   import { crtEffectEnabled } from "$lib/stores";
-
-  interface Props {
-    children?: import("svelte").Snippet;
-  }
+  import { isRecruiter } from "$lib/stores";
+  import { Button } from "$lib/components/ui/button";
 
   let scrollY = $state(0);
-  let { children }: Props = $props();
+  let { children, data }: LayoutProps = $props();
 
-  let isLoading = $state($crtEffectEnabled);
+  $isRecruiter = data.isRecruiter;
+
+  let isLoading = $state(!$isRecruiter && $crtEffectEnabled);
   let crtEffect: CrtOverlay | undefined = $state(undefined);
-
-  onMount(() => {});
 
   function handleLoadingComplete() {
     isLoading = false;
@@ -69,15 +65,30 @@
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
   <meta name="theme-color" content="#ffffff" />
-
 </svelte:head>
 
 <svelte:window bind:scrollY />
 
-<CrtOverlay bind:this={crtEffect} />
+{#if $isRecruiter}
+  <div class="fixed top-4 right-4 z-50 flex flex-col gap-2">
+    <Button
+      class="hover:text-black"
+      variant="outline"
+      size="sm"
+      onclick={() => window.location.href = '?recruiter=0'}
+      title="Switch back to regular portfolio experience"
+    >
+      Back to Regular Site
+    </Button>
+  </div>
+{/if}
+
+{#if !$isRecruiter}
+  <CrtOverlay bind:this={crtEffect} />
+{/if}
+
 <Cursor />
-<ModeWatcher />
-<Toaster />
+<ModeWatcher defaultMode="dark" />
 
 {#if isLoading}
   <LoadingScreen onComplete={handleLoadingComplete} />

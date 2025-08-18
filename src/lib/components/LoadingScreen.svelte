@@ -49,6 +49,16 @@
       class:loading-complete={extendBar}
     ></div>
   </div>
+
+  <div class="text-sm text-black/60 font-courierPrime mt-24">
+    <span>Recruiter? </span>
+    <a
+      href="?recruiter=1"
+      class="underline hover:no-underline transition-all duration-200 text-black/80 hover:text-black"
+    >
+      See plain version →
+    </a>
+  </div>
 </div>
 
 <style>

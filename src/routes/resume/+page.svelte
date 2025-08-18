@@ -5,13 +5,14 @@
   import { ArrowLeft, Download } from "@lucide/svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
-  import { base } from "$app/paths";
   import { crtEffectBlendMode, crtEffectEnabled } from "$lib/stores";
   import { CrtEffectBlendMode } from "$lib/interfaces/sys.interface";
   import Entry from "$lib/components/resume/Entry.svelte";
   import ResumeNav from "$lib/components/resume/ResumeNav.svelte";
   import ResumeMobileNav from "$lib/components/resume/ResumeMobileNav.svelte";
   import type { PageProps } from "./$types";
+  import { isRecruiter } from "$lib/stores";
+  // import { fade } from "svelte/transition";
 
   let { data }: PageProps = $props();
 
@@ -75,7 +76,7 @@
 </svelte:head>
 
 <div
-  class="bg-[url('/assets/resume-bg.png')] {$crtEffectEnabled
+  class="bg-[url('/assets/resume-bg.png')] {!$isRecruiter && $crtEffectEnabled
     ? 'bg-black/20'
     : 'bg-white/70'} h-full bg-blend-overlay bg-cover rounded-lg md:px-16 py-4 flex gap-6 font-courierPrime text-black"
 >
@@ -85,7 +86,7 @@
       variant="outline"
       size="icon"
       target="_blank"
-      href="{base}/resume.pdf"
+      href="/resume.pdf"
     >
       <Download class="w-6 h-6 text-white" />
     </Button>
@@ -123,7 +124,7 @@
   </div>
 
   <div class="fixed md:absolute top-4 left-4 z-50 flex flex-col gap-2">
-    <Button class="" variant="outline" size="icon" href="{base}/">
+    <Button class="" variant="outline" size="icon" href="/">
       <!-- <Download class="w-6 h-6 text-white" /> -->
       <ArrowLeft class="w-6 h-6 text-white" />
     </Button>
@@ -144,8 +145,8 @@
 
         {#await data.contact}
           <div class="w-full flex flex-col items-center gap-2 mt-4">
-            <Skeleton class="h-5 w-[40%]" />
-            <Skeleton class="h-5 w-[30%]" />
+            <Skeleton class="h-5 w-[40%] bg-black/30" />
+            <Skeleton class="h-5 w-[30%] bg-black/30" />
           </div>
         {:then contact}
           {#if contact}
@@ -197,14 +198,14 @@
         <!-- Resume sections skeleton -->
         <div class="flex flex-col gap-8">
           {#each Array(3) as _}
-            <section class="mb-12 rounded-lg p-6 shadow-sm">
+            <section class="mb-12 rounded-lg p-6">
               <div class="mb-6">
-                <Skeleton class="h-6 w-40 mb-2" />
-                <Skeleton class="h-0.5 w-full max-w-md" />
+                <Skeleton class="h-6 w-40 mb-2 bg-black/30" />
+                <Skeleton class="h-0.5 w-full max-w-md bg-black/30" />
               </div>
               <div class="space-y-6">
                 {#each Array(2) as __}
-                  <Skeleton class="h-24 w-full" />
+                  <Skeleton class="h-24 w-full bg-black/30" />
                 {/each}
               </div>
             </section>
@@ -212,7 +213,7 @@
         </div>
       {:then sections}
         {#each Object.entries(sections) as [categoryKey, entries]}
-          <section id={categoryKey} class="mb-12 rounded-lg p-6 shadow-sm">
+          <section id={categoryKey} class="mb-12 rounded-lg p-6 ">
             <!-- Section Title with Underline -->
             <div class="mb-6">
               <h2 class="text-2xl font-courierPrime text-black mb-2">
@@ -242,20 +243,20 @@
       <!-- Projects Section -->
       {#await data.projects}
         <!-- Projects skeleton -->
-        <section class="mb-12 rounded-lg p-6 shadow-sm">
+        <section class="mb-12 rounded-lg p-6">
           <div class="mb-6">
-            <Skeleton class="h-6 w-32 mb-2" />
-            <Skeleton class="h-0.5 w-full max-w-md" />
+            <Skeleton class="h-6 w-32 mb-2 bg-black/30" />
+            <Skeleton class="h-0.5 w-full max-w-md bg-black/30" />
           </div>
           <div class="space-y-6">
             {#each Array(3) as _}
-              <Skeleton class="h-32 w-full" />
+              <Skeleton class="h-32 w-full bg-black/30" />
             {/each}
           </div>
         </section>
       {:then projects}
         {#if projects && projects.length > 0}
-          <section id="projects" class="mb-12 rounded-lg p-6 shadow-sm">
+          <section id="projects" class="mb-12 rounded-lg p-6 ">
             <!-- Section Title with Underline -->
             <div class="mb-6">
               <h2 class="text-2xl font-courierPrime text-black mb-2">Projects</h2>
@@ -270,17 +271,17 @@
             </div>
           </section>
         {:else}
-          <section class="mb-12 rounded-lg p-6 shadow-sm">
+          <section class="mb-12 rounded-lg p-6 ">
             <p class="text-black/60">No projects to display</p>
           </section>
         {/if}
       {:catch error}
-        <section class="mb-12 rounded-lg p-6 shadow-sm">
+        <section class="mb-12 rounded-lg p-6 ">
           <p class="text-red-600">Error loading projects: {error.message}</p>
         </section>
       {/await}
 
-      <section id="Skills" class="mb-12 rounded-lg p-6 shadow-sm">
+      <section id="Skills" class="mb-12 rounded-lg p-6 ">
         <!-- Section Title with Underline -->
         <div class="mb-6">
           <h2 class="text-2xl font-courierPrime text-black mb-2">Skills</h2>
@@ -292,10 +293,10 @@
           <div class="space-y-6">
             {#each Array(3) as _}
               <div>
-                <Skeleton class="h-5 w-64 mb-3" />
+                <Skeleton class="h-5 w-64 mb-3 bg-black/30" />
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                   {#each Array(6) as __}
-                    <Skeleton class="h-8" />
+                    <Skeleton class="h-8 bg-black/30" />
                   {/each}
                 </div>
               </div>

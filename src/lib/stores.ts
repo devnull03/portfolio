@@ -8,3 +8,5 @@ export const currentCursorState =  writable<CursorState>(CursorState.Default);
 
 export const crtEffectEnabled = writable<boolean>(true);
 export const crtEffectBlendMode = writable<CrtEffectBlendMode>(CrtEffectBlendMode.Overlay);
+
+export const isRecruiter = writable<boolean>(false);
