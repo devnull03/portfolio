@@ -44,6 +44,9 @@
     <p class="">i make stuff</p>
 
     <div class="flex flex-wrap justify-center items-center gap-4 px-4">
+      <Button href={resumeData.contact.linkedin} target="_blank" size="sm"
+        >LinkedIn</Button
+      >
       <Button href={resumeData.contact.github} target="_blank" size="sm"
         >Github</Button
       >
