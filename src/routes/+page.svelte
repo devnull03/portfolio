@@ -86,7 +86,7 @@
         >making the most efficient - websites, code, mass data processing
         scripts</i
       >). Also i've been making little cool tools with <b>notion integrations</b>
-      recently. Contact me if you have something cool you to work on.
+      recently. Contact me if you have something cool you want to work on.
     </p>
 
     <a
