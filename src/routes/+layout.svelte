@@ -67,7 +67,11 @@
   <meta name="theme-color" content="#ffffff" />
 
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={'{"token": "55338564772b42c391fb241b614c6cc9"}'}></script>
+  <script
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={'{"token": "55338564772b42c391fb241b614c6cc9"}'}
+  ></script>
   <!-- End Cloudflare Web Analytics -->
 </svelte:head>
 
@@ -79,7 +83,7 @@
       class="hover:text-black"
       variant="outline"
       size="sm"
-      onclick={() => window.location.href = '?recruiter=0'}
+      onclick={() => (window.location.href = "?recruiter=0")}
       title="Switch back to regular portfolio experience"
     >
       Back to Regular Site

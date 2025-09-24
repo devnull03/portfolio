@@ -33,7 +33,7 @@
 
 <svelte:window />
 
-<main id="smooth-content" class="font-majorMono h-[250vh]">
+<main id="smooth-content" class="font-majorMono">
   <HomeIntro bind:smoother={smoother as globalThis.ScrollSmoother} />
 
   <section
@@ -85,7 +85,8 @@
       >), <b>optimisation</b> (<i
         >making the most efficient - websites, code, mass data processing
         scripts</i
-      >). Also i've been making little cool tools with <b>notion integrations</b>
+      >). Also i've been making little cool tools with
+      <b>notion integrations</b>
       recently. Contact me if you have something cool you want to work on.
     </p>
 
@@ -95,13 +96,15 @@
     >
   </section>
 
+  <!-- <div class="h-[39vh] -z-20 pointer-events-none!"></div> -->
   <footer
-    data-speed="1"
-    class="realtive z-10 h-[40vh] bg-orange-400 text-black font-black flex items-center justify-center p-2 text-center"
+    data-speed="-0.5"
+    class="h-[40vh] w-full bg-orange-400 text-black font-black flex items-center justify-center p-2 text-center"
   >
-    how i built this: <a
+    how i built this: &nbsp; <a
       href="https://devnull03.notion.site/thingys"
-      target="_blank">blog post thingy</a
+      target="_blank"
+      class="underline">blog post thingy</a
     >
   </footer>
 </main>

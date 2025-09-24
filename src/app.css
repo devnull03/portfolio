@@ -86,7 +86,7 @@
   #smooth-content {
     overflow: visible;
     width: 100%;
-    height: 150rem;
+    /* height: 100%; */
   }
   .aspect-crt {
     @apply md:!max-w-[calc(100vh*(4/3))] md:mx-auto md:rounded-lg md:shadow-lg;
