@@ -15,7 +15,7 @@
 </script>
 
 <div
-  class="bg-[#1e1e1e] rounded-lg h-[10vh] w-[30vh] fixed md:absolute bottom-6 left-6 z-[9999] font-['Ubuntu_Mono'] border-2 border-[#4e4e4e]"
+  class="bg-[#1e1e1e] rounded-lg h-[10vh] w-[30vh] fixed md:absolute bottom-6 left-6 z-[9999] font-['Ubuntu_Mono'] border-2 border-[#696969]"
   data-name="spotifyPlayer"
   transition:fade
 >
@@ -31,7 +31,7 @@
       <div class="absolute inset-0 w-full h-full">
         <img
           alt="Vinyl disk background"
-          class="absolute inset-0 max-w-none object-center object-cover opacity-60 pointer-events-none w-full h-full rounded-sm animate-spin"
+          class="absolute inset-0 max-w-none object-center object-cover pointer-events-none size-[calc(100%+1rem)] rounded-full animate-spin -m-2"
           src={vinyl}
         />
       </div>
