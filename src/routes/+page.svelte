@@ -127,7 +127,7 @@
   </footer>
 </main>
 
-{#if scrollY !== 0}
+{#if scrollY !== 0 && data.currentTrack}
   <SpotifyInfo currentTrack={data.currentTrack} />
 {/if}
 

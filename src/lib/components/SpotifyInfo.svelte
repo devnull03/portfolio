@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { fade } from "svelte/transition";
   import type { CurrentTrackData } from "$lib/interfaces/spotify.interface";
+  import SpotifyLogo from "$lib/assets/Spotify_Primary_Logo_RGB_White.png";
+  import Vinyl from "$lib/assets/vecteezy_black-vinyl-disc-record-for-music-album-cover-design_9393830.png";
 
   interface Props {
     currentTrack: CurrentTrackData | null;
@@ -7,11 +10,9 @@
 
   let { currentTrack }: Props = $props();
 
-  // Progress tracking
-  let progress = $state(0); // Current position in seconds
-  let duration = $state(0); // Total duration in seconds
+  let progress = $state(0);
+  let duration = $state(0);
 
-  // Update progress every second when playing
   $effect(() => {
     if (
       currentTrack?.isPlaying &&
@@ -31,18 +32,14 @@
     }
   });
 
-  // Format time as mm:ss
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  // Use the localhost assets from Figma and local assets
-  const vinyl =
-    "http://localhost:3845/assets/5b7639aae5a66cb855fe431e9086c04d3858fd7b.png";
-  import SpotifyLogo from "$lib/assets/Spotify_Primary_Logo_RGB_White.png";
-  import { fade } from "svelte/transition";
+  // const Vinyl =
+  //   "http://localhost:3845/assets/5b7639aae5a66cb855fe431e9086c04d3858fd7b.png";
 </script>
 
 <div
@@ -67,7 +64,7 @@
         <img
           alt="Vinyl disk background"
           class="absolute inset-0 max-w-none object-center object-cover pointer-events-none size-[calc(100%+1rem)] rounded-full animate-spin -m-2"
-          src={vinyl}
+          src={Vinyl}
         />
       </div>
 
