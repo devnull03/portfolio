@@ -7,6 +7,37 @@
 
   let { currentTrack }: Props = $props();
 
+  // Progress tracking
+  let progress = $state(0); // Current position in seconds
+  let duration = $state(0); // Total duration in seconds
+
+  // Update progress every second when playing
+  $effect(() => {
+    if (
+      currentTrack?.isPlaying &&
+      currentTrack?.progress &&
+      currentTrack?.duration
+    ) {
+      progress = Math.floor(currentTrack.progress / 1000);
+      duration = Math.floor(currentTrack.duration / 1000);
+
+      const interval = setInterval(() => {
+        if (progress < duration) {
+          progress += 1;
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  });
+
+  // Format time as mm:ss
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
   // Use the localhost assets from Figma and local assets
   const vinyl =
     "http://localhost:3845/assets/5b7639aae5a66cb855fe431e9086c04d3858fd7b.png";
@@ -19,7 +50,11 @@
   data-name="spotifyPlayer"
   transition:fade
 >
-  <div class="text-[0.6rem] absolute -top-[1.4rem] bg-[#1e1e1e] rounded-lg px-1.5">Now Listening to</div>
+  <div
+    class="text-[0.6rem] absolute -top-[1.4rem] bg-[#1e1e1e] rounded-lg px-1.5"
+  >
+    Now Listening to
+  </div>
 
   <div
     class="box-border flex gap-4 items-end overflow-hidden p-2 relative w-full h-full"
@@ -57,23 +92,39 @@
     </div>
 
     <div
-      class=" flex flex-col font-normal gap-[2%] h-full items-start leading-none overflow-hidden relative shrink-0 text-nowrap text-white *:*:text-ellipsis"
+      class=" flex flex-col font-normal gap-0 h-full items-start leading-none overflow-hidden relative shrink-0 text-nowrap text-white *:*:text-ellipsis"
     >
       <div class="relative shrink-0">
-        <p class="leading-normal text-nowrap whitespace-pre">
+        <p class="leading-tight text-nowrap whitespace-pre">
           {currentTrack?.name || "Song Name"}
         </p>
       </div>
       <div class="relative shrink-0 text-[0.6rem]">
-        <p class="leading-normal text-nowrap whitespace-pre">
+        <p class="leading-tight text-nowrap whitespace-pre">
           by {currentTrack?.artists?.[0] || "artist"}
         </p>
       </div>
+
+      <!-- Progress bar and time display -->
+      <div class="w-[80%] flex flex-col gap-1 mt-auto">
+        <div class="w-full bg-[#444444] rounded-full h-[2px] overflow-hidden">
+          <div
+            class="h-full bg-[#1db954] rounded-full transition-all duration-1000 ease-linear"
+            style="width: {duration > 0 ? (progress / duration) * 100 : 0}%"
+          ></div>
+        </div>
+        <div class="flex justify-between text-[0.5rem] text-[#b3b3b3]">
+          <span>{formatTime(progress)}</span>
+          <span>{formatTime(duration)}</span>
+        </div>
+      </div>
     </div>
 
-    <a href={currentTrack?.link} class="aspect-square size-5 shrink-0 absolute right-2">
+    <a
+      href={currentTrack?.link}
+      class="aspect-square size-5 shrink-0 absolute right-2"
+    >
       <img alt="Spotify logo" class="size-5 aspect-square" src={SpotifyLogo} />
     </a>
-
   </div>
 </div>
