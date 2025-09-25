@@ -84,4 +84,39 @@ export interface SpotifyCurrentlyPlayingResponse {
 	currently_playing_type: 'track' | 'episode' | 'ad' | 'unknown';
 }
 
+export interface SpotifyPlayHistoryObject {
+	track: SpotifyTrack;
+	played_at: string; // ISO 8601 date-time
+	context?: {
+		type: string;
+		href: string;
+		external_urls: {
+			spotify: string;
+		};
+		uri: string;
+	};
+}
+
+export interface SpotifyRecentlyPlayedResponse {
+	href: string;
+	limit: number;
+	next: string | null;
+	cursors: {
+		after: string;
+		before: string;
+	};
+	total: number;
+	items: SpotifyPlayHistoryObject[];
+}
+
+export interface RecentlyPlayedTrack {
+	name: string;
+	artists: string[];
+	image: string | null;
+	link: string;
+	playedAt: string;
+	playedAtMs: number;
+	duration: number;
+}
+
 

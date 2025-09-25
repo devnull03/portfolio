@@ -23,6 +23,7 @@ except ImportError:
 CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
 REDIRECT_URI = "https://dvnl.work"
+SCOPE = "user-read-currently-playing user-read-playback-state user-read-recently-played"
 
 auth_code = None
 server_running = True
@@ -212,7 +213,7 @@ def main():
         print("SPOTIFY_CLIENT_SECRET=your_client_secret")
         return
     
-    auth_url = f"https://accounts.spotify.com/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={urllib.parse.quote(REDIRECT_URI)}&scope=user-read-currently-playing%20user-read-playback-state&show_dialog=true"
+    auth_url = f"https://accounts.spotify.com/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={urllib.parse.quote(REDIRECT_URI)}&scope={urllib.parse.quote(SCOPE)}&show_dialog=true"
     print(f"Visit this URL: {auth_url}")
     
     authorization_code = input("Paste authorization code: ").strip()
@@ -229,6 +230,8 @@ def main():
     
     access_token = token_response.get('access_token')
     refresh_token = token_response.get('refresh_token')
+
+    print(f"----------\n\n{refresh_token}\n\n----------")
     
     if not access_token or not refresh_token:
         print("Invalid token response - missing access_token or refresh_token.")

@@ -6,15 +6,18 @@
 
   interface Props {
     currentTrack: CurrentTrackData | null;
+    trackType?: "current" | "recent";
+    playedAt?: string;
   }
 
-  let { currentTrack }: Props = $props();
+  let { currentTrack, trackType, playedAt }: Props = $props();
 
   let progress = $state(0);
   let duration = $state(0);
 
   $effect(() => {
     if (
+      trackType === "current" &&
       currentTrack?.isPlaying &&
       currentTrack?.progress &&
       currentTrack?.duration
@@ -50,7 +53,9 @@
   <div
     class="text-[0.6rem] absolute -top-[1.4rem] bg-[#1e1e1e] rounded-lg px-1.5"
   >
-    Now Listening to
+    {trackType === "current"
+      ? "Now Listening to"
+      : `Last Played ${playedAt || ""}`}
   </div>
 
   <div
@@ -63,7 +68,10 @@
       <div class="absolute inset-0 w-full h-full">
         <img
           alt="Vinyl disk background"
-          class="absolute inset-0 max-w-none object-center object-cover pointer-events-none size-[calc(100%+1rem)] rounded-full animate-spin -m-2"
+          class="absolute inset-0 max-w-none object-center object-cover pointer-events-none size-[calc(100%+1rem)] rounded-full {trackType ===
+            'current' && currentTrack?.isPlaying
+            ? 'animate-spin'
+            : ''} -m-2"
           src={Vinyl}
         />
       </div>
@@ -102,19 +110,21 @@
         </p>
       </div>
 
-      <!-- Progress bar and time display -->
-      <div class="w-[80%] flex flex-col gap-1 mt-auto">
-        <div class="w-full bg-[#444444] rounded-full h-[2px] overflow-hidden">
-          <div
-            class="h-full bg-[#1db954] rounded-full transition-all duration-1000 ease-linear"
-            style="width: {duration > 0 ? (progress / duration) * 100 : 0}%"
-          ></div>
+      <!-- Progress bar and time display (only for current tracks) -->
+      {#if trackType === "current"}
+        <div class="w-[80%] flex flex-col gap-1 mt-auto">
+          <div class="w-full bg-[#444444] rounded-full h-[2px] overflow-hidden">
+            <div
+              class="h-full bg-[#1db954] rounded-full transition-all duration-1000 ease-linear"
+              style="width: {duration > 0 ? (progress / duration) * 100 : 0}%"
+            ></div>
+          </div>
+          <div class="flex justify-between text-[0.5rem] text-[#b3b3b3]">
+            <span>{formatTime(progress)}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
         </div>
-        <div class="flex justify-between text-[0.5rem] text-[#b3b3b3]">
-          <span>{formatTime(progress)}</span>
-          <span>{formatTime(duration)}</span>
-        </div>
-      </div>
+      {/if}
     </div>
 
     <a

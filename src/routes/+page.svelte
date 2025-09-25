@@ -31,12 +31,15 @@
     console.log("Spotify Data:", data.currentTrack);
     if (data.currentTrack) {
       console.log(
-        `Currently ${data.currentTrack.isPlaying ? "Playing" : "Paused"}: ${data.currentTrack.display}`
+        `${data.trackType === "current" ? "Currently" : "Recently"} ${data.trackType === "current" && data.currentTrack.isPlaying ? "Playing" : "Played"}: ${data.currentTrack.display}`
       );
       console.log("URL:", data.currentTrack.link);
       console.log("image:", data.currentTrack.image);
+      if (data.trackType === "recent") {
+        console.log("Played at:", data.playedAt);
+      }
     } else {
-      console.log("No track playing");
+      console.log("No track data available");
     }
   });
 
@@ -128,7 +131,11 @@
 </main>
 
 {#if scrollY !== 0 && data.currentTrack}
-  <SpotifyInfo currentTrack={data.currentTrack} />
+  <SpotifyInfo
+    currentTrack={data.currentTrack}
+    trackType={data.trackType}
+    playedAt={data.playedAt}
+  />
 {/if}
 
 {#if loadFloatingWindow}
