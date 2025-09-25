@@ -8,6 +8,9 @@
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
   import { resumeData } from "$lib/data/resume.data";
+  import type { PageData } from "./$types";
+
+  let { data }: { data: PageData } = $props();
 
   let smoother: globalThis.ScrollSmoother | undefined = $state();
   let showFloatingWindow = $state(false);
@@ -22,6 +25,17 @@
       effects: true,
       normalizeScroll: true,
     });
+
+    console.log("Spotify Data:", data.currentTrack);
+    if (data.currentTrack) {
+      console.log(
+        `Currently ${data.currentTrack.isPlaying ? "Playing" : "Paused"}: ${data.currentTrack.display}`
+      );
+      console.log("URL:", data.currentTrack.link);
+      console.log("image:", data.currentTrack.image);
+    } else {
+      console.log("No track playing");
+    }
   });
 
   $crtEffectEnabled = true;
