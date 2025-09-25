@@ -9,6 +9,8 @@
   import { crtEffectEnabled } from "$lib/stores";
   import { resumeData } from "$lib/data/resume.data";
   import type { PageData } from "./$types";
+  import { fade } from "svelte/transition";
+  import SpotifyInfo from "$lib/components/SpotifyInfo.svelte";
 
   let { data }: { data: PageData } = $props();
 
@@ -40,12 +42,14 @@
 
   $crtEffectEnabled = true;
 
+  let scrollY = $state(0);
+
   onDestroy(() => {
     smoother?.kill();
   });
 </script>
 
-<svelte:window />
+<svelte:window bind:scrollY />
 
 <main id="smooth-content" class="font-majorMono">
   <HomeIntro bind:smoother={smoother as globalThis.ScrollSmoother} />
@@ -122,6 +126,10 @@
     >
   </footer>
 </main>
+
+{#if scrollY !== 0}
+  <SpotifyInfo currentTrack={data.currentTrack} />
+{/if}
 
 {#if loadFloatingWindow}
   <FunnyHaha
