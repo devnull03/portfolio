@@ -1,85 +1,11 @@
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } from '$env/static/private';
+import type {
+	SpotifyTokenResponse,
+	SpotifyCurrentlyPlayingResponse,
+	CurrentlyPlayingTrack
+} from '$lib/interfaces/spotify.interface';
 
 // Types for Spotify API responses
-interface SpotifyTokenResponse {
-	access_token: string;
-	token_type: string;
-	scope: string;
-	expires_in: number;
-	refresh_token?: string;
-}
-
-interface SpotifyImage {
-	url: string;
-	height: number | null;
-	width: number | null;
-}
-
-interface SpotifyAlbum {
-	id: string;
-	name: string;
-	images: SpotifyImage[];
-	external_urls: {
-		spotify: string;
-	};
-}
-
-interface SpotifyArtist {
-	id: string;
-	name: string;
-	external_urls: {
-		spotify: string;
-	};
-}
-
-interface SpotifyTrack {
-	id: string;
-	name: string;
-	artists: SpotifyArtist[];
-	album: SpotifyAlbum;
-	external_urls: {
-		spotify: string;
-	};
-	duration_ms: number;
-	popularity: number;
-}
-
-interface SpotifyCurrentlyPlayingResponse {
-	device?: {
-		id: string;
-		is_active: boolean;
-		name: string;
-		type: string;
-		volume_percent: number | null;
-	};
-	repeat_state: 'off' | 'track' | 'context';
-	shuffle_state: boolean;
-	context?: {
-		type: string;
-		href: string;
-		external_urls: {
-			spotify: string;
-		};
-		uri: string;
-	};
-	timestamp: number;
-	progress_ms: number | null;
-	is_playing: boolean;
-	item: SpotifyTrack | null;
-	currently_playing_type: 'track' | 'episode' | 'ad' | 'unknown';
-}
-
-// Simplified interface for what we actually need
-export interface CurrentlyPlayingTrack {
-	name: string;
-	artists: string[];
-	image: string | null;
-	link: string;
-	isPlaying: boolean;
-	progress: number | null;
-	duration: number | null;
-}
-
 class SpotifyError extends Error {
 	constructor(message: string, public status?: number) {
 		super(message);

@@ -1,4 +1,5 @@
 import { getCurrentlyPlayingTrack, getTrackDisplayString, formatDuration, isTrackActive } from '$lib/server/spotify';
+import type { CurrentTrackData } from '$lib/interfaces/spotify.interface';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent }) => {
@@ -12,17 +13,11 @@ export const load: PageServerLoad = async ({ parent }) => {
 			return {
 				...parentData,
 				currentTrack: {
+					...track,
 					display: getTrackDisplayString(track),
-					name: track.name,
-					artists: track.artists,
-					image: track.image,
-					link: track.link,
-					isPlaying: track.isPlaying,
 					isActive: isTrackActive(track),
-					duration: formatDuration(track.duration),
-					progress: track.progress,
-					progressMs: track.progress
-				}
+					durationFmt: formatDuration(track.duration),
+				} satisfies CurrentTrackData
 			};
 		}
 
