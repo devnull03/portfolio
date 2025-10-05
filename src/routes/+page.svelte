@@ -9,8 +9,8 @@
   import { crtEffectEnabled } from "$lib/stores";
   import { resumeData } from "$lib/data/resume.data";
   import type { PageData } from "./$types";
-  import { fade } from "svelte/transition";
   import SpotifyInfo from "$lib/components/SpotifyInfo.svelte";
+  import { Github, Linkedin } from "@lucide/svelte";
 
   let { data }: { data: PageData } = $props();
 
@@ -65,18 +65,27 @@
     <p class="">i make stuff</p>
 
     <div class="flex flex-wrap justify-center items-center gap-4 px-4">
-      <Button href={resumeData.contact.linkedin} target="_blank" size="sm"
-        >LinkedIn</Button
-      >
-      <Button href={resumeData.contact.github} target="_blank" size="sm"
-        >Github</Button
-      >
       <Button onclick={() => goto("/projects")} target="_blank" size="sm"
         >Projects</Button
       >
       <Button onclick={() => goto("/resume")} target="_blank" size="sm"
         >Resume</Button
       >
+
+      <Button href={resumeData.contact.linkedin} target="_blank" size="sm">
+        <Linkedin class="stroke-[1.5]" />
+      </Button>
+      <Button
+        href={resumeData.contact.github}
+        target="_blank"
+        size="sm"
+        class="group"
+      >
+        <Github class="stroke-[1.5]" />
+        <!-- <span class="group-hover:w-full w-0 overflow-clip duration-400 transition-all ease-in-out">Github</span> -->
+      </Button>
+
+
 
       <Button
         onclick={() => (showFloatingWindow = true)}
