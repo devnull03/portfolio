@@ -3,7 +3,8 @@
   import { Button } from "$lib/components/ui/button";
   import { ArrowLeft, Download } from "@lucide/svelte";
   import { gsap } from "gsap";
-  import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { ScrollSmoother } from "gsap/ScrollSmoother";
   import { crtEffectBlendMode, crtEffectEnabled } from "$lib/stores";
   import { CrtEffectBlendMode } from "$lib/interfaces/sys.interface";
   import Entry from "$lib/components/resume/Entry.svelte";
@@ -55,7 +56,7 @@
 </svelte:head>
 
 <div
-  class="bg-[url('/assets/resume-bg.png')] {!$isRecruiter && $crtEffectEnabled
+  class="bg-[url('/assets/resume-bg.webp')] {!$isRecruiter && $crtEffectEnabled
     ? 'bg-black/20'
     : 'bg-white/70'} h-full bg-blend-overlay bg-cover rounded-lg md:px-16 py-4 flex gap-6 font-courierPrime text-black"
 >

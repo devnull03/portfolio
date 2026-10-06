@@ -26,7 +26,7 @@
 >
   <div class="absolute inset-0 z-0 w-full h-full select-none">
     <img
-      src="/assets/Gradient.png"
+      src="/assets/Gradient.webp"
       class="w-full h-full md:object-cover select-none"
       ondragstart={(e) => e.preventDefault()}
       alt=""
@@ -34,7 +34,7 @@
   </div>
 
   <img
-    src="/assets/bg.png"
+    src="/assets/bg.webp"
     alt=""
     ondragstart={(e) => e.preventDefault()}
     class="absolute object-cover object-center md:object-contain h-full w-[100vh] md:w-full md:h-full p-4 select-none"
@@ -53,7 +53,7 @@
     width: 200%;
     height: 200vh;
     background: #000
-      url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0;
+      url(/assets/noise.webp) 0 0;
     background-size: 620px 620px;
     opacity: 0.3;
     animation: static-animation 0.3s infinite;

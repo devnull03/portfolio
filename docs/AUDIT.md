@@ -177,3 +177,28 @@ diffing Playwright screenshots against `main`.
 | Unused dependencies (`@babylonjs/inspector`, `@sanity/client`, Vercel packages, `adapter-auto`, …) | Removed | None |
 
 The loading screen stays as it is.
+
+### Results (measured on `claude/perf` vs `main`)
+
+| | `main` | after |
+| --- | --- | --- |
+| Client JS, all chunks, gzip | 1.31 MB | **141 KB** (−89%) |
+| JS decoded on the home page | 16.7 MB | **1.0 MB** |
+| Bytes transferred on the home page (includes the 13 MB surprise video) | 29.0 MB | **13.8 MB** |
+| Hero + background images | 5.59 MB PNG | **3.89 MB** lossless WebP (0 differing pixels) |
+| CRT overlay | re-rendered every frame | drawn on mount, resize and toggle only |
+| Server work per page view | Sanity queries plus Spotify calls | none (static HTML); Spotify only via `/api/now-playing` |
+
+**Visual check.** Playwright screenshots of `/`, `/resume` and `/projects` were
+taken at desktop and mobile sizes, at the top and two scroll positions, and
+compared against `main` with the same content:
+
+* Rendered text is identical on every page.
+* Most screenshots differ by at most 1–2/255 per channel on well under 1% of
+  pixels. That is rounding noise from the software GL renderer, and invisible.
+* Read back directly, the CRT canvas differs from Babylon's by 1 pixel out of
+  329k on mobile and 5 out of 1.08M on desktop, each by 1/255.
+* The only larger local differences are the cursor halo, caught a sub-pixel
+  apart mid-spring, and ScrollSmoother's inertia landing at a slightly
+  different offset. The same noise shows up when `main` is compared with
+  itself across runs.

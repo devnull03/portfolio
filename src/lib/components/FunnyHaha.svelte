@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { gsap } from "gsap";
   import { Draggable } from "gsap/Draggable";
+  import { InertiaPlugin } from "gsap/InertiaPlugin";
   import { Card, CardContent } from "$lib/components/ui/card";
   import { Button } from "$lib/components/ui/button";
   import { X } from "@lucide/svelte";
@@ -19,7 +20,8 @@
   let videoRef: HTMLVideoElement;
 
   onMount(() => {
-    gsap.registerPlugin(Draggable);
+    // `inertia: true` below needs InertiaPlugin (it used to be registered implicitly by gsap/all).
+    gsap.registerPlugin(Draggable, InertiaPlugin);
 
     // Set initial position
 //     gsap.set(windowRef, {
@@ -51,7 +53,6 @@
   });
 
   function handleClose() {
-    console.log("Closing window");
     if (windowRef) {
       show = false;
       gsap.to(windowRef, {

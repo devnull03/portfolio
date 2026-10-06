@@ -2,9 +2,9 @@
   import { onDestroy, onMount } from "svelte";
   import { Button } from "$lib/components/ui/button";
   import { gsap } from "gsap";
-  import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { ScrollSmoother } from "gsap/ScrollSmoother";
   import HomeIntro from "$lib/components/HomeIntro.svelte";
-  import FunnyHaha from "$lib/components/FunnyHaha.svelte";
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
   import type { PageData } from "./$types";
@@ -140,9 +140,12 @@
   />
 {/if}
 
+<!-- Loaded on first hover of the button, so Draggable/Inertia stay out of the initial bundle. -->
 {#if loadFloatingWindow}
-  <FunnyHaha
-    show={showFloatingWindow}
-    onClose={() => (showFloatingWindow = false)}
-  />
+  {#await import("$lib/components/FunnyHaha.svelte") then { default: FunnyHaha }}
+    <FunnyHaha
+      show={showFloatingWindow}
+      onClose={() => (showFloatingWindow = false)}
+    />
+  {/await}
 {/if}
