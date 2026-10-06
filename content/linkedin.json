@@ -1,0 +1,144 @@
+{
+	"source": "seed",
+	"fetchedAt": "2025-08-01T00:00:00.000Z",
+	"profile": {
+		"firstName": "Arnav",
+		"lastName": "Mehta",
+		"headline": "Software Developer / Student",
+		"summary": "Software Developer / Student with experience in full-stack development, API design, and cloud computing.",
+		"location": "Burnaby, BC",
+		"websites": [
+			"https://dvnl.work"
+		]
+	},
+	"positions": [
+		{
+			"id": "south-asian-studies-institute-university-of-the-fraser-valley-undergraduate-research-assistant-web-developer",
+			"title": "Undergraduate Research Assistant / Web Developer",
+			"company": "South Asian Studies Institute, University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"description": "• Crafted engaging interactive content, increasing user engagement by 200% and social media shares\n• Streamlined website updates with PHP and Collective Access, improving loading speeds by 40%\n• Automated metadata management with Python using custom algorithms, cutting task completion time by 80%\n• Improved digital archive accessibility through optimized data management workflows",
+			"startDate": "2022-08",
+			"endDate": null
+		},
+		{
+			"id": "university-of-the-fraser-valley-teaching-assistant",
+			"title": "Teaching Assistant",
+			"company": "University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"description": "• Provided academic support and feedback to students\n• Assisted with course material and assignments\n• Facilitated learning through one-on-one and group sessions",
+			"startDate": "2024-09",
+			"endDate": "2024-12"
+		},
+		{
+			"id": "it-service-desk-university-of-the-fraser-valley-lab-monitor",
+			"title": "Lab Monitor",
+			"company": "IT Service Desk, University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"description": "• Provided technical support to students and faculty\n• Monitored computer lab operations\n• Troubleshot hardware and software issues\n• Assisted with IT service desk operations",
+			"startDate": "2022-10",
+			"endDate": "2024-04"
+		},
+		{
+			"id": "ids-company-full-stack-engineer",
+			"title": "Full-Stack Engineer",
+			"company": "IDS.company",
+			"location": "Remote",
+			"description": "• Directed the overhaul of the project website's 2nd redesign with scalable transition strategy\n• Integrated 10+ new features within 3 weeks, increasing daily active users by 25%\n• Architected and refined core logic for post management, accelerating content moderation workflows by 35%\n• Fostered collaboration between frontend and backend teams across different time zones",
+			"startDate": "2022-05",
+			"endDate": "2024-07"
+		},
+		{
+			"id": "job-unicorn-software-engineering-intern",
+			"title": "Software Engineering Intern",
+			"company": "Job Unicorn",
+			"location": "Mumbai, India",
+			"description": "• Engineered and deployed backend services using TypeScript and Golang\n• Developed advanced web scraping system with Express.js and Puppeteer\n• Built and optimized RESTful APIs for enhanced analytics integration\n• Collaborated with business intelligence teams and stakeholders",
+			"startDate": "2022-02",
+			"endDate": "2022-04"
+		}
+	],
+	"education": [
+		{
+			"id": "university-of-the-fraser-valley-bachelor-of-science",
+			"school": "University of the Fraser Valley",
+			"degree": "Bachelor of Science",
+			"notes": "• Computer Science, with Co-operative education\n• Focused on software engineering, data structures, and algorithms\n• Relevant coursework in full-stack development and system design",
+			"startDate": "2022-05",
+			"endDate": "2026-04"
+		}
+	],
+	"volunteering": [
+		{
+			"id": "japanese-culture-club-university-of-the-fraser-valley-club-secretary",
+			"role": "Club Secretary",
+			"organization": "Japanese Culture Club, University of the Fraser Valley",
+			"description": "• Facilitated club events, boosting attendance by 25% through proactive promotion and concise scheduling\n• Handled member updates and announcements on social media, ensuring everyone stayed informed of upcoming activities\n• Compiled clear meeting records, maintaining an organized log of decisions and tasks for future reference",
+			"startDate": "2023-09",
+			"endDate": null
+		},
+		{
+			"id": "ufv-international-university-of-the-fraser-valley-student-ambassador",
+			"role": "Student Ambassador",
+			"organization": "UFV International, University of the Fraser Valley",
+			"description": "• Welcomed prospective students, highlighting campus offerings and improving enrollment interest by 15%\n• Provided recommendations tailored to individual goals, showcasing adaptability and thorough program knowledge\n• Resolved diverse student inquiries, fostering positive experiences and promoting strong institutional loyalty",
+			"startDate": "2022-04",
+			"endDate": "2023-01"
+		}
+	],
+	"projects": [],
+	"skills": [
+		"Python",
+		"TypeScript",
+		"JavaScript",
+		"Go",
+		"C/C++",
+		"Rust",
+		"SQL",
+		"Ruby on Rails",
+		"React.js",
+		"Svelte",
+		"Next.js",
+		"Tailwind CSS",
+		"Node.js",
+		"Express.js",
+		"FastAPI",
+		"AngularJS",
+		"React Native",
+		"Mobile Applications",
+		"MongoDB",
+		"PostgreSQL",
+		"MySQL",
+		"Google Cloud Platform",
+		"Redis",
+		"Git",
+		"Jira",
+		"Agile/Scrum",
+		"Docker",
+		"CI/CD Pipelines",
+		"WebRTC",
+		"API Development",
+		"Test-Driven Development (TDD)"
+	],
+	"languages": [
+		{
+			"name": "English",
+			"proficiency": "Native"
+		},
+		{
+			"name": "Hindi",
+			"proficiency": "Native"
+		},
+		{
+			"name": "Punjabi",
+			"proficiency": "Fluent"
+		},
+		{
+			"name": "Japanese",
+			"proficiency": "Conversational"
+		}
+	],
+	"certifications": [],
+	"honors": [],
+	"courses": []
+}

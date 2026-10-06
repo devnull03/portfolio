@@ -7,7 +7,6 @@
   import FunnyHaha from "$lib/components/FunnyHaha.svelte";
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
-  import { resumeData } from "$lib/data/resume.data";
   import type { PageData } from "./$types";
   import SpotifyInfo from "$lib/components/SpotifyInfo.svelte";
   import { Github, Linkedin } from "@lucide/svelte";
@@ -72,11 +71,11 @@
         >Resume</Button
       >
 
-      <Button href={resumeData.contact.linkedin} target="_blank" size="sm">
+      <Button href={data.contact.linkedin} target="_blank" size="sm">
         <Linkedin class="stroke-[1.5]" />
       </Button>
       <Button
-        href={resumeData.contact.github}
+        href={data.contact.github}
         target="_blank"
         size="sm"
         class="group"
