@@ -12,6 +12,11 @@
       smoother?.scrollTo("#main-info", true);
     }
   };
+
+  // Each image "paints in" top to bottom like an old TV once it has loaded (this used to happen
+  // by accident while the large PNGs streamed in after the loading screen).
+  let gradientLoaded = $state(false);
+  let bgLoaded = $state(false);
 </script>
 
 <section
@@ -24,10 +29,14 @@
   data-speed="0.5"
   data-cursor-state="indicate-scroll-down"
 >
-  <div class="absolute inset-0 z-0 w-full h-full select-none">
+  <!-- bg-background is only visible while the images are still drawing in (they are opaque),
+       so the not-yet-drawn part looks like a dark screen instead of showing what's behind. -->
+  <div class="absolute inset-0 z-0 w-full h-full select-none bg-background">
     <img
       src="/assets/Gradient.webp"
-      class="w-full h-full md:object-cover select-none"
+      class="tv-load w-full h-full md:object-cover select-none"
+      class:loaded={gradientLoaded}
+      onload={() => (gradientLoaded = true)}
       ondragstart={(e) => e.preventDefault()}
       alt=""
     />
@@ -37,13 +46,44 @@
     src="/assets/bg.webp"
     alt=""
     ondragstart={(e) => e.preventDefault()}
-    class="absolute object-cover object-center md:object-contain h-full w-[100vh] md:w-full md:h-full p-4 select-none"
+    onload={() => (bgLoaded = true)}
+    class:loaded={bgLoaded}
+    style="--tv-load-duration: 1.6s; --tv-load-steps: 20; --tv-load-delay: 1.1s"
+    class="tv-load absolute object-cover object-center md:object-contain h-full w-[100vh] md:w-full md:h-full p-4 select-none"
   />
 
   <div class="effect-static"></div>
 </section>
 
 <style>
+  /* Top-to-bottom reveal in chunky steps, like a picture drawing in on an old TV. The default
+     delay waits out the loading screen's 0.8s fade so the reveal is actually visible. */
+  .tv-load {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .tv-load.loaded {
+    animation: tv-load var(--tv-load-duration, 2.4s)
+      steps(var(--tv-load-steps, 30), end) var(--tv-load-delay, 0.8s) forwards;
+  }
+
+  @keyframes tv-load {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tv-load,
+    .tv-load.loaded {
+      animation: none;
+      clip-path: none;
+    }
+  }
+
   .effect-static {
     position: absolute;
     top: -50%;
