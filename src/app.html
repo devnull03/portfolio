@@ -9,6 +9,29 @@
 	<script defer src='https://static.cloudflareinsights.com/beacon.min.js'
 		data-cf-beacon='{"token": "55338564772b42c391fb241b614c6cc9"}'></script>
 	<!-- End Cloudflare Web Analytics -->
+	<script>
+		// Recruiter mode (see src/lib/recruiter.ts). Runs before first paint.
+		(function () {
+			try {
+				var param = new URLSearchParams(location.search).get('recruiter');
+				var recruiter;
+				if (param !== null) {
+					recruiter = param === '1';
+					document.cookie = recruiter
+						? 'isRecruiter=1; path=/; max-age=259200; samesite=strict'
+						: 'isRecruiter=; path=/; max-age=0; samesite=strict';
+				} else {
+					recruiter = /(?:^|;\s*)isRecruiter=1(?:;|$)/.test(document.cookie);
+				}
+				if (recruiter) document.documentElement.setAttribute('data-recruiter', '');
+			} catch (e) {}
+		})();
+	</script>
+	<style>
+		html[data-recruiter] [data-loading-screen] {
+			display: none;
+		}
+	</style>
 	%sveltekit.head%
 </head>
 

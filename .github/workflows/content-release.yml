@@ -1,0 +1,45 @@
+name: Content release
+
+# Entry point for automated redeploys. The linkedin-sync worker sends
+# `repository_dispatch: content-changed` once a profile change has been quiet for its debounce
+# window; this tags the current default branch and deploys that tag.
+#
+# Tags pushed with GITHUB_TOKEN don't trigger other workflows, so deploy.yml is called
+# directly rather than relying on its tag trigger (which would otherwise deploy twice).
+on:
+  repository_dispatch:
+    types: [content-changed]
+  workflow_dispatch:
+
+concurrency:
+  group: content-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - id: tag
+        run: |
+          tag="content-$(date -u +%Y%m%d-%H%M%S)"
+          git tag "$tag"
+          git push origin "$tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "Tagged $(git rev-parse --short HEAD) as $tag (reason: ${REASON:-manual})" >> "$GITHUB_STEP_SUMMARY"
+        env:
+          REASON: ${{ github.event.client_payload.reason }}
+
+  deploy:
+    needs: tag
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ needs.tag.outputs.tag }}
+    secrets: inherit

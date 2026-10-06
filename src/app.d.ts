@@ -1,13 +1,7 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
-// for information about these interfaces
+// App.Platform (env, cf, ctx, caches) is declared by @sveltejs/adapter-cloudflare.
 declare global {
-	namespace App {
-        interface Platform {
-            env: Env
-            cf: CfProperties
-            ctx: ExecutionContext
-        }
-    }
+	namespace App {}
 }
 
 export {};

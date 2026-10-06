@@ -1,0 +1,30 @@
+name: CI
+
+# Type-checks and builds every PR (including PRs into other PR branches, so each layer of a
+# stack is checked on its own) and every push to main. Nothing is deployed from here.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_COMPANY_NAME: Arnav Mehta / devnull03
+      PUBLIC_DOMAIN: dvnl.work
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm check:scripts
+      - run: pnpm build

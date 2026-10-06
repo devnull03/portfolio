@@ -1,3 +1,9 @@
+export interface NowPlaying {
+	currentTrack: CurrentTrackData | null;
+	trackType?: 'current' | 'recent';
+	playedAt?: string;
+}
+
 export interface CurrentTrackData extends CurrentlyPlayingTrack {
 	display: string;
 	isActive: boolean;
