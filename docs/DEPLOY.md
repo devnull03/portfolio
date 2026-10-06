@@ -37,7 +37,9 @@ when someone visits.
    proxy it, or delete it and replace the `routes` entry with
    `{ "pattern": "dvnl.work", "custom_domain": true }`, which makes Cloudflare
    create the record. Remove the project from Vercel once the Cloudflare
-   deploy is serving.
+   deploy is serving, then drop `adapter-vercel` from `svelte.config.js`.
+   Until then, Vercel builds (`VERCEL=1`) keep using the Vercel adapter, so
+   merging this doesn't break the site that is live now.
 
 ### GitHub (Settings → Secrets and variables → Actions)
 
