@@ -1,12 +1,20 @@
 /**
- * For more details on how to configure Wrangler, refer to:
  * https://developers.cloudflare.com/workers/wrangler/configuration/
+ *
+ * Every page is prerendered, so requests are served straight from static assets without
+ * starting the Worker. The Worker (SvelteKit's adapter-cloudflare output) only runs for paths
+ * that aren't assets: /api/now-playing and 404s.
+ *
+ * Secrets (set once with `wrangler secret put <NAME>`):
+ *   SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "portfolio",
 	"main": ".svelte-kit/cloudflare/_worker.js",
-	"compatibility_date": "2025-06-14",
+	"compatibility_date": "2026-09-01",
+	// SvelteKit uses AsyncLocalStorage (node:async_hooks) for request-scoped state.
+	"compatibility_flags": ["nodejs_compat"],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
@@ -14,44 +22,10 @@
 	"observability": {
 		"enabled": true
 	},
-	  "routes": [
-  	  {
-  	    "pattern": "dvnl.work/*",
-	    "zone_name": "dvnl.work"
-  	  }
-  	]
-	/**
-	 * Smart Placement
-	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
-	 */
-	// "placement": { "mode": "smart" },
-
-	/**
-	 * Bindings
-	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
-	 * databases, object storage, AI inference, real-time communication and more.
-	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
-	 */
-
-	/**
-	 * Environment Variables
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-	 */
-	// "vars": { "MY_VARIABLE": "production_value" },
-	/**
-	 * Note: Use secrets to store sensitive data.
-	 * https://developers.cloudflare.com/workers/configuration/secrets/
-	 */
-
-	/**
-	 * Static Assets
-	 * https://developers.cloudflare.com/workers/static-assets/binding/
-	 */
-	// "assets": { "directory": "./public/", "binding": "ASSETS" },
-
-	/**
-	 * Service Bindings (communicate between multiple Workers)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-	 */
-	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
+	"routes": [
+		{
+			"pattern": "dvnl.work/*",
+			"zone_name": "dvnl.work"
+		}
+	]
 }

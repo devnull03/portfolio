@@ -1,38 +1,15 @@
-# sv
+# dvnl.work
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+Personal portfolio: SvelteKit, prerendered at build time, served from Cloudflare Workers.
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+pnpm install
+pnpm dev               # local dev server
+pnpm preview           # production build in the real Workers runtime (wrangler dev)
+pnpm check             # svelte-check
+pnpm content:fetch     # refresh content/linkedin.json from LinkedIn
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- [`content/README.md`](content/README.md): where resume and project data comes from, and how to edit it
+- [`docs/DEPLOY.md`](docs/DEPLOY.md): tag-based deploys, secrets, Cloudflare setup
+- [`docs/AUDIT.md`](docs/AUDIT.md): the audit and plan behind the current architecture

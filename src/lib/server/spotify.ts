@@ -1,10 +1,11 @@
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type {
 	SpotifyTokenResponse,
 	SpotifyCurrentlyPlayingResponse,
 	CurrentlyPlayingTrack,
 	SpotifyRecentlyPlayedResponse,
-	RecentlyPlayedTrack
+	RecentlyPlayedTrack,
+	NowPlaying
 } from '$lib/interfaces/spotify.interface';
 
 // Types for Spotify API responses
@@ -19,10 +20,15 @@ class SpotifyError extends Error {
  * Get access token for your personal Spotify account using refresh token
  * This requires a refresh token from your Spotify account
  */
+// Access tokens live for an hour; reuse one per Worker isolate instead of refreshing per request.
+let cachedToken: { value: string; expiresAt: number } | null = null;
+
 async function getPersonalAccessToken(): Promise<string> {
-	const clientId = SPOTIFY_CLIENT_ID;
-	const clientSecret = SPOTIFY_CLIENT_SECRET;
-	const refreshToken = SPOTIFY_REFRESH_TOKEN;
+	if (cachedToken && cachedToken.expiresAt > Date.now()) return cachedToken.value;
+
+	const clientId = env.SPOTIFY_CLIENT_ID;
+	const clientSecret = env.SPOTIFY_CLIENT_SECRET;
+	const refreshToken = env.SPOTIFY_REFRESH_TOKEN;
 
 	if (!clientId || !clientSecret || !refreshToken) {
 		throw new SpotifyError('Spotify credentials not configured. Need CLIENT_ID, CLIENT_SECRET, and REFRESH_TOKEN');
@@ -42,6 +48,7 @@ async function getPersonalAccessToken(): Promise<string> {
 	}
 
 	const data: SpotifyTokenResponse = await response.json();
+	cachedToken = { value: data.access_token, expiresAt: Date.now() + (data.expires_in - 60) * 1000 };
 	return data.access_token;
 }
 
@@ -270,4 +277,43 @@ export async function getCurrentOrRecentTrack(): Promise<{
 		}
 		throw new SpotifyError(`Failed to get current or recent track: ${error}`);
 	}
+}
+
+/**
+ * What the home page widget shows: the current track, or the last played one.
+ */
+export async function getNowPlaying(): Promise<NowPlaying> {
+	const result = await getCurrentOrRecentTrack();
+	if (!result) return { currentTrack: null };
+
+	if (result.type === 'current') {
+		const track = result.track as CurrentlyPlayingTrack;
+		return {
+			currentTrack: {
+				...track,
+				display: getTrackDisplayString(track),
+				isActive: isTrackActive(track),
+				durationFmt: formatDuration(track.duration)
+			},
+			trackType: 'current'
+		};
+	}
+
+	const track = result.track as RecentlyPlayedTrack;
+	return {
+		currentTrack: {
+			name: track.name,
+			artists: track.artists,
+			image: track.image,
+			link: track.link,
+			isPlaying: false,
+			progress: null,
+			duration: track.duration,
+			display: getRecentlyPlayedDisplayString(track),
+			isActive: false,
+			durationFmt: formatDuration(track.duration)
+		},
+		trackType: 'recent',
+		playedAt: formatPlayedAt(track.playedAtMs)
+	};
 }

@@ -1,17 +1,18 @@
-import adapter from '@sveltejs/adapter-vercel';
+import cloudflare from '@sveltejs/adapter-cloudflare';
+import vercel from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://svelte.dev/docs/kit/integrations
-	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 
 	kit: {
-		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
-		adapter: adapter()
+		// Every page is prerendered at build time (see src/routes/+layout.ts) and served as a
+		// Workers static asset. The Worker itself only runs for the dynamic /api routes.
+		//
+		// Vercel still builds this repo until dvnl.work moves to Cloudflare (docs/DEPLOY.md), so
+		// builds there keep using adapter-vercel; drop it once Vercel is disconnected.
+		adapter: process.env.VERCEL ? vercel() : cloudflare()
 	}
 };
 

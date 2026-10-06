@@ -8,6 +8,7 @@
   import { goto } from "$app/navigation";
   import { crtEffectEnabled } from "$lib/stores";
   import type { PageData } from "./$types";
+  import type { NowPlaying } from "$lib/interfaces/spotify.interface";
   import SpotifyInfo from "$lib/components/SpotifyInfo.svelte";
   import { Github, Linkedin } from "@lucide/svelte";
 
@@ -16,6 +17,7 @@
   let smoother: globalThis.ScrollSmoother | undefined = $state();
   let showFloatingWindow = $state(false);
   let loadFloatingWindow = $state(false);
+  let nowPlaying = $state<NowPlaying | null>(null);
 
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -27,19 +29,11 @@
       normalizeScroll: true,
     });
 
-    console.log("Spotify Data:", data.currentTrack);
-    if (data.currentTrack) {
-      console.log(
-        `${data.trackType === "current" ? "Currently" : "Recently"} ${data.trackType === "current" && data.currentTrack.isPlaying ? "Playing" : "Played"}: ${data.currentTrack.display}`
-      );
-      console.log("URL:", data.currentTrack.link);
-      console.log("image:", data.currentTrack.image);
-      if (data.trackType === "recent") {
-        console.log("Played at:", data.playedAt);
-      }
-    } else {
-      console.log("No track data available");
-    }
+    // The widget only appears after scrolling, so this never delays first paint.
+    fetch("/api/now-playing")
+      .then((res) => (res.ok ? (res.json() as Promise<NowPlaying>) : null))
+      .then((body) => (nowPlaying = body))
+      .catch(() => {});
   });
 
   $crtEffectEnabled = true;
@@ -138,11 +132,11 @@
   </footer>
 </main>
 
-{#if scrollY !== 0 && data.currentTrack}
+{#if scrollY !== 0 && nowPlaying?.currentTrack}
   <SpotifyInfo
-    currentTrack={data.currentTrack}
-    trackType={data.trackType}
-    playedAt={data.playedAt}
+    currentTrack={nowPlaying.currentTrack}
+    trackType={nowPlaying.trackType}
+    playedAt={nowPlaying.playedAt}
   />
 {/if}
 

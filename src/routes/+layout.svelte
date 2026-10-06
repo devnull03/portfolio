@@ -11,11 +11,13 @@
   import { crtEffectEnabled } from "$lib/stores";
   import { isRecruiter } from "$lib/stores";
   import { Button } from "$lib/components/ui/button";
+  import { browser } from "$app/environment";
+  import { isRecruiterMode } from "$lib/recruiter";
 
   let scrollY = $state(0);
-  let { children, data }: LayoutProps = $props();
+  let { children }: LayoutProps = $props();
 
-  $isRecruiter = data.isRecruiter;
+  $isRecruiter = browser && isRecruiterMode();
 
   let isLoading = $state(!$isRecruiter && $crtEffectEnabled);
   let crtEffect: CrtOverlay | undefined = $state(undefined);
