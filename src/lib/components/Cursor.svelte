@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { Spring } from "svelte/motion";
   import { gsap } from "gsap";
-  import { MorphSVGPlugin } from "gsap/all";
+  import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
   import { CursorState } from "$lib/interfaces/sys.interface";
   import { currentCursorState } from "$lib/stores";
 
@@ -34,9 +34,11 @@
     }
   );
 
-  const isPointOverText = (x: number, y: number): boolean => {
-    const element = document.elementFromPoint(x, y);
-    if (element == null) return false;
+  const isPointOverText = (
+    element: Element,
+    x: number,
+    y: number
+  ): boolean => {
     const nodes = element.childNodes;
     for (let i = 0, node; (node = nodes[i++]); ) {
       if (node.nodeType === 3) {
@@ -102,24 +104,13 @@
     return false;
   };
 
-  const isOverScrollDownIndicator = (x: number, y: number): boolean => {
-    const element = document.elementFromPoint(x, y);
-    if (!element) return false;
+  const isOverScrollDownIndicator = (element: Element): boolean =>
+    element.closest('[data-cursor-state="indicate-scroll-down"]') !== null;
 
-    if (element.getAttribute("data-cursor-state") === "indicate-scroll-down") {
-      return true;
-    }
-
-    let parent = element.parentElement;
-    while (parent) {
-      if (parent.getAttribute("data-cursor-state") === "indicate-scroll-down") {
-        return true;
-      }
-      parent = parent.parentElement;
-    }
-
-    return false;
-  };
+  // Hit-testing (elementFromPoint, computed styles, text ranges) forces layout, so it runs at most
+  // once per frame for the latest pointer position instead of on every mousemove event.
+  let pendingPoint: { x: number; y: number } | null = null;
+  let hitTestFrame = 0;
 
   function handleMouseMove(event: MouseEvent | WheelEvent) {
     if (!mounted) return;
@@ -135,25 +126,30 @@
       { preserveMomentum: 1000 }
     );
 
-    const element = document.elementFromPoint(event.clientX, event.clientY);
+    pendingPoint = { x: event.clientX, y: event.clientY };
+    if (!hitTestFrame) hitTestFrame = requestAnimationFrame(updateCursorState);
+  }
 
-    const isOverText = isPointOverText(event.clientX, event.clientY);
-    const isPointer =
-      element &&
-      (isClickable(element) ||
-        isClickable(element.closest("[role], a, button, input, .clickable")));
-    const isOverScrollDown = isOverScrollDownIndicator(
-      event.clientX,
-      event.clientY
-    );
+  function updateCursorState() {
+    hitTestFrame = 0;
+    if (!pendingPoint) return;
+    const { x, y } = pendingPoint;
+    pendingPoint = null;
 
-    // Determine the new cursor state
+    const element = document.elementFromPoint(x, y);
+
+    // Determine the new cursor state (checks run in priority order and stop at the first match)
     let newState: CursorState;
-    if (isOverScrollDown) {
+    if (!element) {
+      newState = CursorState.Default;
+    } else if (isOverScrollDownIndicator(element)) {
       newState = CursorState.ArrowDown;
-    } else if (isPointer) {
+    } else if (
+      isClickable(element) ||
+      isClickable(element.closest("[role], a, button, input, .clickable"))
+    ) {
       newState = CursorState.Pointer;
-    } else if (isOverText) {
+    } else if (isPointOverText(element, x, y)) {
       newState = CursorState.Text;
     } else {
       newState = CursorState.Default;
@@ -162,7 +158,6 @@
     // Update state if changed
     if (newState !== $currentCursorState) {
       $currentCursorState = newState;
-      // updateCursorAppearance($currentState);
     }
   }
 
@@ -265,6 +260,8 @@
         // console.log("Cursor SVG:", cursorSvg);
       }
     }, 100);
+
+    return () => cancelAnimationFrame(hitTestFrame);
   });
 </script>
 

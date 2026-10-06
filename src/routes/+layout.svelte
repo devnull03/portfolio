@@ -13,6 +13,7 @@
   import { Button } from "$lib/components/ui/button";
   import { browser } from "$app/environment";
   import { isRecruiterMode } from "$lib/recruiter";
+  import { page } from "$app/state";
 
   let scrollY = $state(0);
   let { children }: LayoutProps = $props();
@@ -64,17 +65,17 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/manifest.json" />
+
+  {#if page.url.pathname === "/"}
+    <!-- The home hero only mounts after the loading screen; fetch it while that is showing. -->
+    <link rel="preload" as="image" href="/assets/Gradient.webp" />
+    <link rel="preload" as="image" href="/assets/bg.webp" />
+    <link rel="preload" as="image" href="/assets/noise.webp" />
+  {/if}
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
   <meta name="theme-color" content="#ffffff" />
 
-  <!-- Cloudflare Web Analytics -->
-  <script
-    defer
-    src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon={'{"token": "55338564772b42c391fb241b614c6cc9"}'}
-  ></script>
-  <!-- End Cloudflare Web Analytics -->
 </svelte:head>
 
 <svelte:window bind:scrollY />
