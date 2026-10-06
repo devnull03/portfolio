@@ -16,7 +16,12 @@
 		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts",
 		"content:fetch": "node scripts/content/fetch.ts",
 		"content:migrate-sanity": "node scripts/content/migrate-sanity.ts",
-		"check:scripts": "tsc -p scripts/tsconfig.json"
+		"check:scripts": "tsc -p scripts/tsconfig.json",
+		"worker:dev": "wrangler dev -c workers/linkedin-sync/wrangler.jsonc --test-scheduled",
+		"worker:deploy": "wrangler deploy -c workers/linkedin-sync/wrangler.jsonc",
+		"worker:secret": "wrangler secret put -c workers/linkedin-sync/wrangler.jsonc",
+		"worker:test": "node --test \"workers/linkedin-sync/test/*.test.ts\"",
+		"worker:check": "wrangler types -c workers/linkedin-sync/wrangler.jsonc workers/linkedin-sync/worker-configuration.d.ts && tsc -p workers/linkedin-sync/tsconfig.json"
 	},
 	"devDependencies": {
 		"@babylonjs/core": "^8.22.2",
