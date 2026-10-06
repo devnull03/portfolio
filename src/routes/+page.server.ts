@@ -1,9 +1,11 @@
 import { getCurrentOrRecentTrack, getTrackDisplayString, getRecentlyPlayedDisplayString, formatDuration, isTrackActive, formatPlayedAt } from '$lib/server/spotify';
 import type { CurrentTrackData, CurrentlyPlayingTrack, RecentlyPlayedTrack } from '$lib/interfaces/spotify.interface';
 import type { PageServerLoad } from './$types';
+import { getContactInfo } from '$lib/server/content';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const parentData = await parent();
+	const contact = getContactInfo();
 
 	try {
 		const result = await getCurrentOrRecentTrack();
@@ -13,6 +15,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 				const track = result.track as CurrentlyPlayingTrack;
 				return {
 					...parentData,
+					contact,
 					currentTrack: {
 						...track,
 						display: getTrackDisplayString(track),
@@ -25,6 +28,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 				const track = result.track as RecentlyPlayedTrack;
 				return {
 					...parentData,
+					contact,
 					currentTrack: {
 						name: track.name,
 						artists: track.artists,
@@ -45,12 +49,14 @@ export const load: PageServerLoad = async ({ parent }) => {
 
 		return {
 			...parentData,
+			contact,
 			currentTrack: null
 		};
 	} catch (error) {
 		console.error('Failed to get current or recent track:', error);
 		return {
 			...parentData,
+			contact,
 			currentTrack: null
 		};
 	}

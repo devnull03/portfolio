@@ -7,13 +7,13 @@
   }: {
     mounted: boolean;
     smoother: globalThis.ScrollSmoother | null;
-    resumeSections: Promise<Record<string, any[]>>;
+    resumeSections: Record<string, unknown[]>;
     class?: string;
   } = $props();
 
-  let sections = $state<{display: string, id: string}[]>([]);
+  const sections: { display: string; id: string }[] = $derived.by(() => {
+    const data = resumeSections;
 
-  resumeSections.then((data) => {
     // Check if this is projects data by looking for resume-specific categories first
     const isResumePage = Object.keys(data).some(key => 
       ['experience', 'education', 'volunteering'].includes(key)
@@ -34,7 +34,7 @@
         id: key
       }));
       
-      sections = [
+      return [
         ...sectionItems,
         { display: "Projects", id: "projects" },
         { display: "Skills", id: "Skills" }
@@ -49,12 +49,12 @@
         'hackathon': 'Hackathons'
       };
       
-      sections = Object.keys(data).map(key => ({
+      return Object.keys(data).map(key => ({
         display: categoryNames[key] || key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
         id: key
       }));
     }
-  }).catch(console.error);
+  });
 
   const scrollToSection = (id: string) => {
     if (!mounted) return;

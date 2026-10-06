@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { Button } from "$lib/components/ui/button";
-  import { Skeleton } from "$lib/components/ui/skeleton";
   import { ArrowLeft, Download } from "@lucide/svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
@@ -16,33 +15,15 @@
 
   let { data }: PageProps = $props();
 
-  let resumeEntryScrollerHeight = $state(0);
-  let scrollerSectionHeightMultiplier = 62;
+  const scrollerSectionHeightMultiplier = 62;
+  const resumeEntryScrollerHeight = $derived(
+    Object.values(data.resumeSections).flat().length * scrollerSectionHeightMultiplier
+  );
 
   let mounted = $state(false);
   let smoother: globalThis.ScrollSmoother | null = $state(null);
 
   onMount(() => {
-
-    data.resumeSections.then((s) => {
-      resumeEntryScrollerHeight = Object.values(s).flat().length * scrollerSectionHeightMultiplier;
-    })
-
-    // Debug data loading
-    Promise.all([
-      data.contact,
-      data.resumeSections, 
-      data.projects,
-      data.skills
-    ]).then(([contact, sections, projects, skills]) => {
-      console.log('Loaded data:', {
-        contact,
-        sections,
-        projects: projects?.length || 0,
-        skills: skills?.length || 0
-      });
-    }).catch(console.error);
-
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -62,13 +43,11 @@
 </script>
 
 <svelte:head>
-  {#await data.contact then contact}
-    <title>Resume - {contact?.name || 'Loading...'}</title>
-    <meta
-      name="description"
-      content="Professional resume of {contact?.name || 'Loading...'}"
-    />
-  {/await}
+  <title>Resume - {data.contact.name}</title>
+  <meta
+    name="description"
+    content="Professional resume of {data.contact.name}"
+  />
   <meta
     name="keywords"
     content="resume, software developer, computer science, full-stack, web development"
@@ -143,13 +122,8 @@
       >
         <h1 class="text-5xl w-1/2 border-b-2 border-b-black">Resume</h1>
 
-        {#await data.contact}
-          <div class="w-full flex flex-col items-center gap-2 mt-4">
-            <Skeleton class="h-5 w-[40%] bg-black/30" />
-            <Skeleton class="h-5 w-[30%] bg-black/30" />
-          </div>
-        {:then contact}
-          {#if contact}
+        {#if data.contact}
+          {@const contact = data.contact}
             <p class="text-sm">
               <span>{contact.name} | {contact.location} | </span>
               <a
@@ -190,29 +164,10 @@
                 LinkedIn
               </a>
             </p>
-          {/if}
-        {/await}
+        {/if}
       </section>
 
-      {#await data.resumeSections}
-        <!-- Resume sections skeleton -->
-        <div class="flex flex-col gap-8">
-          {#each Array(3) as _}
-            <section class="mb-12 rounded-lg p-6">
-              <div class="mb-6">
-                <Skeleton class="h-6 w-40 mb-2 bg-black/30" />
-                <Skeleton class="h-0.5 w-full max-w-md bg-black/30" />
-              </div>
-              <div class="space-y-6">
-                {#each Array(2) as __}
-                  <Skeleton class="h-24 w-full bg-black/30" />
-                {/each}
-              </div>
-            </section>
-          {/each}
-        </div>
-      {:then sections}
-        {#each Object.entries(sections) as [categoryKey, entries]}
+      {#each Object.entries(data.resumeSections) as [categoryKey, entries]}
           <section id={categoryKey} class="mb-12 rounded-lg p-6 ">
             <!-- Section Title with Underline -->
             <div class="mb-6">
@@ -237,25 +192,10 @@
               {/each}
             </div>
           </section>
-        {/each}
-      {/await}
+      {/each}
 
       <!-- Projects Section -->
-      {#await data.projects}
-        <!-- Projects skeleton -->
-        <section class="mb-12 rounded-lg p-6">
-          <div class="mb-6">
-            <Skeleton class="h-6 w-32 mb-2 bg-black/30" />
-            <Skeleton class="h-0.5 w-full max-w-md bg-black/30" />
-          </div>
-          <div class="space-y-6">
-            {#each Array(3) as _}
-              <Skeleton class="h-32 w-full bg-black/30" />
-            {/each}
-          </div>
-        </section>
-      {:then projects}
-        {#if projects && projects.length > 0}
+      {#if data.projects.length > 0}
           <section id="projects" class="mb-12 rounded-lg p-6 ">
             <!-- Section Title with Underline -->
             <div class="mb-6">
@@ -265,7 +205,7 @@
 
             <!-- Project Entries -->
             <div class="space-y-8">
-              {#each projects as project}
+              {#each data.projects as project}
                 <Entry entry={project} />
               {/each}
             </div>
@@ -274,12 +214,7 @@
           <section class="mb-12 rounded-lg p-6 ">
             <p class="text-black/60">No projects to display</p>
           </section>
-        {/if}
-      {:catch error}
-        <section class="mb-12 rounded-lg p-6 ">
-          <p class="text-red-600">Error loading projects: {error.message}</p>
-        </section>
-      {/await}
+      {/if}
 
       <section id="Skills" class="mb-12 rounded-lg p-6 ">
         <!-- Section Title with Underline -->
@@ -289,22 +224,8 @@
         </div>
 
         <!-- Skills Grid -->
-        {#await data.skills}
           <div class="space-y-6">
-            {#each Array(3) as _}
-              <div>
-                <Skeleton class="h-5 w-64 mb-3 bg-black/30" />
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                  {#each Array(6) as __}
-                    <Skeleton class="h-8 bg-black/30" />
-                  {/each}
-                </div>
-              </div>
-            {/each}
-          </div>
-        {:then skillSections}
-          <div class="space-y-6">
-            {#each skillSections as section}
+            {#each data.skills as section}
               <div class="skill-category">
                 <h3 class="text-lg font-courierPrime font-semibold text-black mb-3">
                   {section.title}
@@ -328,7 +249,6 @@
               </div>
             {/each}
           </div>
-        {/await}
       </section>
     </main>
     <div class="main-borders right-0 mr-4">&nbsp;</div>

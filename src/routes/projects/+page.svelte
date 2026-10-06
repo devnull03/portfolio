@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { Button } from "$lib/components/ui/button";
-  import { Skeleton } from "$lib/components/ui/skeleton";
   import { ArrowLeft } from "@lucide/svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger, ScrollSmoother } from "gsap/all";
@@ -15,25 +14,15 @@
 
   let { data }: PageProps = $props();
 
-  let projectsScrollerHeight = $state(0);
-  let scrollerSectionHeightMultiplier = 62;
+  const scrollerSectionHeightMultiplier = 62;
+  const projectsScrollerHeight = $derived(
+    Object.values(data.projectSections).flat().length * scrollerSectionHeightMultiplier
+  );
 
   let mounted = $state(false);
   let smoother: globalThis.ScrollSmoother | null = $state(null);
 
   onMount(() => {
-    data.projectSections.then((s) => {
-      projectsScrollerHeight = Object.values(s).flat().length * scrollerSectionHeightMultiplier;
-    })
-
-    // Debug data loading
-    data.projectSections.then((sections) => {
-      console.log('Loaded project sections:', {
-        sections,
-        total: Object.values(sections).flat().length
-      });
-    }).catch(console.error);
-
     $crtEffectBlendMode = CrtEffectBlendMode.ColorDodge;
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -125,25 +114,7 @@
         </p>
       </section>
 
-      {#await data.projectSections}
-        <!-- Project sections skeleton -->
-        <div class="flex flex-col gap-8">
-          {#each Array(3) as _}
-            <section class="mb-12 rounded-lg p-6 shadow-sm">
-              <div class="mb-6">
-                <Skeleton class="h-6 w-40 mb-2" />
-                <Skeleton class="h-0.5 w-full max-w-md" />
-              </div>
-              <div class="space-y-6">
-                {#each Array(2) as __}
-                  <Skeleton class="h-24 w-full" />
-                {/each}
-              </div>
-            </section>
-          {/each}
-        </div>
-      {:then sections}
-        {#each Object.entries(sections) as [categoryKey, projects]}
+        {#each Object.entries(data.projectSections) as [categoryKey, projects]}
           <section id={categoryKey} class="mb-12 rounded-lg p-6 shadow-sm">
             <!-- Section Title with Underline -->
             <div class="mb-6">
@@ -170,11 +141,6 @@
             </div>
           </section>
         {/each}
-      {:catch error}
-        <section class="mb-12 rounded-lg p-6 shadow-sm">
-          <p class="text-red-600">Error loading projects: {error.message}</p>
-        </section>
-      {/await}
     </main>
     <div class="main-borders right-0 mr-4">&nbsp;</div>
   </div>

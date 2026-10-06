@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ResumeEntry, Project } from "$lib/interfaces/sanity.types";
+  import type { PreviewItem, Project, ResumeEntry } from "$lib/content/types";
   import PreviewPlaceholder from "./PreviewPlaceholder.svelte";
 
   interface Props {
@@ -8,65 +8,40 @@
 
   let { entry }: Props = $props();
 
-  console.log(entry.title)
+  const isProject = (entry: ResumeEntry | Project): entry is Project =>
+    entry.kind === "project";
 
-  const isProject = (entry: any): boolean => entry._type === 'project';
+  const getAllUrls = (): PreviewItem[] => {
+    const urls: PreviewItem[] = [...(entry.previewItems ?? [])];
 
-  const getAllUrls = () => {
-    console.log('Entry:', entry);
-    console.log('Has relatedProjects:', Object.hasOwn(entry, 'relatedProjects'));
-    
-    let urls: any[] = [];
-    
-    // Add preview items if they exist
-    if (entry.previewItems && Array.isArray(entry.previewItems)) {
-      urls = [...entry.previewItems];
+    if (!isProject(entry) && entry.relatedProjects) {
+      urls.push(
+        ...entry.relatedProjects.map((p) => ({
+          title: p.title || "Untitled Project",
+          link: p.githubUrl || p.url || "#",
+          image: p.previewItems?.[0]?.image,
+        }))
+      );
     }
-    
-    if (Object.hasOwn(entry, 'relatedProjects') && (entry as any).relatedProjects) {
-      const relatedProjects = (entry as any).relatedProjects;
-      if (Array.isArray(relatedProjects)) {
-        const projectItems = relatedProjects.map((p: any) => ({
-          title: p.title || 'Untitled Project',
-          link: p.githubUrl || p.url || '#',
-          image: p.previewItems?.[0]?.image || null,
-          _type: 'previewItem',
-          _key: p._id || Math.random().toString()
-        }));
-        urls = [...urls, ...projectItems];
-      }
-    }
-    
-    console.log('Generated URLs:', urls);
+
     return urls;
   };
 
   const allUrls = getAllUrls();
   const maxPreviewsToShow = 2;
-  const urlsToPreview = Array.isArray(allUrls) ? allUrls.slice(0, maxPreviewsToShow) : [];
-  const remainingUrlsCount = Math.max(0, (Array.isArray(allUrls) ? allUrls.length : 0) - maxPreviewsToShow);
-
-  $inspect({
-    allUrls,
-    urlsToPreview,
-    remainingUrlsCount,
-  });
+  const urlsToPreview = allUrls.slice(0, maxPreviewsToShow);
+  const remainingUrlsCount = Math.max(0, allUrls.length - maxPreviewsToShow);
 
   const formatDate = (dateString?: string) => {
-    console.log(dateString);
-    
-    if (!dateString) return 'Present';
-    if (dateString === '9999-12-31' || dateString === undefined) return 'Present';
-    
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short' 
-      });
-    } catch {
-      return dateString;
-    }
+    if (!dateString) return "Present";
+
+    // Dates are calendar months, so format in UTC: the server and every visitor's timezone
+    // then agree on the month.
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      timeZone: "UTC",
+    });
   };
 </script>
 
@@ -117,15 +92,13 @@
   {/if}
 
   <!-- Project Links for Projects section -->
-  {#if (isProject(entry) && entry.githubUrl) || (entry.previewItems && entry.previewItems.length > 0) || (!isProject(entry) && (entry as any).relatedProjects && (entry as any).relatedProjects.length > 0)}
+  {#if (isProject(entry) && entry.githubUrl) || urlsToPreview.length > 0}
     <div class="mt-4">
       <!-- Preview thumbnails -->
       {#if urlsToPreview.length > 0}
         <div class="mb-3">
           <div class="grid grid-cols-7 gap-3">
-            {#each urlsToPreview as urlItem, index}
-              {@const previewItem = entry.previewItems?.[index]}
-
+            {#each urlsToPreview as urlItem}
               <button
                 class="relative group cursor-pointer w-full text-left col-span-3"
                 onclick={() => window.open(urlItem.link, "_blank")}
@@ -135,20 +108,10 @@
                 <div
                   class="w-full h-28 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-200"
                 >
-                  {#if previewItem && (previewItem.image as any)?.asset?.url}
-                    <!-- Use provided image -->
+                  {#if urlItem.image}
                     <div class="w-full h-full relative">
                       <img
-                        src={(previewItem.image as any).asset.url}
-                        alt={urlItem.title}
-                        class="w-full h-full object-cover"
-                      />
-                    </div>
-                  {:else if urlItem.image?.url}
-                    <!-- Use image from related project -->
-                    <div class="w-full h-full relative">
-                      <img
-                        src={urlItem.image.url}
+                        src={urlItem.image}
                         alt={urlItem.title}
                         class="w-full h-full object-cover"
                       />
