@@ -1,0 +1,36 @@
+/**
+ * linkedin-sync: debounced "my LinkedIn profile changed → redeploy the portfolio" worker.
+ * See README.md for setup.
+ *
+ * Secrets (`pnpm worker:secret <NAME>` from the repo root):
+ *   HOOK_SECRET          bearer token for /hook, /flush, /status, PUT /export
+ *   GITHUB_TOKEN         fine-grained PAT on devnull03/portfolio with "Contents: read and write"
+ *   EXPORT_READ_TOKEN    optional, read-only token CI uses for GET /export
+ *   LINKEDIN_DMA_TOKEN   optional, EEA/CH accounts only: enables the hourly change check
+ */
+{
+	"$schema": "../../node_modules/wrangler/config-schema.json",
+	"name": "linkedin-sync",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-09-01",
+	"observability": { "enabled": true },
+
+	"vars": {
+		"GITHUB_REPO": "devnull03/portfolio",
+		// Deploy once no new change has arrived for this long...
+		"DEBOUNCE_MINUTES": "120",
+		// ...but never postpone a pending change longer than this.
+		"MAX_WAIT_MINUTES": "1440"
+	},
+
+	"durable_objects": {
+		"bindings": [{ "name": "DEBOUNCER", "class_name": "Debouncer" }]
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["Debouncer"] }],
+
+	// Uploaded LinkedIn exports. Create once: `pnpm exec wrangler r2 bucket create linkedin-exports`
+	"r2_buckets": [{ "binding": "EXPORTS", "bucket_name": "linkedin-exports" }],
+
+	// Hourly, as LinkedIn recommends for its portability APIs. A no-op without LINKEDIN_DMA_TOKEN.
+	"triggers": { "crons": ["17 * * * *"] }
+}

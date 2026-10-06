@@ -16,7 +16,7 @@ when someone visits.
 | I want to… | Do this |
 | --- | --- |
 | Ship a code change | Merge to `main`, then `git tag vX.Y.Z && git push --tags`. |
-| Ship a LinkedIn profile change | Nothing. The sync worker notices, waits for 2 quiet hours, then triggers a content release. You can also run **Actions → Content release → Run workflow**. |
+| Ship a LinkedIn profile change | Upload a fresh export to the sync worker (`PUT /export`), or ping `POST /hook`. It waits for 2 quiet hours, then triggers a content release. See [`workers/linkedin-sync`](../workers/linkedin-sync/README.md). You can also run **Actions → Content release → Run workflow**. |
 | Redeploy a specific tag | **Actions → Deploy → Run workflow**, with `ref` set to the tag. |
 | Preview locally in the real Workers runtime | `pnpm preview` (builds, then runs `wrangler dev`). |
 
