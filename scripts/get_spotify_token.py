@@ -216,8 +216,12 @@ def main():
     auth_url = f"https://accounts.spotify.com/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={urllib.parse.quote(REDIRECT_URI)}&scope={urllib.parse.quote(SCOPE)}&show_dialog=true"
     print(f"Visit this URL: {auth_url}")
     
-    authorization_code = input("Paste authorization code: ").strip()
-    
+    pasted = input("Paste the redirect URL (or just the code): ").strip()
+    # Spotify appends extra params (e.g. &ubi=...), so take only the `code` value.
+    query = urllib.parse.urlparse(pasted).query if '://' in pasted else pasted
+    params = urllib.parse.parse_qs(query.removeprefix('?'))
+    authorization_code = params['code'][0] if 'code' in params else pasted.split('&')[0]
+
     if not authorization_code:
         print("Authorization code is required!")
         return
