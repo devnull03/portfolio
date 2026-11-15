@@ -48,7 +48,7 @@
     ondragstart={(e) => e.preventDefault()}
     onload={() => (bgLoaded = true)}
     class:loaded={bgLoaded}
-    style="--tv-load-duration: 1.6s; --tv-load-steps: 20; --tv-load-delay: 1.1s"
+    style="--tv-load-duration: 0.8s; --tv-load-steps: 10; --tv-load-delay: 0.8s"
     class="tv-load absolute object-cover object-center md:object-contain h-full w-[100vh] md:w-full md:h-full p-4 select-none"
   />
 
@@ -57,14 +57,14 @@
 
 <style>
   /* Top-to-bottom reveal in chunky steps, like a picture drawing in on an old TV. The default
-     delay waits out the loading screen's 0.8s fade so the reveal is actually visible. */
+     delay overlaps the end of the loading screen's 0.8s fade so the reveal is still visible. */
   .tv-load {
     clip-path: inset(0 0 100% 0);
   }
 
   .tv-load.loaded {
-    animation: tv-load var(--tv-load-duration, 2.4s)
-      steps(var(--tv-load-steps, 30), end) var(--tv-load-delay, 0.8s) forwards;
+    animation: tv-load var(--tv-load-duration, 1.2s)
+      steps(var(--tv-load-steps, 15), end) var(--tv-load-delay, 0.6s) forwards;
   }
 
   @keyframes tv-load {
