@@ -80,7 +80,7 @@
 			"organization": "Japanese Culture Club, University of the Fraser Valley",
 			"description": "• Facilitated club events, boosting attendance by 25% through proactive promotion and concise scheduling\n• Handled member updates and announcements on social media, ensuring everyone stayed informed of upcoming activities\n• Compiled clear meeting records, maintaining an organized log of decisions and tasks for future reference",
 			"startDate": "2023-09",
-			"endDate": null
+			"endDate": "2026-08"
 		},
 		{
 			"id": "ufv-international-university-of-the-fraser-valley-student-ambassador",
@@ -89,6 +89,14 @@
 			"description": "• Welcomed prospective students, highlighting campus offerings and improving enrollment interest by 15%\n• Provided recommendations tailored to individual goals, showcasing adaptability and thorough program knowledge\n• Resolved diverse student inquiries, fostering positive experiences and promoting strong institutional loyalty",
 			"startDate": "2022-04",
 			"endDate": "2023-01"
+		},
+		{
+			"id": "computing-students-association-university-of-the-fraser-valley-representative",
+			"role": "Representative",
+			"organization": "Computing Students Association (CSA), University of the Fraser Valley",
+			"description": "• Represented the CSA at campus events and recruited new and interested students to the club",
+			"startDate": "2022-05",
+			"endDate": null
 		}
 	],
 	"projects": [],
