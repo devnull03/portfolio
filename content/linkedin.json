@@ -9,6 +9,15 @@
 	},
 	"positions": [
 		{
+			"id": "magic-hour-prototype-engineer",
+			"title": "Prototype Engineer",
+			"company": "Magic Hour (YC W24)",
+			"location": "San Francisco Bay Area (Remote)",
+			"description": "• Research and rapidly prototype new AI-powered creative workflows on the latest generative image and video models, evaluating quality, reliability and failure modes\n• Took 2 features from prototype into production\n• Build internal tools that speed up model and tool evaluation, including ComfyUI custom nodes for masking and pose and an ffmpeg tool that lays out model outputs side by side for comparison\n• Benchmark open image and video models for character replacement and video-to-video against the production pipeline",
+			"startDate": "2025-11",
+			"endDate": null
+		},
+		{
 			"id": "ids-company-full-stack-engineer",
 			"title": "Full-Stack Engineer",
 			"company": "IDS.company",
@@ -40,7 +49,7 @@
 			"title": "Undergraduate Research Assistant / Software Developer",
 			"company": "South Asian Studies Institute, University of the Fraser Valley",
 			"location": "Abbotsford, BC",
-			"description": "• 2026:\nMoving the South Asian Canadian Digital Archive from CollectiveAccess to Islandora 2 (ISLE on Docker), including CI/CD and a custom Drupal theme, and contributing the fixes it turns up back to Islandora.\nBuilt qrate, an open-source cataloguing app the institute's research assistants now use on SACDA collections.\n• 2025: \nWorking on porting over Collective Access to Islandora. Figuring out new data design, automation scripts to bring over old data, and the most optimal data ingestion techniques to go with Drupal's node system. \nWriting custom configurations and Rust automation scripts for ingesting 3 million photographs worth of data to the new archival system.\n• 2024:\nStandardising exhibit creation workflow with more modern technologies like Sveltekit. \nSetting up common libraries to share components across exhibits and A new github org account that I alone maintain to keep the organisation's exhibits, tools, etc organised and open source whatever possible. \n• 2023:\nDeveloped interactive storytelling content on the institute's website using archival data and JavaScript.\nMaintained and updated project websites with PHP and Collective Access.\nAutomated metadata tasks using Python scripts.",
+			"description": "• Leading the migration of the South Asian Canadian Digital Archive (SACDA), 3M+ photographs, off a discontinued CollectiveAccess install onto Islandora, owning the new data model, the migration automation and the CI/CD for the new server\n• Wrote Rust automation and custom configuration to ingest 3 million photographs' worth of records into Drupal's node system\n• Built qrate, an open-source cataloguing app now in beta with SACDA's research assistants, and contribute the fixes the migration turns up back to Islandora\n• Researching AI-assisted document and metadata pipelines with small fine-tuned models, embeddings and retrieval on CPU-only machines, measuring accuracy against production needs for archival work\n• Increased SACDA user engagement by 200% and cut task completion time by 80%\n• 2024: standardised exhibit creation on SvelteKit with shared component libraries, and set up a GitHub organisation I maintain to keep the institute's exhibits and tools organised and open source\n• 2023: built interactive storytelling from archival data in JavaScript, maintained project sites in PHP and CollectiveAccess, and automated metadata tasks with Python",
 			"startDate": "2022-08",
 			"endDate": null
 		},
@@ -51,7 +60,7 @@
 			"location": "Abbotsford, BC",
 			"description": "• Provided academic support and feedback to students\n• Assisted with course material and assignments\n• Facilitated learning through one-on-one and group sessions",
 			"startDate": "2024-09",
-			"endDate": "2024-12"
+			"endDate": "2025-12"
 		}
 	],
 	"education": [

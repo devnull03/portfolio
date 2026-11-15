@@ -24,14 +24,21 @@ const site = siteJson as SiteContent;
 const ENTRY_ORDER: string[] = ['work-experience', 'education', 'volunteering'];
 const PROJECT_ORDER: string[] = ['personal', 'open-source', 'work-experience', 'academic', 'freelance', 'hackathon'];
 
-/** Newest first by end date, falling back to the start date for ongoing items. */
-function byRecency(a: { startDate?: string; endDate?: string }, b: { startDate?: string; endDate?: string }) {
-	const ka = a.endDate ?? a.startDate;
-	const kb = b.endDate ?? b.startDate;
-	if (ka === kb) return 0;
-	if (ka === undefined) return 1;
-	if (kb === undefined) return -1;
-	return ka < kb ? 1 : -1;
+type Dated = { startDate?: string; endDate?: string };
+
+/** Newest first, comparing ISO date strings; a missing date sorts last. */
+const desc = (a?: string, b?: string) => (a === b ? 0 : a === undefined ? 1 : b === undefined ? -1 : a < b ? 1 : -1);
+
+/**
+ * Current work first (ongoing: has a start date but no end date), newest start first.
+ * Then finished items by end date, newest first, ties broken by start date.
+ */
+function byRecency(a: Dated, b: Dated) {
+	const ongoingA = a.startDate !== undefined && a.endDate === undefined;
+	const ongoingB = b.startDate !== undefined && b.endDate === undefined;
+	if (ongoingA !== ongoingB) return ongoingA ? -1 : 1;
+	if (ongoingA) return desc(a.startDate, b.startDate);
+	return desc(a.endDate, b.endDate) || desc(a.startDate, b.startDate);
 }
 
 function groupBy<T>(items: T[], key: (item: T) => string, order: string[]): Record<string, T[]> {

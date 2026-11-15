@@ -55,7 +55,9 @@
 				"Bash",
 				"Rust",
 				"Drupal",
-				"Docker"
+				"Docker",
+				"JavaScript",
+				"SvelteKit"
 			],
 			"relatedProjects": [
 				"qrate",
@@ -78,26 +80,38 @@
 		},
 		"ufv-international-university-of-the-fraser-valley-student-ambassador": {
 			"location": "Abbotsford, BC"
+		},
+		"magic-hour-prototype-engineer": {
+			"technologies": [
+				"Python",
+				"TypeScript",
+				"ComfyUI",
+				"ffmpeg",
+				"Generative AI"
+			]
 		}
 	},
 	"projects": [
 		{
 			"id": "qrate",
 			"title": "qrate",
-			"organization": "Open source · COMP 440 Directed Studies, University of the Fraser Valley",
+			"organization": "Personal project · COMP 440 Directed Studies, University of the Fraser Valley",
 			"location": "Abbotsford, BC",
 			"category": "personal",
 			"startDate": "2025-11",
 			"endDate": null,
-			"description": "An open-source desktop cataloguing app for archives, libraries and museums: a spreadsheet-style grid that validates metadata as it is typed, with each record's scans, documents and video beside it. Used by the South Asian Studies Institute at UFV on its real archival collections.",
+			"description": "An open-source desktop cataloguing app for archives, libraries and museums. It keeps the spreadsheet grid archivists already know, validates metadata against real standards as it is typed, and shows each record's scans, documents and video beside it. In beta with the South Asian Canadian Digital Archive and other institutions, iterating on live feedback from archivists.",
 			"details": [
-				"Used by the South Asian Studies Institute's research assistants to catalogue collections for the South Asian Canadian Digital Archive; their feedback drives the roadmap",
-				"330+ release downloads, shipped through the Microsoft Store, a Homebrew tap and signed in-app updates",
-				"Validates as you type: LCSH, Wikidata and GeoNames authority checks, EDTF dates, missing linked files and spelling, shown as squiggles and in a Problems panel",
-				"15-crate Rust workspace on GPUI (the UI framework behind the Zed editor), smooth on ~2,000-row collections backed by scans",
-				"Sandboxed Luau plugin system with a signed plugin registry; the Islandora plugin checks columns against a live repository's vocabularies",
-				"Optional AI review through a read-only agent bridge: an agent can stage findings but never writes a cell",
-				"AGPL-3.0, with contributions from 4 other developers"
+				"Used by the South Asian Studies Institute's research assistants to catalogue SACDA collections; their requests (bulk editing first) set the roadmap",
+				"330+ release downloads; signed builds for macOS, Windows and Linux shipped through the Microsoft Store, a Homebrew tap and background in-app updates",
+				"Validates as you type: LCSH, Wikidata and GeoNames authority checks, EDTF dates, missing linked files and Hunspell spelling, shown as squiggles and in a Problems panel with one-click fixes",
+				"15-crate Rust workspace on GPUI (the GPU UI framework behind the Zed editor), with a virtualised grid and cached thumbnail gallery that stay smooth on ~2,000-row scan-backed collections",
+				"Projects are portable single-file SQLite databases; import CSV, Excel, OpenDocument, a folder tree or a Google Sheet, export CSV, Excel, JSON-LD, CSL-JSON or ZIP, with two-way Google Sheets sync",
+				"Optional local visual search ranks images, PDF pages and video frames against a text description, with the model running on the archivist's machine",
+				"Sandboxed Luau plugin system with permissions and a signed plugin registry; the Islandora plugin checks columns against a live repository's vocabularies",
+				"Read-only AI agent bridge: an agent (bundled or external) can stage findings in the Problems panel but never writes a cell",
+				"PDFium and ffmpeg are loaded at runtime instead of linked, so the app ships at 73 MB while previewing PDFs, multi-page TIFFs, audio and video",
+				"Started as an AI metadata assistant at Hack the North 2025; AGPL-3.0 with contributions from 4 other developers"
 			],
 			"technologies": [
 				"Rust",
@@ -129,20 +143,25 @@
 			"organization": "Islandora (open-source digital repository platform)",
 			"location": "Remote",
 			"category": "open-source",
-			"startDate": "2026-10",
+			"startDate": "2026-01",
 			"endDate": null,
-			"description": "Contributing upstream fixes to Islandora, the open-source Drupal-based repository platform, found while moving the South Asian Canadian Digital Archive onto it.",
+			"description": "Open-source contributor to Islandora, the Drupal-based digital repository platform used by libraries and archives, focused on ecosystem tooling, high-throughput migration and ingestion, and digital preservation workflows. Most of it comes out of moving SACDA onto Islandora.",
 			"details": [
-				"isle-buildkit: found and fixed animated GIFs producing no derivatives in the Houdini image service (issue #609, PR #610)",
-				"islandora_dxpr: print stylesheet so researchers can print an item or collection record for citation (PR #44)",
-				"qrate's Islandora plugin brings a live Islandora site's vocabularies into cataloguing"
+				"isle-buildkit: traced animated GIFs producing no derivatives to ImageMagick writing one file per frame in the Houdini image service, and fixed it by reading only the first frame (issue #609, PR #610)",
+				"islandora_dxpr: print stylesheet so researchers can print an item or collection record for citation, with the title, image, full metadata and citation but no navigation or viewer chrome (PR #44)",
+				"Replacing legacy Java media-processing microservices with a Go + libvips pipeline that generates pyramidal TIFFs, to cut server resource use and processing latency while improving image quality",
+				"Working with Fedora and OCFL (Oxford Common File Layout) for standards-compliant preservation storage and derivative generation",
+				"qrate's Islandora plugin brings a live Islandora site's controlled vocabularies into cataloguing"
 			],
 			"technologies": [
 				"Islandora",
 				"Drupal",
 				"Docker",
-				"ImageMagick",
-				"CSS"
+				"Go",
+				"libvips",
+				"Fedora",
+				"OCFL",
+				"ImageMagick"
 			],
 			"githubUrl": "https://github.com/Islandora-Devops/isle-buildkit/pull/610",
 			"showInResume": true,
@@ -165,7 +184,7 @@
 			"category": "open-source",
 			"startDate": "2026-04",
 			"endDate": "2026-07",
-			"description": "A Rust desktop front end for Islandora Workbench, the command-line tool for bulk-loading content into Islandora 2, built for the institute's archive migration. Its reusable pieces became the foundation of qrate.",
+			"description": "A Rust desktop front end for Islandora Workbench, the command-line tool for bulk-loading content into Islandora 2, so the institute's research assistants can run ingests without editing YAML configs and CSVs by hand during the archive migration.",
 			"technologies": [
 				"Rust",
 				"GPUI",
@@ -173,7 +192,11 @@
 			],
 			"githubUrl": "https://github.com/devnull03/islandora_workbench_gui",
 			"url": "https://devnull03.github.io/islandora_workbench_gui/",
-			"showInResume": false
+			"showInResume": false,
+			"details": [
+				"Built on GPUI; its reusable crates became the foundation of qrate",
+				"Published docs site on GitHub Pages"
+			]
 		},
 		{
 			"id": "harness-picker",
@@ -181,9 +204,10 @@
 			"category": "personal",
 			"startDate": "2025-09",
 			"endDate": null,
-			"description": "`hpick`: one fzf pick to start a new Claude Code, Codex or pi chat, or resume one from the current folder. Built to run from Zed's terminal.",
+			"description": "hpick: one fzf picker to start a new Claude Code, Codex or pi chat, or resume one started in the current folder. Made to be run from Zed's terminal as a quick agent switcher, but it works in any terminal.",
 			"details": [
-				"Published to Homebrew, Scoop and WinGet with prebuilt release binaries"
+				"Reads each harness's own history (Claude Code's history.jsonl, Codex history and sessions, pi agent sessions) and lists only chats started in the current folder",
+				"Published to Homebrew, Scoop and WinGet (accepted into microsoft/winget-pkgs), with prebuilt release binaries"
 			],
 			"technologies": [
 				"Rust",
@@ -195,19 +219,27 @@
 		{
 			"id": "pokeforge",
 			"title": "Pokeforge",
-			"category": "personal",
+			"category": "hackathon",
 			"startDate": "2026-02",
 			"endDate": "2026-02",
-			"description": "Generates MCP servers from browser automation: it explores a website with Stagehand, writes an MCP server for the actions it found, tests it in a Cloudflare Sandbox and publishes it to GitHub, so the Poke assistant can use sites that have no API.",
+			"description": "Given a website and a task, Pokeforge drives the site with an LLM agent, works out the actions it needs, and generates a working MCP server from them, so the Poke assistant can use sites that have no API.",
 			"technologies": [
 				"TypeScript",
 				"Cloudflare Workers",
+				"Cloudflare Sandbox",
 				"MCP",
 				"Stagehand",
 				"Browserbase"
 			],
 			"githubUrl": "https://github.com/devnull03/pokeforge",
-			"showInResume": false
+			"showInResume": true,
+			"organization": "TreeHacks 2026 (Stanford)",
+			"location": "Stanford, CA",
+			"details": [
+				"Orchestration across two Cloudflare Workers: an MCP endpoint plus workflows for codegen, and a Stagehand + Browserbase service that executes browser steps",
+				"Generated code is tested in a Cloudflare Sandbox before the finished MCP server is published to GitHub automatically",
+				"Exposed itself as an MCP tool (automate_website), so an agent can ask for a new integration on the fly"
+			]
 		},
 		{
 			"id": "booksplore",
@@ -523,6 +555,136 @@
 					"link": "https://ethglobal.com/showcase/zkare-nxt7h"
 				}
 			]
+		},
+		{
+			"id": "clash-of-code",
+			"title": "Clash of Code (LAN edition)",
+			"organization": "10th grade final project, Programming course",
+			"category": "personal",
+			"startDate": "2020-09",
+			"endDate": "2021-04",
+			"description": "A multiplayer competitive-programming game inspired by CodinGame's Clash of Code that runs on a local network, so a whole class can race to solve the same problem. My 10th grade final project for my programming course, built with Python and PyQt5.",
+			"details": [
+				"Client/server over the LAN: a PyQt5 client with login, problem and results screens, and a server GUI to host a round",
+				"Teachers write a problem as three Python files (starter code, reference solution and test-case generator); the server checks every submission against the generated cases",
+				"Round settings for mode (e.g. shortest code), time limit, task description and examples, plus ready-made problem presets",
+				"Account database managed from the command line, and a setup script that creates desktop shortcuts for the client and server"
+			],
+			"technologies": [
+				"Python",
+				"PyQt5",
+				"Sockets",
+				"SQLite"
+			],
+			"githubUrl": "https://github.com/devnull03/finalYearProject",
+			"showInResume": false,
+			"previewItems": [
+				{
+					"title": "GitHub",
+					"link": "https://github.com/devnull03/finalYearProject",
+					"image": "/content/images/clash-of-code.webp"
+				}
+			]
+		},
+		{
+			"id": "webwork-mcp",
+			"title": "webwork-mcp",
+			"category": "personal",
+			"startDate": "2026-02",
+			"endDate": "2026-03",
+			"description": "An MCP server that connects LLM assistants (Claude, Cursor, Poke) to WeBWorK, the open-source online homework system many universities use.",
+			"details": [
+				"Logs into WeBWorK courses and lists classes, homework sets and upcoming due dates",
+				"Reads individual problems with full LaTeX math, tracks progress and grades, and downloads PDF hardcopies",
+				"Read-only by design: it cannot submit or preview answers"
+			],
+			"technologies": [
+				"Python",
+				"MCP"
+			],
+			"githubUrl": "https://github.com/devnull03/webwork-mcp",
+			"showInResume": false
+		},
+		{
+			"id": "caelestia-animated-wallpapers",
+			"title": "Caelestia-AW: animated wallpapers for the Caelestia shell",
+			"category": "personal",
+			"startDate": "2026-09",
+			"endDate": "2026-09",
+			"description": "A fork of the Caelestia Linux desktop shell (Quickshell/QML) and its CLI that adds native animated video wallpapers, packaged for declarative NixOS and Home Manager setups.",
+			"details": [
+				"Replaces the static image renderer with a hardware-accelerated QtMultimedia video wallpaper supporting MP4, WebM and MKV",
+				"Pauser service stops the wallpaper to save CPU and GPU, for example when running on battery",
+				"Companion CLI fork and a Nix-maintained package for my NixOS config"
+			],
+			"technologies": [
+				"QML",
+				"Qt",
+				"Python",
+				"Nix"
+			],
+			"githubUrl": "https://github.com/devnull03/caelestia-shell-aw",
+			"showInResume": false
+		},
+		{
+			"id": "mac-media-server",
+			"title": "Mac media server",
+			"category": "personal",
+			"startDate": "2026-11",
+			"endDate": "2026-11",
+			"description": "Scripts from my native Jellyfin setup on an Apple Silicon Mac with media on an external SSD: Live TV for India and Canada with a daily XMLTV guide, anime library configuration, subtitles, SMB sharing and monitoring.",
+			"details": [
+				"Live TV: filters iptv-org playlists to the channels I want, probes every stream with Jellyfin's ffprobe and registers the tuners through the Jellyfin API",
+				"Maps playlist channels to guide sources and rebuilds a two-day XMLTV guide daily, publishing atomically and keeping the last good guide if a grab fails",
+				"Guide checkout lives on an APFS sparse image because its many small files were slow on the exFAT media drive; Beszel for monitoring, Tailscale for remote access"
+			],
+			"technologies": [
+				"Python",
+				"Jellyfin",
+				"ffmpeg",
+				"macOS",
+				"Tailscale"
+			],
+			"githubUrl": "https://github.com/devnull03/mac-media-server",
+			"showInResume": false
+		},
+		{
+			"id": "spotify-bingo-creator",
+			"title": "Spotify Bingo Creator",
+			"category": "personal",
+			"startDate": "2025-10",
+			"endDate": "2025-10",
+			"description": "Paste a Spotify playlist link and get every song, artist and its metadata out of it, ready to turn into music-bingo cards.",
+			"technologies": [
+				"SvelteKit",
+				"TypeScript",
+				"Spotify API"
+			],
+			"githubUrl": "https://github.com/devnull03/spotify_bingo_creator",
+			"url": "https://spotify-bingo-creator.vercel.app",
+			"showInResume": false
+		},
+		{
+			"id": "qrate-htn",
+			"title": "qrate: AI metadata assistant",
+			"organization": "Hack the North 2025",
+			"location": "Waterloo, ON",
+			"category": "hackathon",
+			"startDate": "2025-09",
+			"endDate": "2025-09",
+			"description": "The weekend prototype that became qrate: an AI workspace that helps archivists and historians catalogue historical items in a fraction of the time while keeping a person in charge of accuracy.",
+			"details": [
+				"AI-assisted metadata extraction from historical items",
+				"Asks the archivist targeted questions about fields it is unsure of",
+				"Spreadsheet view to review and revise the generated metadata"
+			],
+			"technologies": [
+				"SvelteKit",
+				"Cohere"
+			],
+			"githubUrl": "https://github.com/devnull03/metadata-assistant-htn",
+			"url": "https://metadata-assistant-htn.vercel.app",
+			"showInResume": false
 		}
 	],
 	"skillSections": [
