@@ -22,7 +22,7 @@ const linkedin = linkedinJson as LinkedInSnapshot;
 const site = siteJson as SiteContent;
 
 const ENTRY_ORDER: string[] = ['work-experience', 'education', 'volunteering'];
-const PROJECT_ORDER: string[] = ['work-experience', 'personal', 'academic', 'freelance', 'hackathon'];
+const PROJECT_ORDER: string[] = ['personal', 'open-source', 'work-experience', 'academic', 'freelance', 'hackathon'];
 
 /** Newest first by end date, falling back to the start date for ongoing items. */
 function byRecency(a: { startDate?: string; endDate?: string }, b: { startDate?: string; endDate?: string }) {

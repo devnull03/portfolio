@@ -46,7 +46,7 @@
   <title>Projects - Portfolio</title>
   <meta
     name="description"
-    content="Explore my portfolio of projects across different categories including work experience, personal projects, academic work, freelance, and hackathons."
+    content="Explore my portfolio of projects across different categories including personal projects, open-source contributions, work experience, academic work, freelance, and hackathons."
   />
   <meta
     name="keywords"
@@ -124,6 +124,7 @@
                   const categoryNames: Record<string, string> = {
                     'work-experience': 'Work Experience',
                     'personal': 'Personal Projects',
+                    'open-source': 'Open Source',
                     'academic': 'Academic Projects',
                     'freelance': 'Freelance Work',
                     'hackathon': 'Hackathons'

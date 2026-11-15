@@ -110,7 +110,7 @@ export interface PreviewItem {
 }
 
 export type EntryCategory = 'work-experience' | 'education' | 'volunteering';
-export type ProjectCategory = 'work-experience' | 'personal' | 'academic' | 'freelance' | 'hackathon';
+export type ProjectCategory = 'work-experience' | 'personal' | 'open-source' | 'academic' | 'freelance' | 'hackathon';
 
 /** Site-only fields layered over an entry derived from LinkedIn, keyed by its id. */
 export interface EntryOverride {

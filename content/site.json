@@ -52,9 +52,15 @@
 				"Web Development",
 				"OCR",
 				"Islandora",
-				"Bash"
+				"Bash",
+				"Rust",
+				"Drupal",
+				"Docker"
 			],
 			"relatedProjects": [
+				"qrate",
+				"islandora-contributions",
+				"islandora-workbench-gui",
 				"sacda-digital-archive",
 				"union-zindabad-exhibit",
 				"discriminatory-laws-timeline",
@@ -75,6 +81,134 @@
 		}
 	},
 	"projects": [
+		{
+			"id": "qrate",
+			"title": "qrate",
+			"organization": "Open source · COMP 440 Directed Studies, University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"category": "personal",
+			"startDate": "2025-11",
+			"endDate": null,
+			"description": "An open-source desktop cataloguing app for archives, libraries and museums: a spreadsheet-style grid that validates metadata as it is typed, with each record's scans, documents and video beside it. Used by the South Asian Studies Institute at UFV on its real archival collections.",
+			"details": [
+				"Used by the South Asian Studies Institute's research assistants to catalogue collections for the South Asian Canadian Digital Archive; their feedback drives the roadmap",
+				"330+ release downloads, shipped through the Microsoft Store, a Homebrew tap and signed in-app updates",
+				"Validates as you type: LCSH, Wikidata and GeoNames authority checks, EDTF dates, missing linked files and spelling, shown as squiggles and in a Problems panel",
+				"15-crate Rust workspace on GPUI (the UI framework behind the Zed editor), smooth on ~2,000-row collections backed by scans",
+				"Sandboxed Luau plugin system with a signed plugin registry; the Islandora plugin checks columns against a live repository's vocabularies",
+				"Optional AI review through a read-only agent bridge: an agent can stage findings but never writes a cell",
+				"AGPL-3.0, with contributions from 4 other developers"
+			],
+			"technologies": [
+				"Rust",
+				"GPUI",
+				"SQLite",
+				"Luau",
+				"Astro",
+				"Cloudflare Workers",
+				"GitHub Actions"
+			],
+			"githubUrl": "https://github.com/devnull03/qrate",
+			"url": "https://qrate.dvnl.work",
+			"showInResume": true,
+			"previewItems": [
+				{
+					"title": "qrate.dvnl.work",
+					"link": "https://qrate.dvnl.work",
+					"image": "/content/images/qrate-diagnostics.webp"
+				},
+				{
+					"title": "GitHub",
+					"link": "https://github.com/devnull03/qrate"
+				}
+			]
+		},
+		{
+			"id": "islandora-contributions",
+			"title": "Islandora contributions",
+			"organization": "Islandora (open-source digital repository platform)",
+			"location": "Remote",
+			"category": "open-source",
+			"startDate": "2026-10",
+			"endDate": null,
+			"description": "Contributing upstream fixes to Islandora, the open-source Drupal-based repository platform, found while moving the South Asian Canadian Digital Archive onto it.",
+			"details": [
+				"isle-buildkit: found and fixed animated GIFs producing no derivatives in the Houdini image service (issue #609, PR #610)",
+				"islandora_dxpr: print stylesheet so researchers can print an item or collection record for citation (PR #44)",
+				"qrate's Islandora plugin brings a live Islandora site's vocabularies into cataloguing"
+			],
+			"technologies": [
+				"Islandora",
+				"Drupal",
+				"Docker",
+				"ImageMagick",
+				"CSS"
+			],
+			"githubUrl": "https://github.com/Islandora-Devops/isle-buildkit/pull/610",
+			"showInResume": true,
+			"previewItems": [
+				{
+					"title": "isle-buildkit #610",
+					"link": "https://github.com/Islandora-Devops/isle-buildkit/pull/610"
+				},
+				{
+					"title": "islandora_dxpr #44",
+					"link": "https://github.com/Islandora/islandora_dxpr/pull/44"
+				}
+			]
+		},
+		{
+			"id": "islandora-workbench-gui",
+			"title": "Islandora Workbench GUI",
+			"organization": "South Asian Studies Institute, University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"category": "open-source",
+			"startDate": "2026-04",
+			"endDate": "2026-07",
+			"description": "A Rust desktop front end for Islandora Workbench, the command-line tool for bulk-loading content into Islandora 2, built for the institute's archive migration. Its reusable pieces became the foundation of qrate.",
+			"technologies": [
+				"Rust",
+				"GPUI",
+				"Islandora"
+			],
+			"githubUrl": "https://github.com/devnull03/islandora_workbench_gui",
+			"url": "https://devnull03.github.io/islandora_workbench_gui/",
+			"showInResume": false
+		},
+		{
+			"id": "harness-picker",
+			"title": "harness-picker",
+			"category": "personal",
+			"startDate": "2025-09",
+			"endDate": null,
+			"description": "`hpick`: one fzf pick to start a new Claude Code, Codex or pi chat, or resume one from the current folder. Built to run from Zed's terminal.",
+			"details": [
+				"Published to Homebrew, Scoop and WinGet with prebuilt release binaries"
+			],
+			"technologies": [
+				"Rust",
+				"fzf"
+			],
+			"githubUrl": "https://github.com/devnull03/harness-picker",
+			"showInResume": false
+		},
+		{
+			"id": "pokeforge",
+			"title": "Pokeforge",
+			"category": "personal",
+			"startDate": "2026-02",
+			"endDate": "2026-02",
+			"description": "Generates MCP servers from browser automation: it explores a website with Stagehand, writes an MCP server for the actions it found, tests it in a Cloudflare Sandbox and publishes it to GitHub, so the Poke assistant can use sites that have no API.",
+			"technologies": [
+				"TypeScript",
+				"Cloudflare Workers",
+				"MCP",
+				"Stagehand",
+				"Browserbase"
+			],
+			"githubUrl": "https://github.com/devnull03/pokeforge",
+			"showInResume": false
+		},
 		{
 			"id": "booksplore",
 			"title": "Booksplore",

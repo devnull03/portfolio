@@ -48,6 +48,7 @@
       categoryNames = {
         'work-experience': 'Work Experience',
         'personal': 'Personal Projects',
+        'open-source': 'Open Source',
         'academic': 'Academic Projects',
         'freelance': 'Freelance Work',
         'hackathon': 'Hackathons'
