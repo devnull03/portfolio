@@ -15,7 +15,6 @@
 		"deploy": "pnpm run build && wrangler deploy",
 		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts",
 		"content:fetch": "node scripts/content/fetch.ts",
-		"content:migrate-sanity": "node scripts/content/migrate-sanity.ts",
 		"check:scripts": "tsc -p scripts/tsconfig.json",
 		"worker:dev": "wrangler dev -c workers/linkedin-sync/wrangler.jsonc --test-scheduled",
 		"worker:deploy": "wrangler deploy -c workers/linkedin-sync/wrangler.jsonc",

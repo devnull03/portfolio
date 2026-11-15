@@ -61,14 +61,3 @@ With no LinkedIn source configured, the command is a no-op and the committed
 ```
 
 Dates are `"YYYY-MM"`, or `null` for "Present".
-
-## Migrating from Sanity (one-time)
-
-The committed data was seeded from the old `src/lib/data/*.data.ts`. To bring
-over what is currently in Sanity, including preview images (downloaded into
-`static/content/images`):
-
-```bash
-SANITY_PROJECT_ID=wt0c9f6z SANITY_DATASET=production SANITY_TOKEN=... pnpm content:migrate-sanity
-git diff content static/content
-```

@@ -107,7 +107,7 @@
         <!-- svelte-ignore a11y_media_has_caption -->
         <video
           bind:this={videoRef}
-          src="https://cdn.sanity.io/files/wt0c9f6z/production/6e17d07f3db2cb408a8d8119c9693800bb1a15cf.mp4"
+          src="/assets/surprise.mp4"
           autoplay
           playsinline
           controls
