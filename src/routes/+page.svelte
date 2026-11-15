@@ -29,11 +29,27 @@
       normalizeScroll: true,
     });
 
-    // The widget only appears after scrolling, so this never delays first paint.
-    fetch("/api/now-playing")
-      .then((res) => (res.ok ? (res.json() as Promise<NowPlaying>) : null))
-      .then((body) => (nowPlaying = body))
-      .catch(() => {});
+    // The widget only appears after scrolling, so this never delays first paint. Refresh it
+    // every 30s while the tab is visible so it follows track changes (the API caches for 15s).
+    const loadNowPlaying = () =>
+      fetch("/api/now-playing")
+        .then((res) => (res.ok ? (res.json() as Promise<NowPlaying>) : null))
+        .then((body) => {
+          if (body) nowPlaying = body;
+        })
+        .catch(() => {});
+    loadNowPlaying();
+    const poll = setInterval(() => {
+      if (!document.hidden) loadNowPlaying();
+    }, 30_000);
+    const onVisible = () => {
+      if (!document.hidden) loadNowPlaying();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      clearInterval(poll);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   });
 
   $crtEffectEnabled = true;
