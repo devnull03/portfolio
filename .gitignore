@@ -9,3 +9,5 @@ build
 .netlify
 .vercel
 .wrangler
+.env*
+!.env.example
