@@ -181,6 +181,7 @@ export interface Contact {
 	website?: string;
 	linkedin?: string;
 	github?: string;
+	discord?: string;
 }
 
 export interface ResumeEntry {
