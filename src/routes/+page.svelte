@@ -30,9 +30,9 @@
     });
 
     // The widget only appears after scrolling, so this never delays first paint. Refresh it
-    // every 30s while the tab is visible so it follows track changes (the API caches for 15s).
+    // every 30s while the tab is visible so it follows track changes.
     const loadNowPlaying = () =>
-      fetch("/api/now-playing")
+      fetch("/api/now-playing", { cache: "no-store" })
         .then((res) => (res.ok ? (res.json() as Promise<NowPlaying>) : null))
         .then((body) => {
           if (body) nowPlaying = body;

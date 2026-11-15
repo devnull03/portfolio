@@ -21,7 +21,20 @@ export const GET: RequestHandler = async () => {
 		}
 	}
 
-	return json(cached.body, {
-		headers: { 'Cache-Control': `public, max-age=${TTL_MS / 1000}` }
+	// no-store, not a short max-age: the zone's Browser Cache TTL (4h) raises any shorter max-age,
+	// and the edge then serves that stale copy. The 15s in-isolate cache above already keeps
+	// Spotify requests down.
+	return json(withElapsed(cached.body, Date.now() - cached.at), {
+		headers: { 'Cache-Control': 'no-store' }
 	});
 };
+
+/** A cached "playing" response is up to TTL_MS old; move its progress forward by that much. */
+function withElapsed(body: NowPlaying, elapsedMs: number): NowPlaying {
+	const track = body.currentTrack;
+	if (body.trackType !== 'current' || !track?.isPlaying || track.progress == null) return body;
+	const progress = track.duration
+		? Math.min(track.progress + elapsedMs, track.duration)
+		: track.progress + elapsedMs;
+	return { ...body, currentTrack: { ...track, progress } };
+}
