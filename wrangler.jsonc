@@ -22,9 +22,10 @@
 	"observability": {
 		"enabled": true
 	},
-	// Served on portfolio.<subdomain>.workers.dev until the domain is cut over from Vercel.
-	// At cutover, replace this with:
-	//   "routes": [{ "pattern": "dvnl.work/*", "zone_name": "dvnl.work" }]
+	// dvnl.work is a Worker custom domain (Cloudflare manages its DNS record and certificate).
+	// www.dvnl.work is redirected to it by a zone redirect rule, not by this Worker.
+	"routes": [{ "pattern": "dvnl.work", "custom_domain": true }],
+	// Also kept on portfolio.<subdomain>.workers.dev for previews.
 	"workers_dev": true,
 	"preview_urls": true
 }
