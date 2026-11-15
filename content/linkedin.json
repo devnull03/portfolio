@@ -1,34 +1,21 @@
 {
-	"source": "seed",
-	"fetchedAt": "2025-08-01T00:00:00.000Z",
+	"source": "sanity",
+	"fetchedAt": "2026-11-15T19:49:34.300Z",
 	"profile": {
 		"firstName": "Arnav",
 		"lastName": "Mehta",
 		"headline": "Software Developer / Student",
-		"summary": "Software Developer / Student with experience in full-stack development, API design, and cloud computing.",
-		"location": "Burnaby, BC",
-		"websites": [
-			"https://dvnl.work"
-		]
+		"location": "Burnaby, BC"
 	},
 	"positions": [
 		{
-			"id": "south-asian-studies-institute-university-of-the-fraser-valley-undergraduate-research-assistant-web-developer",
-			"title": "Undergraduate Research Assistant / Web Developer",
-			"company": "South Asian Studies Institute, University of the Fraser Valley",
-			"location": "Abbotsford, BC",
-			"description": "• Crafted engaging interactive content, increasing user engagement by 200% and social media shares\n• Streamlined website updates with PHP and Collective Access, improving loading speeds by 40%\n• Automated metadata management with Python using custom algorithms, cutting task completion time by 80%\n• Improved digital archive accessibility through optimized data management workflows",
-			"startDate": "2022-08",
-			"endDate": null
-		},
-		{
-			"id": "university-of-the-fraser-valley-teaching-assistant",
-			"title": "Teaching Assistant",
-			"company": "University of the Fraser Valley",
-			"location": "Abbotsford, BC",
-			"description": "• Provided academic support and feedback to students\n• Assisted with course material and assignments\n• Facilitated learning through one-on-one and group sessions",
-			"startDate": "2024-09",
-			"endDate": "2024-12"
+			"id": "ids-company-full-stack-engineer",
+			"title": "Full-Stack Engineer",
+			"company": "IDS.company",
+			"location": "Remote",
+			"description": "• Directed the overhaul of the project website's 2nd redesign with scalable transition strategy\n• Integrated 10+ new features within 3 weeks, increasing daily active users by 25%\n• Architected and refined core logic for post management, accelerating content moderation workflows by 35%\n• Fostered collaboration between frontend and backend teams across different time zones",
+			"startDate": "2022-05",
+			"endDate": "2024-07"
 		},
 		{
 			"id": "it-service-desk-university-of-the-fraser-valley-lab-monitor",
@@ -40,15 +27,6 @@
 			"endDate": "2024-04"
 		},
 		{
-			"id": "ids-company-full-stack-engineer",
-			"title": "Full-Stack Engineer",
-			"company": "IDS.company",
-			"location": "Remote",
-			"description": "• Directed the overhaul of the project website's 2nd redesign with scalable transition strategy\n• Integrated 10+ new features within 3 weeks, increasing daily active users by 25%\n• Architected and refined core logic for post management, accelerating content moderation workflows by 35%\n• Fostered collaboration between frontend and backend teams across different time zones",
-			"startDate": "2022-05",
-			"endDate": "2024-07"
-		},
-		{
 			"id": "job-unicorn-software-engineering-intern",
 			"title": "Software Engineering Intern",
 			"company": "Job Unicorn",
@@ -56,6 +34,24 @@
 			"description": "• Engineered and deployed backend services using TypeScript and Golang\n• Developed advanced web scraping system with Express.js and Puppeteer\n• Built and optimized RESTful APIs for enhanced analytics integration\n• Collaborated with business intelligence teams and stakeholders",
 			"startDate": "2022-02",
 			"endDate": "2022-04"
+		},
+		{
+			"id": "south-asian-studies-institute-university-of-the-fraser-valley-undergraduate-research-assistant-software-developer",
+			"title": "Undergraduate Research Assistant / Software Developer",
+			"company": "South Asian Studies Institute, University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"description": "• 2025: \nWorking on porting over Collective Access to Islandora. Figuring out new data design, automation scripts to bring over old data, and the most optimal data ingestion techniques to go with Drupal's node system. \nWriting custom configurations and Rust automation scripts for ingesting 3 million photographs worth of data to the new archival system.\n• 2024:\nStandardising exhibit creation workflow with more modern technologies like Sveltekit. \nSetting up common libraries to share components across exhibits and A new github org account that I alone maintain to keep the organisation's exhibits, tools, etc organised and open source whatever possible. \n• 2023:\nDeveloped interactive storytelling content on the institute's website using archival data and JavaScript.\nMaintained and updated project websites with PHP and Collective Access.\nAutomated metadata tasks using Python scripts.",
+			"startDate": "2022-08",
+			"endDate": null
+		},
+		{
+			"id": "university-of-the-fraser-valley-teaching-assistant",
+			"title": "Teaching Assistant",
+			"company": "University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"description": "• Provided academic support and feedback to students\n• Assisted with course material and assignments\n• Facilitated learning through one-on-one and group sessions",
+			"startDate": "2024-09",
+			"endDate": "2024-12"
 		}
 	],
 	"education": [
@@ -70,8 +66,8 @@
 	],
 	"volunteering": [
 		{
-			"id": "japanese-culture-club-university-of-the-fraser-valley-club-secretary",
-			"role": "Club Secretary",
+			"id": "japanese-culture-club-university-of-the-fraser-valley-vice-president",
+			"role": "Vice President",
 			"organization": "Japanese Culture Club, University of the Fraser Valley",
 			"description": "• Facilitated club events, boosting attendance by 25% through proactive promotion and concise scheduling\n• Handled member updates and announcements on social media, ensuring everyone stayed informed of upcoming activities\n• Compiled clear meeting records, maintaining an organized log of decisions and tasks for future reference",
 			"startDate": "2023-09",
@@ -88,24 +84,6 @@
 	],
 	"projects": [],
 	"skills": [
-		"Python",
-		"TypeScript",
-		"JavaScript",
-		"Go",
-		"C/C++",
-		"Rust",
-		"SQL",
-		"Ruby on Rails",
-		"React.js",
-		"Svelte",
-		"Next.js",
-		"Tailwind CSS",
-		"Node.js",
-		"Express.js",
-		"FastAPI",
-		"AngularJS",
-		"React Native",
-		"Mobile Applications",
 		"MongoDB",
 		"PostgreSQL",
 		"MySQL",
@@ -118,7 +96,25 @@
 		"CI/CD Pipelines",
 		"WebRTC",
 		"API Development",
-		"Test-Driven Development (TDD)"
+		"Test-Driven Development (TDD)",
+		"React.js",
+		"Svelte",
+		"Next.js",
+		"Tailwind CSS",
+		"Node.js",
+		"Express.js",
+		"FastAPI",
+		"AngularJS",
+		"React Native",
+		"Mobile Applications",
+		"Python",
+		"TypeScript",
+		"JavaScript",
+		"Go",
+		"C/C++",
+		"Rust",
+		"SQL",
+		"Ruby on Rails"
 	],
 	"languages": [
 		{
