@@ -22,10 +22,9 @@
 	"observability": {
 		"enabled": true
 	},
-	"routes": [
-		{
-			"pattern": "dvnl.work/*",
-			"zone_name": "dvnl.work"
-		}
-	]
+	// Served on portfolio.<subdomain>.workers.dev until the domain is cut over from Vercel.
+	// At cutover, replace this with:
+	//   "routes": [{ "pattern": "dvnl.work/*", "zone_name": "dvnl.work" }]
+	"workers_dev": true,
+	"preview_urls": true
 }
