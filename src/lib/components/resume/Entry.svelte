@@ -56,13 +56,17 @@
     </span>
   </div>
 
-  <!-- Organization and Location -->
-  <div class="mb-3">
-    <p class="text-base font-courierPrime text-black">
-      {entry.organization}
-      <span class="text-black/70 ml-2">{entry.location}</span>
-    </p>
-  </div>
+  <!-- Organization and Location (skipped entirely when neither is set, so there's no blank gap) -->
+  {#if entry.organization || entry.location}
+    <div class="mb-3">
+      <p class="text-base font-courierPrime text-black">
+        {entry.organization}
+        {#if entry.location}
+          <span class="text-black/70" class:ml-2={!!entry.organization}>{entry.location}</span>
+        {/if}
+      </p>
+    </div>
+  {/if}
 
   <!-- Project summary. (Resume entries' descriptions are already split into `details`.) -->
   {#if isProject(entry) && entry.description}
