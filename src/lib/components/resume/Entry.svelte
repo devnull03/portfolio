@@ -64,6 +64,13 @@
     </p>
   </div>
 
+  <!-- Project summary. (Resume entries' descriptions are already split into `details`.) -->
+  {#if isProject(entry) && entry.description}
+    <p class="mb-3 font-courierPrime text-black leading-relaxed">
+      {entry.description}
+    </p>
+  {/if}
+
   <!-- Details/Responsibilities -->
   {#if entry.details && entry.details.length > 0}
     <ul class="mb-4 list-disc">
@@ -92,7 +99,7 @@
   {/if}
 
   <!-- Project Links for Projects section -->
-  {#if (isProject(entry) && entry.githubUrl) || urlsToPreview.length > 0}
+  {#if (isProject(entry) && (entry.githubUrl || entry.url)) || urlsToPreview.length > 0}
     <div class="mt-4">
       <!-- Preview thumbnails -->
       {#if urlsToPreview.length > 0}
@@ -159,6 +166,14 @@
             onclick={() => window.open(entry.githubUrl, "_blank")}
           >
             GitHub
+          </button>
+        {/if}
+        {#if isProject(entry) && entry.url}
+          <button
+            class="text-sm font-courierPrime text-black underline hover:no-underline transition-all duration-200"
+            onclick={() => window.open(entry.url, "_blank")}
+          >
+            Website
           </button>
         {/if}
 

@@ -76,7 +76,10 @@
 			]
 		},
 		"japanese-culture-club-university-of-the-fraser-valley-vice-president": {
-			"location": "Abbotsford, BC"
+			"location": "Abbotsford, BC",
+			"relatedProjects": [
+				"spotify-bingo-creator"
+			]
 		},
 		"ufv-international-university-of-the-fraser-valley-student-ambassador": {
 			"location": "Abbotsford, BC"
@@ -654,15 +657,25 @@
 			"category": "personal",
 			"startDate": "2025-10",
 			"endDate": "2025-10",
-			"description": "Paste a Spotify playlist link and get every song, artist and its metadata out of it, ready to turn into music-bingo cards.",
+			"description": "Built for a music bingo event we organized while I was Vice President of UFV's Japanese Culture Club. Paste a Spotify playlist link and it generates a stack of unique, printable bingo cards from the playlist's songs, instead of anyone making them by hand.",
 			"technologies": [
 				"SvelteKit",
 				"TypeScript",
-				"Spotify API"
+				"Spotify Web API",
+				"pdfmake",
+				"Vercel"
 			],
 			"githubUrl": "https://github.com/devnull03/spotify_bingo_creator",
 			"url": "https://spotify-bingo-creator.vercel.app",
-			"showInResume": false
+			"showInResume": false,
+			"organization": "Japanese Culture Club, University of the Fraser Valley",
+			"location": "Abbotsford, BC",
+			"details": [
+				"Fetches complete playlists from just a link via the Spotify Web API on a SvelteKit server route, paging past Spotify's 50-track-per-request limit",
+				"Generates randomized 3×3 to 5×5 boards with a free centre square, previewable and downloadable as images",
+				"Server-side PDF export with pdfmake, batching many boards into a single PDF or a ZIP of per-board PDFs ready to print",
+				"Bundles Noto Sans JP so Japanese song titles render correctly on the printed cards"
+			]
 		},
 		{
 			"id": "qrate-htn",
