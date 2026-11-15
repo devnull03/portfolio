@@ -1,5 +1,4 @@
-// Shared by the SvelteKit app and the Node scripts in scripts/content, so this file must stay
-// dependency-free and import nothing.
+// Content helpers. Kept dependency-free so non-SvelteKit tooling can import it too.
 
 export function slugify(value: string): string {
 	return value

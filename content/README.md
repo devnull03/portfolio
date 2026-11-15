@@ -3,29 +3,14 @@
 Resume and project data is plain JSON in this folder. It is read **at build time**;
 nothing is fetched while someone is browsing the site.
 
-| File | Edited by | What's in it |
-| --- | --- | --- |
-| `linkedin.json` | `pnpm content:fetch` (don't hand-edit) | Positions, education, volunteering, projects, skills, languages, certifications, honors and courses, as LinkedIn has them. |
-| `site.json` | you | Site-only data LinkedIn has no field for. See below. |
+| File | What's in it |
+| --- | --- |
+| `linkedin.json` | Positions, education, volunteering, skills, languages, certifications, honors and courses. The schema mirrors LinkedIn's data export (it used to be generated from it), but the file is now edited by hand. |
+| `site.json` | Site-only data: projects, skill groups, contact details, and per-entry extras (technologies, related projects, preview images, overrides). See below. |
 
-## Refreshing from LinkedIn
-
-```bash
-# Works for every account: Settings → Data privacy → Get a copy of your data.
-LINKEDIN_EXPORT=~/Downloads/Basic_LinkedInDataExport_10-06-2026.zip pnpm content:fetch
-
-# Only for accounts in the EEA / Switzerland (DMA Member Data Portability API):
-LINKEDIN_DMA_TOKEN=... pnpm content:fetch
-```
-
-The script prints a summary and does nothing if the data hasn't changed. It
-refuses to overwrite a snapshot that has positions with one that has none
-(`--force` to override). It also warns when a `site.json` override no longer
-matches any LinkedIn entry, for example after you rename a job title, and lists
-the new ids to rename it to.
-
-With no LinkedIn source configured, the command is a no-op and the committed
-`linkedin.json` is used as-is, so builds never need LinkedIn credentials.
+Edit either file, push to `main`, and Cloudflare Workers Builds rebuilds and deploys the site.
+An entry's id is the slug its `site.json` overrides are keyed by, so keep ids stable when you
+rename a title.
 
 ## `site.json`
 

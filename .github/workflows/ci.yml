@@ -1,7 +1,7 @@
 name: CI
 
-# Type-checks and builds every PR (including PRs into other PR branches, so each layer of a
-# stack is checked on its own) and every push to main. Nothing is deployed from here.
+# Type-checks and builds every PR and every push to main. Deploys are done by Cloudflare
+# Workers Builds (it builds `main` and runs `wrangler deploy`), not by GitHub Actions.
 on:
   pull_request:
   push:
@@ -26,7 +26,4 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
-      - run: pnpm check:scripts
-      - run: pnpm worker:test
-      - run: pnpm worker:check
       - run: pnpm build

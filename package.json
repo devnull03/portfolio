@@ -13,19 +13,11 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check .",
 		"deploy": "pnpm run build && wrangler deploy",
-		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts",
-		"content:fetch": "node scripts/content/fetch.ts",
-		"check:scripts": "tsc -p scripts/tsconfig.json",
-		"worker:dev": "wrangler dev -c workers/linkedin-sync/wrangler.jsonc --test-scheduled",
-		"worker:deploy": "wrangler deploy -c workers/linkedin-sync/wrangler.jsonc",
-		"worker:secret": "wrangler secret put -c workers/linkedin-sync/wrangler.jsonc",
-		"worker:test": "node --test \"workers/linkedin-sync/test/*.test.ts\"",
-		"worker:check": "wrangler types -c workers/linkedin-sync/wrangler.jsonc workers/linkedin-sync/worker-configuration.d.ts && tsc -p workers/linkedin-sync/tsconfig.json"
+		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts"
 	},
 	"devDependencies": {
 		"@lucide/svelte": "^0.482.0",
 		"@sveltejs/adapter-cloudflare": "^7.1.3",
-		"@sveltejs/adapter-vercel": "^5.10.3",
 		"@sveltejs/kit": "^2.27.3",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
 		"@types/node": "^22.20.5",
