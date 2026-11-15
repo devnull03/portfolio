@@ -107,7 +107,7 @@
         <!-- svelte-ignore a11y_media_has_caption -->
         <video
           bind:this={videoRef}
-          src="/assets/surprise.mp4"
+          src="/media/surprise.mp4"
           autoplay
           playsinline
           controls
